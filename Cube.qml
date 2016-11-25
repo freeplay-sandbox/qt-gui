@@ -3,14 +3,29 @@ import Box2D 2.0
 
 Item {
         id:cube
-        width: parent.height * physicalCubeSize / physicalMapLength
+        width: 2*parent.height * physicalCubeSize / physicalMapLength
         height: width
         rotation: Math.random() * 360
 
+        property string image: "res/cube.svg"
+
+        property var boundingbox:
+           Box {
+                        width: cube_texture.paintedWidth
+                        height: cube_texture.paintedHeight
+                        x: cube.width/2 - width/2
+                        y: cube.height/2 - height/2
+                        density: 1
+                        restitution: 0.1
+                        friction: 1
+                }
+
+
         Image {
-                id: cube_texture
-                anchors.fill: parent
-                source: "res/cube.svg"
+            id: cube_texture
+            fillMode: Image.PreserveAspectFit
+            anchors.fill: parent
+            source: parent.image
 
         }
         Body {
@@ -20,12 +35,8 @@ Item {
                 world: physicsWorld
                 bodyType: Body.Dynamic
 
-                Box {
-                        width: cube.width
-                        height: cube.height
-                        density: 1
-                        restitution: 0.1
-                        friction: 1
+                Component.onCompleted: {
+                    cubeBody.addFixture(cube.boundingbox);
                 }
 
                 angularDamping: 5

@@ -132,29 +132,62 @@ Window {
 
     }
 
-    //    Rectangle {
-    //        id: debugButton
-    //        x: 50
-    //        y: 50
-    //        width: 120
-    //        height: 30
-    //        Text {
-    //            text: debugDraw.visible ? "Debug view: on" : "Debug view: off"
-    //            anchors.centerIn: parent
-    //        }
-    //        color: "#DEDEDE"
-    //        border.color: "#999"
-    //        radius: 5
-    //        MouseArea {
-    //            anchors.fill: parent
-    //            onClicked: debugDraw.visible = !debugDraw.visible;
-    //        }
-    //    }
-    //
-    //    DebugDraw {
-    //        id: debugDraw
-    //        world: physicsWorld
-    //        opacity: 0.75
-    //        visible: false
-    //    }
+    Character {
+        image: "res/sprite-zebra.png"
+    }
+    Character {
+        scale: 1.5
+        image: "res/sprite-elephant.png"
+    }
+     Character {
+        scale: 1.5
+        bbScale: 0.5
+        image: "res/sprite-giraffe.png"
+    }
+   Character {
+        scale: 1.5
+        image: "res/sprite-hippo.png"
+    }
+    Character {
+        image: "res/sprite-lion.png"
+    }
+    Character {
+        image: "res/sprite-crocodile.png"
+    }
+     Character {
+        scale: 1.5
+        bbScale: 0.8
+        image: "res/sprite-rhino.png"
+    }
+   Character {
+        bbScale: 0.8
+        image: "res/sprite-leopard.png"
+    }
+
+
+       Rectangle {
+           id: debugButton
+           x: 50
+           y: 50
+           width: 120
+           height: 30
+           Text {
+               text: debugDraw.visible ? "Debug view: on" : "Debug view: off"
+               anchors.centerIn: parent
+           }
+           color: "#DEDEDE"
+           border.color: "#999"
+           radius: 5
+           MouseArea {
+               anchors.fill: parent
+               onClicked: debugDraw.visible = !debugDraw.visible;
+           }
+       }
+
+        DebugDraw {
+            id: debugDraw
+            world: physicsWorld
+            opacity: 0.75
+            visible: false
+        }
 }

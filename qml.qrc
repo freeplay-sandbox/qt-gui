@@ -7,5 +7,14 @@
         <file>zoo.js</file>
         <file>res/cube.svg</file>
         <file>RectangleBoxBody.qml</file>
+        <file>res/sprite-crocodile.png</file>
+        <file>res/sprite-elephant.png</file>
+        <file>res/sprite-giraffe.png</file>
+        <file>res/sprite-hippo.png</file>
+        <file>res/sprite-leopard.png</file>
+        <file>res/sprite-lion.png</file>
+        <file>res/sprite-rhino.png</file>
+        <file>res/sprite-zebra.png</file>
+        <file>Character.qml</file>
     </qresource>
 </RCC>

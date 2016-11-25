@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="70.958733mm"
-   height="70.958733mm"
-   viewBox="0 0 251.42858 251.42858"
+   width="70.546425mm"
+   height="30.634176mm"
+   viewBox="0 0 249.96765 108.54629"
    id="svg3406"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="183.98982"
-     inkscape:cy="71.51058"
+     inkscape:zoom="1.979899"
+     inkscape:cx="-43.957424"
+     inkscape:cy="115.5209"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,10 +35,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-width="2560"
+     inkscape:window-height="1330"
      inkscape:window-x="0"
-     inkscape:window-y="867"
+     inkscape:window-y="54"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata3411">
@@ -56,14 +56,14 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-205.71428,-375.21936)">
+     transform="translate(-206.44474,-517.37115)">
     <rect
        style="fill:#e9b96e;stroke:#c17d11;stroke-width:4.49110508;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect3414"
        width="245.47655"
-       height="245.47655"
+       height="104.05519"
        x="208.69029"
-       y="378.19537"
+       y="519.6167"
        rx="23.669746"
        ry="23.669746" />
   </g>

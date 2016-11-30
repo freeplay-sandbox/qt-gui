@@ -3,7 +3,7 @@ import Box2D 2.0
 
 Item {
         id:cube
-        width: 2*parent.height * physicalCubeSize / physicalMapLength
+        width: 2*parent.height * physicalCubeSize / physicalMapWidth
         height: width
         rotation: Math.random() * 360
 

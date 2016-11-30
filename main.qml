@@ -3,22 +3,31 @@ import QtQuick.Window 2.2
 
 import Box2D 2.0
 
+import Ros 1.0
+
 import "zoo.js" as ZooScripts
 
 Window {
 
     id: zoo
     visible: true
-    visibility: Window.FullScreen
-    width: Screen.width
-    height: Screen.height
+    //visibility: Window.FullScreen
+    //width: Screen.width
+    //height: Screen.height
+    width:800
+    height: 600
     color: "#000000"
     title: qsTr("Zoo Builder")
 
     property double physicalMapLength: 412 //mm
     property double physicalCubeSize: 30 //mm
 
-    property int nbCubes: 40
+    property int nbCubes: 0
+
+    RosNode {
+        id: rosNode
+        name: "zoobuilder-sandtray"
+    }
 
     Image {
             id: map
@@ -135,34 +144,34 @@ Window {
     Character {
         image: "res/sprite-zebra.png"
     }
-    Character {
-        scale: 1.5
-        image: "res/sprite-elephant.png"
-    }
-     Character {
-        scale: 1.5
-        bbScale: 0.5
-        image: "res/sprite-giraffe.png"
-    }
-   Character {
-        scale: 1.5
-        image: "res/sprite-hippo.png"
-    }
-    Character {
-        image: "res/sprite-lion.png"
-    }
-    Character {
-        image: "res/sprite-crocodile.png"
-    }
-     Character {
-        scale: 1.5
-        bbScale: 0.8
-        image: "res/sprite-rhino.png"
-    }
-   Character {
-        bbScale: 0.8
-        image: "res/sprite-leopard.png"
-    }
+//    Character {
+//        scale: 1.5
+//        image: "res/sprite-elephant.png"
+//    }
+//     Character {
+//        scale: 1.5
+//        bbScale: 0.5
+//        image: "res/sprite-giraffe.png"
+//    }
+//   Character {
+//        scale: 1.5
+//        image: "res/sprite-hippo.png"
+//    }
+//    Character {
+//        image: "res/sprite-lion.png"
+//    }
+//    Character {
+//        image: "res/sprite-crocodile.png"
+//    }
+//     Character {
+//        scale: 1.5
+//        bbScale: 0.8
+//        image: "res/sprite-rhino.png"
+//    }
+//   Character {
+//        bbScale: 0.8
+//        image: "res/sprite-leopard.png"
+//    }
 
 
        Rectangle {

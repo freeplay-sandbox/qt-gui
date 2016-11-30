@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Box2D 2.0
+import Ros 1.0
 
 Cube {
     id: character
@@ -23,4 +24,12 @@ Cube {
                 restitution: 0.1
             }
 
+        TFBroadcaster {
+            //node: rosNode
+            parentframe: "sandtray"
+            target: character
+        }
+        Component.onCompleted: {
+            console.log("Hello");
+        }
 }

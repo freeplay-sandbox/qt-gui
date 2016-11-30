@@ -1,12 +1,15 @@
 import QtQuick 2.2
 import Box2D 2.0
 
+import Ros 1.0
+
 Item {
         id:cube
         width: 2*parent.height * physicalCubeSize / physicalMapWidth
         height: width
         rotation: Math.random() * 360
 
+        property string name: ""
         property string image: "res/cube.svg"
 
         property var boundingbox:
@@ -20,6 +23,7 @@ Item {
                         friction: 1
                 }
 
+        property alias body: cubeBody
 
         Image {
             id: cube_texture
@@ -67,5 +71,14 @@ Item {
 //           }
 //   }
 
+        TFBroadcaster {
+            target: parent
+            frame: parent.name
+
+            origin: mapOrigin
+            parentframe: "sandtray"
+
+            pixelscale: zoo.pixel2meter
+        }
 
 }

@@ -1,11 +1,9 @@
 import QtQuick 2.0
 import Box2D 2.0
-import Ros 1.0
 
 Cube {
     id: character
 
-        property string name: ""
         property double scale: 1.0
         property double bbScale: 1.0
 
@@ -25,14 +23,5 @@ Cube {
                 restitution: 0.1
             }
 
-        TFBroadcaster {
-            target: character
-            frame: parent.name
-
-            origin: mapOrigin
-            parentframe: "sandtray"
-
-            pixelscale: zoo.pixel2meter
-        }
 
 }

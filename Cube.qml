@@ -14,8 +14,8 @@ Item {
 
         property var boundingbox:
            Box {
-                        width: cube_texture.paintedWidth
-                        height: cube_texture.paintedHeight
+                        width: image.paintedWidth
+                        height: image.paintedHeight
                         x: cube.width/2 - width/2
                         y: cube.height/2 - height/2
                         density: 1
@@ -24,12 +24,26 @@ Item {
                 }
 
         property alias body: cubeBody
+        property double bbratio: 1 // set later (cf below) once paintedWidth is known
+        property alias origin: imageOrigin
 
         Image {
-            id: cube_texture
+            id: image
             fillMode: Image.PreserveAspectFit
             anchors.fill: parent
             source: parent.image
+
+            Item {
+                // this item sticks to the 'visual' origin of the object, taking into account
+                // possible margins appearing when resizing
+                id: imageOrigin
+                rotation: parent.rotation
+                x: parent.x + (parent.width - parent.paintedWidth)/2
+                y: parent.y + (parent.height - parent.paintedHeight)/2
+            }
+            onPaintedWidthChanged: {
+                bbratio= image.paintedWidth/image.sourceSize.width;
+            }
 
         }
         Body {

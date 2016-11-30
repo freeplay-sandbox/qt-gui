@@ -90,9 +90,11 @@ Window {
         }
 
         property var target: null
+        origin: mapOrigin
+        pixelscale: zoo.pixel2meter
 
         onPositionChanged: {
-            console.log("Received pose update!");
+            console.log("Received pose update! x: " + x + ", y: " + y);
             if (target === null) {
                 var obj = map.childAt(x, y);
                 if (obj === null) return;
@@ -106,9 +108,9 @@ Window {
             externalJoint.target = Qt.point(parent.x, parent.y);
         }
 
-        onReleasedChanged: {
-            externalJoint.bodyB = null;
-        }
+//        onReleasedChanged: {
+//            externalJoint.bodyB = null;
+//        }
 
     }
 

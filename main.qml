@@ -39,7 +39,6 @@ Window {
         }
     }
 
-
     property Body pressedBody: null
 
     MouseJoint {
@@ -81,12 +80,20 @@ Window {
     RosPositionController {
         id: roscontrol
 
-        Rectangle {
-            x: parent.x
-            y: parent.y
-            width: 10
-            height: 10
-            color: "red"
+            Rectangle {
+                anchors.centerIn: parent
+                width: 30
+                height: width
+                radius: width/2
+                border.color: "#FF330022"
+                color: "#00000000"
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: 5
+                    height: width
+                    radius: width/2
+                    color: parent.border.color
+                }
         }
 
         property var target: null
@@ -108,9 +115,9 @@ Window {
             externalJoint.target = Qt.point(parent.x, parent.y);
         }
 
-//        onReleasedChanged: {
-//            externalJoint.bodyB = null;
-//        }
+        //        onReleasedChanged: {
+        //            externalJoint.bodyB = null;
+        //        }
 
     }
 

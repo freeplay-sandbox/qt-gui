@@ -85,14 +85,20 @@ Item {
 //           }
 //   }
 
+    Item {
+        id: objectCenter
+        anchors.centerIn: parent
+        rotation: parent.rotation
         TFBroadcaster {
             target: parent
-            frame: parent.name
+            frame: parent.parent.name
 
             origin: mapOrigin
             parentframe: "sandtray"
 
             pixelscale: zoo.pixel2meter
         }
+    }
+
 
 }

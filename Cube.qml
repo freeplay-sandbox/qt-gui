@@ -5,7 +5,7 @@ import Ros 1.0
 
 Item {
         id:cube
-        width: 2*parent.height * physicalCubeSize / physicalMapWidth
+        width: 2*parent.height * zoo.physicalCubeSize / zoo.physicalMapWidth
         height: width
         rotation: Math.random() * 360
 
@@ -68,7 +68,7 @@ Item {
                 propagateComposedEvents: true
                 onPressed: {
                         mouse.accepted = false;
-                        zoo.pressedBody = cubeBody;
+                        zoo.pressedBody = body;
                 }
         }
 //   PinchArea {

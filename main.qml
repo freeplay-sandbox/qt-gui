@@ -27,7 +27,7 @@ Window {
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedHeight
 
-        property int nbCubes: 0
+        property int nbCubes: 40
 
         Image {
             id: map
@@ -103,18 +103,22 @@ Window {
             }
 
             property var target: null
+            property string draggedObject: ""
             origin: mapOrigin
             pixelscale: zoo.pixel2meter
 
             onPositionChanged: {
+
                 if (target === null) {
                     var obj = zoo.childAt(x, y);
                     if (obj.objectName === "interactive") {
-                        console.log("Touched object: " + obj.name);
+                        draggedObject = obj.name;
+                        console.log("ROS controller touched object: " + obj.name);
 
                         target = obj.body
 
                         externalJoint.maxForce = target.getMass() * 500;
+                        externalJoint.target = Qt.point(x,y);
                         externalJoint.bodyB = target;
                     }
 
@@ -130,7 +134,8 @@ Window {
                     interval: 2000
                     running: false
                     onTriggered: {
-                        console.log("Releasing ROS contact");
+                        console.log("Auto-releasing ROS contact with " + parent.draggedObject);
+                        parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
                     }

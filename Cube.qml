@@ -9,6 +9,8 @@ Item {
         height: width
         rotation: Math.random() * 360
 
+        objectName: "interactive"
+
         property string name: ""
         property string image: "res/cube.svg"
 
@@ -66,7 +68,7 @@ Item {
                 propagateComposedEvents: true
                 onPressed: {
                         mouse.accepted = false;
-                        pressedBody = cubeBody;
+                        zoo.pressedBody = cubeBody;
                 }
         }
 //   PinchArea {

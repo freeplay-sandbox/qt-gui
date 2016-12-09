@@ -14,6 +14,7 @@ Cube {
     width: scale * 2 * parent.height * zoo.physicalCubeSize / zoo.physicalMapWidth
     rotation: -30 + Math.random() * 60
 
+
     boundingbox:  Circle {
         id: circleShape
         radius: bbScale * character.width/2

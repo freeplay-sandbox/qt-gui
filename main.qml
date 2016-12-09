@@ -27,7 +27,7 @@ Window {
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedHeight
 
-        property int nbCubes: 40
+        property int nbCubes: 0
 
         Image {
             id: map
@@ -83,7 +83,7 @@ Window {
             }
         }
 
-        RosPositionController {
+        RosPose {
             id: roscontrol
 
             Rectangle {
@@ -234,6 +234,7 @@ Window {
                 friction: 1
                 restitution: 0.1
             }
+            //Component.onCompleted: footprints.targets.push(zebra)
         }
         Character {
             id: elephant
@@ -370,14 +371,20 @@ Window {
         }
 
 
+
+        FootprintsPublisher {
+            id:footprints
+            pixelscale: zoo.pixel2meter
+        }
+
         Rectangle {
-            id: debugButton
+            id: fullscreenButton
             x: 50
             y: 50
-            width: 120
+            width: 180
             height: 30
             Text {
-                text: debugDraw.visible ? "Debug view: on" : "Debug view: off"
+                text:  "Toggle fullscreen"
                 anchors.centerIn: parent
             }
             color: "#DEDEDE"
@@ -385,7 +392,28 @@ Window {
             radius: 5
             MouseArea {
                 anchors.fill: parent
-                onClicked: debugDraw.visible = !debugDraw.visible;
+                onClicked: (window.visibility === Window.FullScreen) ? window.visibility = Window.Windowed : window.visibility = Window.FullScreen;
+            }
+        }
+        Rectangle {
+            id: debugButton
+            x: 50
+            y: 100
+            width: 180
+            height: 30
+            Text {
+                text: debugDraw.visible ? "Physics debug: on" : "Physics debug: off"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    debugDraw.visible = !debugDraw.visible;
+            footprints.targets= [zebra,elephant,leopard,lion,giraffe,rhino,crocodile,hippo]
+            }
             }
         }
 

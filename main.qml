@@ -167,7 +167,11 @@ Window {
         RosPose {
             id: rostouch
 
+            x: childFocus.x
+            y: childFocus.y
+
             Image {
+                id:robot_hand
                source: "res/nao_hand.svg"
                y: - 5
                x: - 15
@@ -175,6 +179,7 @@ Window {
                fillMode: Image.PreserveAspectFit
                // tracks the position of the robot
                transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robot.y-rostouch.y, robot.x-rostouch.x))}
+               visible: false
 
             }
             //Rectangle {
@@ -196,6 +201,8 @@ Window {
 
                 // the playground is hidden, nothing to do
                 if(!zoo.visible) return;
+
+                robot_hand.visible=true;
 
                 if (target === null) {
                     var obj = zoo.childAt(x, y);
@@ -219,13 +226,14 @@ Window {
 
             Timer {
                 id: releasetimer
-                    interval: 2000
+                    interval: 1000
                     running: false
                     onTriggered: {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
+                        robot_hand.visible=false;
                     }
                 }
 

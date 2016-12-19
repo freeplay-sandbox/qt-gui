@@ -188,6 +188,9 @@ Window {
 
             onPositionChanged: {
 
+                // the playground is hidden, nothing to do
+                if(!zoo.visible) return;
+
                 if (target === null) {
                     var obj = zoo.childAt(x, y);
                     if (obj.objectName === "interactive") {
@@ -503,4 +506,57 @@ Window {
             visible: false
         }
     }
+
+    Image {
+        id: fiducialmarker
+        fillMode: Image.PreserveAspectFit
+        anchors.fill: parent
+        source: "res/709.png"
+        visible: false
+    }
+
+    MouseArea {
+        width:30
+        height:width
+        z: 100
+
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+
+        //Rectangle {
+        //    anchors.fill: parent
+        //    color: "red"
+        //}
+
+        property int clicks: 0
+
+        onClicked: {
+            clicks += 1;
+            if (clicks === 3) {
+                localising.signal();
+                zoo.visible = false;
+                window.color = "white";
+                fiducialmarker.visible = true;
+                clicks = 0;
+                restore.start();
+            }
+        }
+
+        Timer {
+            id: restore
+            interval: 5000; running: false; repeat: false
+            onTriggered: {
+                fiducialmarker.visible = false;
+                window.color = "black"
+                zoo.visible = true;
+            }
+
+        }
+
+        RosSignal {
+            id: localising
+            topic: "sandtray_localising"
+        }
+    }
+
 }

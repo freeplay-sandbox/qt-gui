@@ -27,7 +27,7 @@ Window {
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
-        property int nbCubes: 0
+        property int nbCubes: 10
 
         Image {
             id: map
@@ -44,6 +44,7 @@ Window {
                 y: map.y + (map.height - map.paintedHeight)/2
             }
         }
+
 
         property Body pressedBody: null
 
@@ -531,7 +532,16 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     debugDraw.visible = !debugDraw.visible;
-            footprints.targets= [zebra,elephant,leopard,lion,giraffe,rhino,crocodile,hippo]
+                    var targets= [zebra,elephant,leopard,lion,giraffe,rhino,crocodile,hippo,toychild1, toychild4];
+                    for (var childIdx=0; childIdx < zoo.children.length; childIdx++) {
+                        var child = zoo.children[childIdx];
+                        if("name" in child)
+                            if (child.name.substr(0,5) === "cube_") {
+                            targets.push(child);
+                            }
+                    }
+
+                    footprints.targets = targets;
             }
             }
         }

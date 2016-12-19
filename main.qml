@@ -94,7 +94,7 @@ Window {
                 anchors.centerIn: parent
                 width: 100
                 fillMode: Image.PreserveAspectFit
-                rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+rostouch.y, -robot.x+rostouch.x))
+                rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+robotFocus.y, -robot.x+robotFocus.x))
 
                 Drag.active: robotDragArea.drag.active
 
@@ -114,17 +114,62 @@ Window {
                 origin: mapOrigin
                 parentframe: "sandtray"
 
+                zoffset: -0.1
+
                 pixelscale: zoo.pixel2meter
             }
 
             x: window.width - robotImg.width
             y: window.height / 2 - robotImg.height / 2
         }
+        Item {
+            id: robotFocus
+            x: window.width/2
+            y: window.height/2
+            z:100
+
+            Rectangle {
+                anchors.centerIn: parent
+                width:30
+                height: width
+                radius: width/2
+                color: "#FF9955"
+
+                Drag.active: robotFocusDragArea.drag.active
+
+                MouseArea {
+                    id: robotFocusDragArea
+                    anchors.fill: parent
+                    drag.target: robotFocus
+                }
+                visible: zoo.showRobotChild
+
+            }
+        }
 
         Item {
             id: childFocus
             x: window.width/2
             y: window.height/2
+            z:100
+
+            Rectangle {
+                anchors.centerIn: parent
+                width:30
+                height: width
+                radius: width/2
+                color: "#995500"
+
+                Drag.active: childFocusDragArea.drag.active
+
+                MouseArea {
+                    id: childFocusDragArea
+                    anchors.fill: parent
+                    drag.target: childFocus
+                }
+                visible: zoo.showRobotChild
+
+            }
         }
 
         Item {

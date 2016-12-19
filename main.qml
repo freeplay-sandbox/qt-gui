@@ -23,9 +23,9 @@ Window {
 
         anchors.fill: parent
 
-        property double physicalMapWidth: 412 //mm
+        property double physicalMapWidth: 600 //mm
         property double physicalCubeSize: 30 //mm
-        property double pixel2meter: (physicalMapWidth / 1000) / map.paintedHeight
+        property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
         property int nbCubes: 0
 

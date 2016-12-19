@@ -136,7 +136,7 @@ Window {
                 anchors.centerIn: parent
                 width: 100
                 fillMode: Image.PreserveAspectFit
-                rotation: 180+180/Math.PI * (-Math.PI/2 + Math.atan2(-child.y+childFocus.y, -child.x+childFocus.x))
+                rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-child.y+childFocus.y, -child.x+childFocus.x))
 
                 Drag.active: childDragArea.drag.active
 

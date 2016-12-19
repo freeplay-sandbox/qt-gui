@@ -27,7 +27,7 @@ Window {
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
-        property int nbCubes: 10
+        property int nbCubes: 40
         property bool showRobotChild: false
 
         Image {
@@ -94,7 +94,7 @@ Window {
                 anchors.centerIn: parent
                 width: 100
                 fillMode: Image.PreserveAspectFit
-                rotation: 180+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+rostouch.y, -robot.x+rostouch.x))
+                rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+rostouch.y, -robot.x+rostouch.x))
 
                 Drag.active: robotDragArea.drag.active
 
@@ -109,7 +109,7 @@ Window {
             TFBroadcaster {
                 active: zoo.showRobotChild
                 target: robotImg
-                frame: "base_footprint"
+                frame: "odom"
 
                 origin: mapOrigin
                 parentframe: "sandtray"

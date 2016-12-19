@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="64.340729mm"
-   height="42.108936mm"
-   viewBox="0 0 227.97896 149.2049"
+   width="42.108936mm"
+   height="64.340729mm"
+   viewBox="0 0 149.20489 227.97897"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="220.42523"
-     inkscape:cy="103.53998"
+     inkscape:cx="183.0585"
+     inkscape:cy="140.90671"
      inkscape:document-units="px"
      inkscape:current-layer="g3356"
      showgrid="false"
@@ -36,9 +36,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-height="1016"
      inkscape:window-x="0"
-     inkscape:window-y="867"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -56,12 +56,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(310.96602,-121.08697)">
+     transform="translate(271.57899,-81.699927)">
     <g
        id="g3356">
       <g
          id="g3406"
-         transform="translate(343.45187,89.903582)">
+         transform="matrix(0,1,-1,0,-91.190709,736.11782)">
         <path
            sodipodi:nodetypes="sssssssss"
            inkscape:connector-curvature="0"

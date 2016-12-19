@@ -29,6 +29,7 @@ Window {
 
             property int nbCubes: 40
             property bool showRobotChild: false
+            property bool publishRobotChild: false
 
             Image {
                     id: map
@@ -88,13 +89,13 @@ Window {
             Item {
                     id:robot
                     z:100
+                    rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+robotFocus.y, -robot.x+robotFocus.x))
                     Image {
                             id: robotImg
                             source: "res/nao_head.svg"
                             anchors.centerIn: parent
                             width: 100
                             fillMode: Image.PreserveAspectFit
-                            rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+robotFocus.y, -robot.x+robotFocus.x))
 
                             Drag.active: robotDragArea.drag.active
 
@@ -107,8 +108,8 @@ Window {
                     }
 
                     TFBroadcaster {
-                            active: zoo.showRobotChild
-                            target: robotImg
+                            active: zoo.publishRobotChild
+                            target: parent
                             frame: "odom"
 
                             origin: mapOrigin
@@ -175,13 +176,13 @@ Window {
             Item {
                     id:child
                     z:100
+                    rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-child.y+childFocus.y, -child.x+childFocus.x))
                     Image {
                             id: childImg
                             source: "res/child_head.svg"
                             anchors.centerIn: parent
                             width: 100
                             fillMode: Image.PreserveAspectFit
-                            rotation: 90+180/Math.PI * (-Math.PI/2 + Math.atan2(-child.y+childFocus.y, -child.x+childFocus.x))
 
                             Drag.active: childDragArea.drag.active
 
@@ -194,8 +195,8 @@ Window {
                     }
 
                     TFBroadcaster {
-                            active: zoo.showRobotChild
-                            target: childImg
+                            active: zoo.publishRobotChild
+                            target: parent
                             frame: "child"
 
                             origin: mapOrigin
@@ -628,13 +629,31 @@ Window {
                             onClicked: {zoo.showRobotChild = !zoo.showRobotChild;}
                     }
             }
-
-            DebugDraw {
-                    id: debugDraw
-                    world: physicsWorld
-                    opacity: 0.75
-                    visible: false
+            Rectangle {
+                    id: robotPublisherButton
+                    x: 50
+                    y: 200
+                    width: 180
+                    height: 30
+                    Text {
+                            text: zoo.publishRobotChild ? "Stop publishing robot/child frames" : "Publish robot/child frames"
+                            anchors.centerIn: parent
+                    }
+                    color: "#DEDEDE"
+                    border.color: "#999"
+                    radius: 5
+                    MouseArea {
+                            anchors.fill: parent
+                            onClicked: {zoo.publishRobotChild = !zoo.publishRobotChild;}
+                    }
             }
+    }
+
+    DebugDraw {
+            id: debugDraw
+            world: physicsWorld
+            opacity: 0.75
+            visible: false
     }
 
     Image {

@@ -470,7 +470,7 @@ Window {
             id: toychild1
             name: "toychild1"
             image: "res/child_1.png"
-            scale:0.5
+            scale:0.75
             boundingbox: Polygon {
                 vertices: [
                     Qt.point(toychild1.origin.x + 93*toychild1.bbratio, toychild1.origin.y),
@@ -488,7 +488,7 @@ Window {
             id: toychild4
             name: "toychild4"
             image: "res/child_4.png"
-            scale:0.5
+            scale:0.7
             boundingbox: Polygon {
                 vertices: [
                     Qt.point(toychild4.origin.x + 93*toychild4.bbratio, toychild4.origin.y),

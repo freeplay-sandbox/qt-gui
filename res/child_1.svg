@@ -9,13 +9,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="66.10553mm"
-   height="40.355209mm"
-   viewBox="0 0 234.23219 142.99091"
+   width="94.275925mm"
+   height="46.02095mm"
+   viewBox="0 0 334.04855 163.06637"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="child_1.svg">
+   sodipodi:docname="child_1.svg"
+   inkscape:export-filename="/home/skadge/src/zoo-builder/res/child_1.png"
+   inkscape:export-xdpi="49"
+   inkscape:export-ydpi="49">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="137.46517"
-     inkscape:cy="138.80426"
+     inkscape:zoom="1.979899"
+     inkscape:cx="82.336124"
+     inkscape:cy="125.72263"
      inkscape:document-units="px"
      inkscape:current-layer="g3406"
      showgrid="false"
@@ -35,10 +38,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-width="2560"
+     inkscape:window-height="1330"
      inkscape:window-x="0"
-     inkscape:window-y="867"
+     inkscape:window-y="54"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -56,12 +59,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(314.95646,-121.08697)">
+     transform="translate(364.00078,-115.53081)">
     <g
        id="g3356">
       <g
          id="g3406"
          transform="translate(343.45187,89.903582)">
+        <path
+           style="fill:#3465a4;fill-opacity:1;stroke:#204a87;stroke-width:4.5999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m -375.71395,103.29779 c 0,20.81301 1.22104,39.65565 -30.18778,53.29504 -31.40881,13.6394 -86.59842,3.0138 -134.52665,3.0138 -47.92823,0 -103.11784,10.6256 -134.52664,-3.0138 -31.40883,-13.63939 -30.18779,-32.48203 -30.18779,-53.29504 0,-20.813007 -1.22104,-39.655649 30.18779,-53.295039 31.4088,-13.63939 86.59841,-22.075527 134.52664,-22.075527 47.92823,0 103.11784,8.436137 134.52665,22.075527 31.40882,13.63939 30.18778,32.482032 30.18778,53.295039 z"
+           id="path4141"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssss" />
         <path
            sodipodi:nodetypes="sssssssss"
            inkscape:connector-curvature="0"
@@ -72,7 +81,7 @@
            sodipodi:nodetypes="sssssssssssss"
            inkscape:connector-curvature="0"
            id="path3387"
-           d="m -541.2922,50.918044 c 15.902,0 42.05224,26.43657 55.79787,28.390915 13.74564,1.954344 15.08667,-20.573537 25.46317,-17.073868 10.37651,3.499669 18.76527,7.669745 24.5599,12.305717 5.79463,4.635973 8.99513,9.737843 8.99513,15.1011 l 0,53.865332 c 0,21.45304 -51.20804,26.7239 -114.81607,26.7239 -63.60814,0 -114.81613,-5.27086 -114.81613,-26.7239 l 0,-53.865332 c 0,-5.363257 33.20816,0.249159 39.0028,-4.386814 5.79461,-4.635973 -15.8243,-19.520334 -5.44778,-23.020003 10.37651,-3.499669 47.23681,15.456784 60.98246,13.502439 13.74564,-1.954344 4.37661,-24.819486 20.27865,-24.819486 z"
+           d="m -541.2922,50.918044 c 15.902,0 42.05224,26.43657 55.79787,28.390915 13.74564,1.954344 15.08667,-20.573537 25.46317,-17.073868 10.37651,3.499669 18.76527,7.669745 24.5599,12.305717 5.79463,4.635973 8.99513,9.737843 8.99513,15.1011 l 0,53.865332 c 0,21.45304 -52.72327,42.88634 -116.3313,42.88634 -63.60814,0 -113.3009,-21.4333 -113.3009,-42.88634 l 0,-53.865332 c 0,-5.363257 33.20816,0.249159 39.0028,-4.386814 5.79461,-4.635973 -15.8243,-19.520334 -5.44778,-23.020003 10.37651,-3.499669 47.23681,15.456784 60.98246,13.502439 13.74564,-1.954344 4.37661,-24.819486 20.27865,-24.819486 z"
            style="fill:#fdb643;fill-opacity:1;stroke:#d58303;stroke-width:4.5999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <path
            style="fill:#ffffff;fill-opacity:1;stroke:#888a85;stroke-width:4.5999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

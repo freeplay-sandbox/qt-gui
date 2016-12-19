@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="51.686825mm"
-   height="50.165768mm"
-   viewBox="0 0 183.14229 177.75273"
+   width="89.714417mm"
+   height="50.165764mm"
+   viewBox="0 0 317.88572 177.75272"
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="43.580629"
-     inkscape:cy="192.70597"
+     inkscape:zoom="1.979899"
+     inkscape:cx="105.93445"
+     inkscape:cy="123.02968"
      inkscape:document-units="px"
      inkscape:current-layer="g3406"
      showgrid="false"
@@ -35,10 +35,10 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-width="2560"
+     inkscape:window-height="1330"
      inkscape:window-x="0"
-     inkscape:window-y="867"
+     inkscape:window-y="54"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -56,12 +56,18 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(289.19757,-121.08697)">
+     transform="translate(350.15563,-121.08697)">
     <g
        id="g3356">
       <g
          id="g3406"
          transform="translate(343.45187,89.903582)">
+        <path
+           style="fill:#4e9a06;fill-opacity:1;stroke:#555753;stroke-width:4.5999999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m -378.03113,110.42575 c 0,20.81301 1.16114,39.65565 -28.70676,53.29505 -29.86789,13.6394 -82.34988,3.0138 -127.92675,3.0138 -45.57686,0 -98.05885,10.6256 -127.92673,-3.0138 -29.86792,-13.6394 -28.70678,-32.48204 -28.70678,-53.29505 0,-20.81301 -1.16114,-39.655653 28.70678,-53.295044 29.86788,-13.63939 82.34987,-22.075528 127.92673,-22.075528 45.57687,0 98.05886,8.436138 127.92675,22.075528 29.8679,13.639391 28.70676,32.482034 28.70676,53.295044 z"
+           id="path4141"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssss" />
         <path
            sodipodi:nodetypes="sssssssss"
            inkscape:connector-curvature="0"

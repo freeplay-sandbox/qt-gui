@@ -16,5 +16,17 @@
         <file>res/sprite-rhino.png</file>
         <file>res/sprite-zebra.png</file>
         <file>Character.qml</file>
+        <file>res/709.png</file>
+        <file>res/nao_hand.svg</file>
+        <file>res/nao_head.svg</file>
+        <file>res/child_head.svg</file>
+        <file>res/child_1.svg</file>
+        <file>res/child_2.svg</file>
+        <file>res/child_3.svg</file>
+        <file>res/child_4.svg</file>
+        <file>res/child_5.svg</file>
+        <file>res/child_4.png</file>
+        <file>res/child_5.png</file>
+        <file>res/child_1.png</file>
     </qresource>
 </RCC>

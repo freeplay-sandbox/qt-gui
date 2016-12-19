@@ -15,7 +15,7 @@ Window {
     //height: Screen.height
     width:800
     height: 600
-    color: "#000000"
+    color: "black"
     title: qsTr("Zoo Builder")
 
     Item {
@@ -83,25 +83,104 @@ Window {
             }
         }
 
-        RosPose {
-            id: roscontrol
-
-            Rectangle {
+        Item {
+            id:robot
+            z:100
+            Image {
+                id: robotImg
+                source: "res/nao_head.svg"
                 anchors.centerIn: parent
-                width: 30
-                height: width
-                radius: width/2
-                border.color: "#FF330022"
-                color: "#00000000"
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: 5
-                    height: width
-                    radius: width/2
-                    color: parent.border.color
+                width: 100
+                fillMode: Image.PreserveAspectFit
+                rotation: 180+180/Math.PI * (-Math.PI/2 + Math.atan2(-robot.y+rostouch.y, -robot.x+rostouch.x))
+
+                Drag.active: robotDragArea.drag.active
+
+                MouseArea {
+                    id: robotDragArea
+                    anchors.fill: parent
+                    drag.target: robot
                 }
             }
 
+            TFBroadcaster {
+                target: robotImg
+                frame: "base_footprint"
+
+                origin: mapOrigin
+                parentframe: "sandtray"
+
+                pixelscale: zoo.pixel2meter
+            }
+
+            x: window.width - robotImg.width
+            y: window.height / 2 - robotImg.height / 2
+        }
+
+        Item {
+            id: childFocus
+            x: window.width/2
+            y: window.height/2
+        }
+
+        Item {
+            id:child
+            z:100
+            Image {
+                id: childImg
+                source: "res/child_head.svg"
+                anchors.centerIn: parent
+                width: 100
+                fillMode: Image.PreserveAspectFit
+                rotation: 180+180/Math.PI * (-Math.PI/2 + Math.atan2(-child.y+childFocus.y, -child.x+childFocus.x))
+
+                Drag.active: childDragArea.drag.active
+
+                MouseArea {
+                    id: childDragArea
+                    anchors.fill: parent
+                    drag.target: child
+                }
+            }
+
+            TFBroadcaster {
+                target: childImg
+                frame: "child"
+
+                origin: mapOrigin
+                parentframe: "sandtray"
+
+                pixelscale: zoo.pixel2meter
+            }
+
+
+            x: window.width/2 - childImg.width /2
+            y: window.height - childImg.height
+        }
+
+        RosPose {
+            id: rostouch
+
+            Image {
+               source: "res/nao_hand.svg"
+               y: - 5
+               x: - 15
+               width: 60
+               fillMode: Image.PreserveAspectFit
+               // tracks the position of the robot
+               transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robot.y-rostouch.y, robot.x-rostouch.x))}
+
+            }
+            //Rectangle {
+            //    anchors.centerIn: parent
+            //    width: 5
+            //    height: width
+            //    radius: width/2
+            //    color: "red"
+            //    z:1
+            //}
+
+            z:100
             property var target: null
             property string draggedObject: ""
             origin: mapOrigin

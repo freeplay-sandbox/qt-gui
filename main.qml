@@ -28,6 +28,7 @@ Window {
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
         property int nbCubes: 10
+        property bool showRobotChild: false
 
         Image {
             id: map
@@ -102,9 +103,11 @@ Window {
                     anchors.fill: parent
                     drag.target: robot
                 }
+                visible:zoo.showRobotChild
             }
 
             TFBroadcaster {
+                active: zoo.showRobotChild
                 target: robotImg
                 frame: "base_footprint"
 
@@ -142,9 +145,11 @@ Window {
                     anchors.fill: parent
                     drag.target: child
                 }
+                visible: zoo.showRobotChild
             }
 
             TFBroadcaster {
+                active: zoo.showRobotChild
                 target: childImg
                 frame: "child"
 
@@ -543,6 +548,24 @@ Window {
 
                     footprints.targets = targets;
             }
+            }
+        }
+        Rectangle {
+            id: robotButton
+            x: 50
+            y: 150
+            width: 180
+            height: 30
+            Text {
+                text: zoo.showRobotChild ? "Hide robot/child" : "Control robot/child"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {zoo.showRobotChild = !zoo.showRobotChild;}
             }
         }
 

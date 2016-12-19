@@ -15,15 +15,18 @@ Item {
         property string image: "res/cube.svg"
 
         property var boundingbox:
-           Box {
-                        width: image.paintedWidth
-                        height: image.paintedHeight
-                        x: cube.width/2 - width/2
-                        y: cube.height/2 - height/2
-                        density: 1
-                        restitution: 0.1
-                        friction: 1
-                }
+            Polygon {
+                id:bbpoly
+                vertices: [
+                    Qt.point(origin.x, origin.y),
+                    Qt.point(origin.x + image.sourceSize.width * bbratio, origin.y),
+                    Qt.point(origin.x + image.sourceSize.width * bbratio, origin.y + image.sourceSize.height * bbratio),
+                    Qt.point(origin.x, origin.y + image.sourceSize.height * bbratio),
+                ]
+                density: 1
+                friction: 1
+                restitution: 0.1
+            }
 
         property alias body: cubeBody
         property double bbratio: 1 // set later (cf below) once paintedWidth is known
@@ -101,6 +104,5 @@ Item {
             pixelscale: zoo.pixel2meter
         }
     }
-
 
 }

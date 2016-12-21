@@ -658,8 +658,11 @@ Window {
 
     Image {
             id: fiducialmarker
+            width: 300
+            anchors.right:parent.right
+            anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
-            anchors.fill: parent
+            //anchors.fill: parent
             source: "res/709.png"
             visible: false
     }

@@ -129,13 +129,22 @@ Window {
                             origin: mapOrigin
                             parentframe: "sandtray"
 
-                            zoffset: -0.1
+                            //zoffset: -0.15 // on boxes, next to sandtray
+                            zoffset: -0.25 // on the ground, next to sandtray
 
                             pixelscale: zoo.pixel2meter
                     }
 
-                    //x: window.width - robotImg.width
-                    //y: window.height / 2 - robotImg.height / 2
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: 0.4 * 2 / zoo.pixel2meter
+                        height: width
+                        radius: width/2
+                        color: "#55FFAA44"
+                        visible: zoo.showRobotChild
+                    }
+
+
 
             }
             Item {
@@ -234,9 +243,9 @@ Window {
                     Image {
                             id:robot_hand
                             source: "res/nao_hand.svg"
-                            y: - 5
-                            x: - 15
-                            width: 60
+                            y: - 10
+                            x: - 30
+                            width: 120
                             fillMode: Image.PreserveAspectFit
                             // tracks the position of the robot
                             transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robot.y-rostouch.y, robot.x-rostouch.x))}
@@ -641,7 +650,13 @@ Window {
                     radius: 5
                     MouseArea {
                             anchors.fill: parent
-                            onClicked: {zoo.showRobotChild = !zoo.showRobotChild;}
+                            onClicked: {
+                                zoo.showRobotChild = !zoo.showRobotChild;
+                                if (zoo.showRobotChild) {
+                                    robot.x=window.width - robotImg.width;
+                                    robot.y=window.height / 2 - robotImg.height / 2;
+                                }
+                            }
                     }
             }
             Rectangle {

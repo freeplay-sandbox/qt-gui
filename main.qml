@@ -15,6 +15,20 @@ Window {
     //height: Screen.height
     width:800
     height: 600
+
+    property int prevWidth:800
+    property int prevHeight:600
+
+    onWidthChanged: {
+        robot.x = robot.x * width/prevWidth;
+        prevWidth=width;
+    }
+    onHeightChanged: {
+        robot.y = robot.y * height/prevHeight;
+        prevHeight=height;
+
+    }
+
     color: "black"
     title: qsTr("Zoo Builder")
 
@@ -120,8 +134,9 @@ Window {
                             pixelscale: zoo.pixel2meter
                     }
 
-                    x: window.width - robotImg.width
-                    y: window.height / 2 - robotImg.height / 2
+                    //x: window.width - robotImg.width
+                    //y: window.height / 2 - robotImg.height / 2
+
             }
             Item {
                     id: robotFocus

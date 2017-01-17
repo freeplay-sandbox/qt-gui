@@ -6,8 +6,6 @@ TouchPoint {
 
     property var touchedItem: null
 
-    property var activeItems: []
-
     property MouseJoint joint: MouseJoint {
     bodyA: anchor
     dampingRatio: 1
@@ -26,22 +24,11 @@ TouchPoint {
         if (pressed) {
 
             // find out whether we touched an item
-            for(var i=0;i<activeItems.length; i++) {
-                var item = activeItems[i];
-
-                if (item.isIn(x,y)) {
-                    console.log("touching " + item.name)
-
-                    touchedItem=item;
-                    break;
-                }
-
-            }
-
-            if (touchedItem != null) {
-                joint.maxForce = touchedItem.body.getMass() * 500;
+            var obj = zoo.childAt(x, y);
+            if (obj.objectName === "interactive") {
+                joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);
-                joint.bodyB = touchedItem.body;
+                joint.bodyB = obj.body;
             }
 
         }

@@ -45,10 +45,6 @@ Window {
         property bool showRobotChild: false
         property bool publishRobotChild: false
 
-        property var activeItems: []
-
-        Component.onCompleted: activeItems=getActiveItems()
-
         Image {
             id: map
             fillMode: Image.PreserveAspectFit
@@ -65,14 +61,6 @@ Window {
             }
         }
 
-
-        MouseJoint {
-            id: touchJoint2
-            bodyA: anchor
-            dampingRatio: 1
-            maxForce: 1
-        }
-
         MouseJoint {
             id: externalJoint
             bodyA: anchor
@@ -85,13 +73,8 @@ Window {
             anchors.fill: parent
 
             touchPoints: [
-                TouchJoint {
-                    activeItems: zoo.activeItems
-                },
-                TouchJoint {
-                    activeItems: zoo.activeItems
-                }
-
+                TouchJoint {},
+                TouchJoint {}
             ]
         }
 

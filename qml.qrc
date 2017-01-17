@@ -4,7 +4,6 @@
         <file>res/map.svg</file>
         <file>main.cpp</file>
         <file>Cube.qml</file>
-        <file>zoo.js</file>
         <file>res/cube.svg</file>
         <file>RectangleBoxBody.qml</file>
         <file>res/sprite-crocodile.png</file>
@@ -28,5 +27,6 @@
         <file>res/child_4.png</file>
         <file>res/child_5.png</file>
         <file>res/child_1.png</file>
+        <file>TouchJoint.qml</file>
     </qresource>
 </RCC>

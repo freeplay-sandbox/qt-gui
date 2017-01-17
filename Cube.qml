@@ -66,14 +66,6 @@ Item {
                 linearDamping: 5
         }
 
-        MouseArea {
-                anchors.fill: parent
-                propagateComposedEvents: true
-                onPressed: {
-                        mouse.accepted = false;
-                        zoo.pressedBody = body;
-                }
-        }
 //   PinchArea {
 //           anchors.fill: parent
 //           pinch.target: parent
@@ -103,6 +95,10 @@ Item {
 
             pixelscale: zoo.pixel2meter
         }
+    }
+
+    function isIn(tx, ty) {
+        return (tx > x) && (tx < x + width) && (ty > y) && (ty < y + height);
     }
 
 }

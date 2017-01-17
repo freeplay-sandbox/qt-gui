@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Window 2.2
+import QtGraphicalEffects 1.0
 
 import Box2D 2.0
 
@@ -172,6 +173,35 @@ Window {
                 }
                 visible: zoo.showRobotChild
 
+            }
+        }
+
+        RosPose {
+            id: gazeFocus
+            x: window.width/2
+            y: window.height/2
+            z:100
+
+            visible: false
+
+            topic: "/gazepose_on_sandtray"
+            origin: mapOrigin
+            pixelscale: zoo.pixel2meter
+
+            Rectangle {
+                anchors.centerIn: parent
+                width:500
+                height: width
+                color: "transparent"
+
+                RadialGradient {
+                    anchors.fill: parent
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: Qt.rgba(1,0.5,0,0.5) }
+                        GradientStop { position: 0.3; color: Qt.rgba(1,0.5,0,0.2) }
+                        GradientStop { position: 0.5; color: "#00000000" }
+                    }
+                }
             }
         }
 
@@ -558,6 +588,7 @@ Window {
             id:footprints
             pixelscale: zoo.pixel2meter
 
+            // wait a bit before publishing the footprints to leave Box2D the time to settle
             Timer {
                 interval: 1000; running: true; repeat: false
                 onTriggered: parent.targets=zoo.getActiveItems()
@@ -663,6 +694,26 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {zoo.publishRobotChild = !zoo.publishRobotChild;}
+            }
+        }
+        Rectangle {
+            id: gazeButton
+            x: 50
+            y: 250
+            width: 180
+            height: 30
+            Text {
+                text: gazeFocus.visible ? "Hide gaze" : "Show gaze"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gazeFocus.visible = !gazeFocus.visible;
+                }
             }
         }
     }

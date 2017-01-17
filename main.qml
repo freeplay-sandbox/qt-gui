@@ -41,13 +41,13 @@ Window {
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
-        property int nbCubes: 0
+        property int nbCubes: 40
         property bool showRobotChild: false
         property bool publishRobotChild: false
 
         property var activeItems: []
 
-        Component.onCompleted: activeItems=getActiveItems();
+        Component.onCompleted: activeItems=getActiveItems()
 
         Image {
             id: map
@@ -395,7 +395,6 @@ Window {
                 friction: 1
                 restitution: 0.1
             }
-            //Component.onCompleted: footprints.targets.push(zebra)
         }
         Character {
             id: elephant
@@ -573,6 +572,11 @@ Window {
         FootprintsPublisher {
             id:footprints
             pixelscale: zoo.pixel2meter
+
+            Timer {
+                interval: 1000; running: true; repeat: false
+                onTriggered: parent.targets=zoo.getActiveItems()
+            }
         }
 
         function getActiveItems() {
@@ -631,7 +635,6 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     debugDraw.visible = !debugDraw.visible;
-                    footprints.targets = zoo.getActiveItems();
                 }
             }
         }

@@ -218,6 +218,8 @@ Window {
             x: childFocus.x
             y: childFocus.y
 
+            topic: "poses"
+
             Image {
                 id:robot_hand
                 source: "res/nao_hand.svg"

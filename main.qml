@@ -60,6 +60,16 @@ Window {
                 x: map.x + (map.width - map.paintedWidth)/2
                 y: map.y + (map.height - map.paintedHeight)/2
             }
+
+            ImagePublisher {
+                id: mapPublisher
+                target: parent
+                topic: "/playground/image"
+                frame: "/sandtray"
+                pixelscale: zoo.pixel2meter
+            }
+
+            onPaintedGeometryChanged: mapPublisher.publish();
         }
 
         MouseJoint {

@@ -207,7 +207,7 @@ Window {
             }
             Rectangle {
                 anchors.centerIn: parent
-                width: parent.zvalue / zoo.pixel2meter
+                width: parent.zvalue * 2 / zoo.pixel2meter
                 height: width
                 radius: width/2
                 color: "transparent"

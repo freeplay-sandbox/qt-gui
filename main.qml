@@ -200,18 +200,18 @@ Window {
 
             Rectangle {
                 anchors.centerIn: parent
-                width:500
+                width: 10
                 height: width
+                radius: width/2
+                color: "red"
+            }
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.zvalue / zoo.pixel2meter
+                height: width
+                radius: width/2
                 color: "transparent"
-
-                RadialGradient {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.0; color: Qt.rgba(1,0.5,0,0.5) }
-                        GradientStop { position: 0.3; color: Qt.rgba(1,0.5,0,0.2) }
-                        GradientStop { position: 0.5; color: "#00000000" }
-                    }
-                }
+                border.color: "orange"
             }
         }
 

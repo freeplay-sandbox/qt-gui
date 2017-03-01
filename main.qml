@@ -38,11 +38,12 @@ Window {
 
         anchors.fill: parent
 
-        property double physicalMapWidth: 600 //mm
+        //property double physicalMapWidth: 553 //mm (desktop acer monitor)
+        property double physicalMapWidth: 600 //mm (sandtray)
         property double physicalCubeSize: 30 //mm
         property double pixel2meter: (physicalMapWidth / 1000) / map.paintedWidth
 
-        property int nbCubes: 40
+        property int nbCubes: 0
         property bool showRobotChild: false
         property bool publishRobotChild: false
 
@@ -64,7 +65,7 @@ Window {
             ImagePublisher {
                 id: mapPublisher
                 target: parent
-                topic: "/playground/image"
+                topic: "/sandbox/image"
                 frame: "/sandtray"
                 pixelscale: zoo.pixel2meter
             }

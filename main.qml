@@ -86,6 +86,10 @@ Window {
 
             touchPoints: [
                 TouchJoint {},
+                TouchJoint {},
+                TouchJoint {},
+                TouchJoint {},
+                TouchJoint {},
                 TouchJoint {}
             ]
         }

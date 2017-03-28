@@ -649,6 +649,30 @@ Window {
                 onClicked: (window.visibility === Window.FullScreen) ? window.visibility = Window.Windowed : window.visibility = Window.FullScreen;
             }
         }
+
+        Rectangle {
+            id: visualAttentionButton
+            x: 250
+            y: 50
+            width: 250
+            height: 30
+            Text {
+                text:  "Start visual target tracking"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    zoo.visible = false;
+                    debugToolbar.visible = false;
+                    visualtracking.visible = true;
+                    visualtracking.start();
+                }
+            }
+        }
         Rectangle {
             id: debugButton
             x: 50
@@ -748,6 +772,11 @@ Window {
         fillMode: Image.PreserveAspectFit
         //anchors.fill: parent
         source: "res/709.png"
+        visible: false
+    }
+
+    VisualAttentionCalibration {
+        id: visualtracking
         visible: false
     }
 

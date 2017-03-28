@@ -28,5 +28,7 @@
         <file>res/child_5.png</file>
         <file>res/child_1.png</file>
         <file>TouchJoint.qml</file>
+        <file>VisualAttentionCalibration.qml</file>
+        <file>res/rocket.svg</file>
     </qresource>
 </RCC>

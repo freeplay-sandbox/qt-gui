@@ -199,7 +199,7 @@ Window {
 
             visible: false
 
-            topic: "/gazepose_on_sandtray"
+            topic: "/gazepose_0"
             origin: mapOrigin
             pixelscale: zoo.pixel2meter
 

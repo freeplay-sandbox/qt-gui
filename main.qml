@@ -766,13 +766,26 @@ Window {
 
     Image {
         id: fiducialmarker
-        width: 300
-        anchors.right:parent.right
+        width: 0.10 / zoo.pixel2meter // 10 centimeters
+        anchors.left:parent.left
+        anchors.leftMargin: 50
         anchors.verticalCenter: parent.verticalCenter
         fillMode: Image.PreserveAspectFit
         //anchors.fill: parent
         source: "res/709.png"
         visible: false
+
+        TFBroadcaster {
+            active: parent.visible
+            target: parent
+            frame: "fiducial_marker"
+
+            origin: mapOrigin
+            parentframe: "sandtray"
+
+            pixelscale: zoo.pixel2meter
+        }
+
     }
 
     VisualAttentionCalibration {

@@ -30,5 +30,6 @@
         <file>TouchJoint.qml</file>
         <file>VisualAttentionCalibration.qml</file>
         <file>res/rocket.svg</file>
+        <file>res/alternate_rocket.svg</file>
     </qresource>
 </RCC>

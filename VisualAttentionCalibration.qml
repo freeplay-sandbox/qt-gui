@@ -11,6 +11,7 @@ Item {
     function start() {
         calibratingvisualfocus.signal();
         visualtarget_animation.start();
+        rocket_color_animation.start();
     }
 
     RosSignal {
@@ -28,6 +29,23 @@ Item {
             fillMode: Image.PreserveAspectFit
             source: "res/rocket.svg"
 
+            Image {
+                id: alternate_rocket
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "res/alternate_rocket.svg"
+                opacity: 0
+
+
+                PropertyAnimation {
+                    id: rocket_color_animation
+                    running:false
+                    target: alternate_rocket
+                    property: "opacity"
+                    duration: 30000
+                    to: 1
+                }
+            }
 
             Item {
                 id: imageOrigin
@@ -46,12 +64,14 @@ Item {
                     pixelscale: zoo.pixel2meter
                 }
 
+                /*
                 Rectangle {
                     color:"blue"
                     width: 5
                     height: 5
                     radius: 2
                 }
+                */
             }
         }
 

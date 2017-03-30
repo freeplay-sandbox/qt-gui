@@ -15,7 +15,6 @@
         <file>res/sprite-rhino.png</file>
         <file>res/sprite-zebra.png</file>
         <file>Character.qml</file>
-        <file>res/709.png</file>
         <file>res/nao_hand.svg</file>
         <file>res/nao_head.svg</file>
         <file>res/child_head.svg</file>
@@ -31,5 +30,6 @@
         <file>VisualAttentionCalibration.qml</file>
         <file>res/rocket.svg</file>
         <file>res/alternate_rocket.svg</file>
+        <file>res/tags/markers.svg</file>
     </qresource>
 </RCC>

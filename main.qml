@@ -766,25 +766,15 @@ Window {
 
     Image {
         id: fiducialmarker
-        width: 0.10 / zoo.pixel2meter // 10 centimeters
-        anchors.left:parent.left
-        anchors.leftMargin: 50
-        anchors.verticalCenter: parent.verticalCenter
-        fillMode: Image.PreserveAspectFit
-        //anchors.fill: parent
-        source: "res/709.png"
+        // set the actual size of the SVG page
+        width: 0.60 / zoo.pixel2meter
+        height: 0.33 / zoo.pixel2meter
+        // make sure the image is in the corner ie, the sandtray origin
+        x: 0
+        y: 0
+        fillMode: Image.PreserveAspectCrop
+        source: "res/tags/markers.svg"
         visible: false
-
-        TFBroadcaster {
-            active: parent.visible
-            target: parent
-            frame: "fiducial_marker"
-
-            origin: mapOrigin
-            parentframe: "sandtray"
-
-            pixelscale: zoo.pixel2meter
-        }
 
     }
 

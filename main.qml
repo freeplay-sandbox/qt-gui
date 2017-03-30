@@ -161,8 +161,19 @@ Window {
                     anchors.fill: parent
                     drag.target: robotFocus
                 }
+
                 visible: zoo.showRobotChild
 
+                TFBroadcaster {
+                    active: parent.visible
+                    target: parent
+                    frame: "robot_focus"
+
+                    origin: mapOrigin
+                    parentframe: "sandtray"
+
+                    pixelscale: zoo.pixel2meter
+                }
             }
         }
 

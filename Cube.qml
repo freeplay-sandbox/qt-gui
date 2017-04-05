@@ -91,7 +91,7 @@ Item {
             frame: parent.parent.name
 
             origin: mapOrigin
-            parentframe: "sandtray"
+            parentframe: mapOrigin.name
 
             pixelscale: zoo.pixel2meter
         }

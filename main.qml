@@ -57,6 +57,7 @@ Window {
                 // this item sticks to the 'visual' origin of the map, taking into account
                 // possible margins appearing when resizing
                 id: mapOrigin
+                property string name: "sandtray"
                 rotation: map.rotation
                 x: map.x + (map.width - map.paintedWidth)/2
                 y: map.y + (map.height - map.paintedHeight)/2
@@ -66,7 +67,7 @@ Window {
                 id: mapPublisher
                 target: parent
                 topic: "/sandbox/image"
-                frame: "/sandtray"
+                frame: mapOrigin.name
                 pixelscale: zoo.pixel2meter
             }
 
@@ -121,7 +122,7 @@ Window {
                 frame: "odom"
 
                 origin: mapOrigin
-                parentframe: "sandtray"
+                parentframe: mapOrigin.name
 
                 //zoffset: -0.15 // on boxes, next to sandtray
                 zoffset: -0.25 // on the ground, next to sandtray
@@ -143,7 +144,7 @@ Window {
 
             frame: "arm_reach"
             origin: mapOrigin
-            parentframe: "sandtray"
+            parentframe: mapOrigin.name
             pixelscale: zoo.pixel2meter
 
             Rectangle {
@@ -191,7 +192,7 @@ Window {
                     frame: "robot_focus"
 
                     origin: mapOrigin
-                    parentframe: "sandtray"
+                    parentframe: mapOrigin.name
 
                     pixelscale: zoo.pixel2meter
                 }
@@ -279,7 +280,7 @@ Window {
                 frame: "child"
 
                 origin: mapOrigin
-                parentframe: "sandtray"
+                parentframe: mapOrigin.name
 
                 pixelscale: zoo.pixel2meter
             }

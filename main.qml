@@ -112,7 +112,7 @@ Window {
                     anchors.fill: parent
                     drag.target: robot
                 }
-                visible:zoo.showRobotChild
+                visible:zoo.publishRobotChild
             }
 
             TFBroadcaster {
@@ -129,17 +129,38 @@ Window {
                 pixelscale: zoo.pixel2meter
             }
 
+
+
+
+        }
+        TFListener {
+            id: robotArmReach
+            x: window.width/2
+            y: window.height/2
+            z:100
+
+            visible: zoo.showRobotChild
+
+            frame: "arm_reach"
+            origin: mapOrigin
+            parentframe: "sandtray"
+            pixelscale: zoo.pixel2meter
+
             Rectangle {
                 anchors.centerIn: parent
-                width: 0.4 * 2 / zoo.pixel2meter
+                width: 10
+                height: width
+                radius: width/2
+                color: "red"
+            }
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.zvalue * 2 / zoo.pixel2meter
                 height: width
                 radius: width/2
                 color: "#55FFAA44"
-                visible: zoo.showRobotChild
             }
-
-
-
         }
         Item {
             id: robotFocus
@@ -152,7 +173,7 @@ Window {
                 width:30
                 height: width
                 radius: width/2
-                color: "#FF9955"
+                color: "#FF3333"
 
                 Drag.active: robotFocusDragArea.drag.active
 
@@ -197,7 +218,7 @@ Window {
                     anchors.fill: parent
                     drag.target: childFocus
                 }
-                visible: zoo.showRobotChild
+                visible: zoo.publishRobotChild
 
             }
         }
@@ -249,7 +270,7 @@ Window {
                     anchors.fill: parent
                     drag.target: child
                 }
-                visible: zoo.showRobotChild
+                visible: zoo.publishRobotChild
             }
 
             TFBroadcaster {
@@ -284,7 +305,7 @@ Window {
                 width: 120
                 fillMode: Image.PreserveAspectFit
                 // tracks the position of the robot
-                transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robot.y-rostouch.y, robot.x-rostouch.x))}
+                transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robotArmReach.y-rostouch.y, robotArmReach.x-rostouch.x))}
                 visible: false
 
             }

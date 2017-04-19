@@ -5,7 +5,7 @@ import Ros 1.0
 
 Item {
         id:cube
-        width: 2*parent.height * zoo.physicalCubeSize / zoo.physicalMapWidth
+        width: 2*parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
         height: width
         rotation: Math.random() * 360
 
@@ -93,7 +93,7 @@ Item {
             origin: mapOrigin
             parentframe: mapOrigin.name
 
-            pixelscale: zoo.pixel2meter
+            pixelscale: sandbox.pixel2meter
         }
     }
 

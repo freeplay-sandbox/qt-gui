@@ -24,7 +24,7 @@ TouchPoint {
         if (pressed) {
 
             // find out whether we touched an item
-            var obj = zoo.childAt(x, y);
+            var obj = interactiveitems.childAt(x, y);
             if (obj.objectName === "interactive") {
                 joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);

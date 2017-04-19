@@ -11,7 +11,7 @@ Cube {
     x: 0.1 * parent.width + Math.random() * 0.8 * parent.width
     y: 0.1 * parent.height + Math.random() * 0.8 * parent.height
 
-    width: scale * 2 * parent.height * zoo.physicalCubeSize / zoo.physicalMapWidth
+    width: scale * 2 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     rotation: -30 + Math.random() * 60
 
 

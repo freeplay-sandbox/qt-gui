@@ -31,5 +31,9 @@
         <file>res/rocket.svg</file>
         <file>res/alternate_rocket.svg</file>
         <file>res/tags/markers.svg</file>
+        <file>DrawingArea.qml</file>
+        <file>ColorSample.qml</file>
+        <file>res/ok.svg</file>
+        <file>res/paint-brush.svg</file>
     </qresource>
 </RCC>

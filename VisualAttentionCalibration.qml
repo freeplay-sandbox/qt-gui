@@ -61,7 +61,7 @@ Item {
                     origin: mapOrigin
                     parentframe: "sandtray"
 
-                    pixelscale: zoo.pixel2meter
+                    pixelscale: sandbox.pixel2meter
                 }
 
                 /*

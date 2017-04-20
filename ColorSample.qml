@@ -4,7 +4,7 @@ Rectangle {
 
     id: colorsampler
 
-    width: 50
+    width: 60
     height: width
 
     property bool selected: false

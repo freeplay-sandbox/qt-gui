@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 
@@ -11,7 +11,7 @@ Window {
     id: window
 
     visible: true
-    //visibility: Window.FullScreen
+    visibility: Window.FullScreen
     //width: Screen.width
     //height: Screen.height
     width:800
@@ -66,38 +66,9 @@ Window {
             anchors.fill: parent
 
 
-            property int nbCubes: 0
+            property int nbCubes: 40
             property bool showRobotChild: false
             property bool publishRobotChild: false
-
-            visible: opacity === 0 ? false : true
-
-            //        Image {
-            //            id: map
-            //            fillMode: Image.PreserveAspectFit
-            //            anchors.fill: parent
-            //            source: "res/map.svg"
-            //
-            //            Item {
-            //                // this item sticks to the 'visual' origin of the map, taking into account
-            //                // possible margins appearing when resizing
-            //                id: mapOrigin
-            //                property string name: "sandtray"
-            //                rotation: map.rotation
-            //                x: map.x + (map.width - map.paintedWidth)/2
-            //                y: map.y + (map.height - map.paintedHeight)/2
-            //            }
-            //
-            //            ImagePublisher {
-            //                id: mapPublisher
-            //                target: parent
-            //                topic: "/sandbox/image"
-            //                frame: mapOrigin.name
-            //                pixelscale: sandbox.pixel2meter
-            //            }
-            //
-            //            onPaintedGeometryChanged: mapPublisher.publish();
-            //        }
 
             Behavior on opacity {
                 NumberAnimation {
@@ -115,6 +86,8 @@ Window {
             MultiPointTouchArea {
                 id: mouseArea
                 anchors.fill: parent
+
+                enabled: parent.opacity < 0.5 ? false : true
 
                 touchPoints: [
                     TouchJoint {},
@@ -692,10 +665,11 @@ Window {
     Image {
         id: drawModeButton
         source: "res/paint-brush.svg"
-        width: 70
+        width: 80
         height: width
+        rotation: -90
         anchors.verticalCenter: parent.verticalCenter
-        x: 20
+        x: 30
         visible: opacity === 0 ? false : true
 
         Behavior on opacity {
@@ -707,7 +681,7 @@ Window {
         MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    interactiveitems.opacity = 0;
+                    interactiveitems.opacity = 0.4;
                     drawModeButton.opacity = 0;
                     drawingarea.drawEnabled = true;
 

@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.2
 
 import Ros 1.0
 
@@ -99,8 +99,9 @@ Item {
 
             source: "res/ok.svg"
 
-            width: 50
+            width: 60
             height: width
+            rotation: -90
 
             MouseArea {
                 anchors.fill: parent

@@ -233,7 +233,7 @@ Window {
                 }
             }
 
-            RosPose {
+            RosPoseSubscriber {
                 id: gazeFocus
                 x: window.width/2
                 y: window.height/2
@@ -299,7 +299,7 @@ Window {
                 y: window.height - childImg.height
             }
 
-            RosPose {
+            RosPoseSubscriber {
                 id: rostouch
 
                 x: childFocus.x
@@ -367,13 +367,17 @@ Window {
                     running: false
                     onTriggered: {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
+                        releasingItem.text = parent.draggedObject;
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
                         robot_hand.visible=false;
                     }
                 }
-
+                RosStringPublisher {
+                    id: releasingItem
+                    topic: "releasing"
+                }
             }
 
             World {

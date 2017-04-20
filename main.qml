@@ -58,6 +58,11 @@ Window {
                 x: parent.x // + (parent.width - parent.paintedWidth)/2
                 y: parent.y //+ (parent.height - parent.paintedHeight)/2
             }
+           RosSignal {
+                id: backgrounddrawing
+                topic: "sandtray_drawing"
+           }
+           onDrawEnabledChanged: backgrounddrawing.signal()
         }
 
         Item {

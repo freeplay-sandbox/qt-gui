@@ -390,7 +390,7 @@ Window {
                     running: false
                     onTriggered: {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
-                        releasingItem.text = parent.draggedObject;
+                        interactionEvents.text = "releasing_" + parent.draggedObject;
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
@@ -398,8 +398,8 @@ Window {
                     }
                 }
                 RosStringPublisher {
-                    id: releasingItem
-                    topic: "releasing"
+                    id: interactionEvents
+                    topic: "sandtray/interaction_events"
                 }
             }
 

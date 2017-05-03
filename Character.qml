@@ -8,11 +8,13 @@ InteractiveItem {
     property double scale: 1.0
     property double bbScale: 1.0
 
-    x: 0.1 * parent.width + Math.random() * 0.8 * parent.width
-    y: 0.1 * parent.height + Math.random() * 0.8 * parent.height
+    property var stash: parent
+
+    x: stash.x + 10 + Math.random() * 0.5 * stash.width
+    y: stash.y + 10 + Math.random() * 0.9 * stash.height
 
     width: scale * 2 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
-    rotation: -30 + Math.random() * 60
+    rotation: Math.random() * 360
 
     property double bbRadius: bbScale * character.width/2
     property point bbOrigin: Qt.point(character.width/2, character.height/2)

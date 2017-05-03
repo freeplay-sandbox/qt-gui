@@ -45,7 +45,10 @@ Window {
 
         DrawingArea {
             id: drawingarea
-            anchors.fill:parent
+            height: parent.height
+            width: parent.width * 0.88
+            anchors.left: parent.left
+            anchors.top: parent.top
 
             pixelscale: sandbox.pixel2meter
 
@@ -63,6 +66,24 @@ Window {
                 topic: "sandtray_drawing"
            }
            onDrawEnabledChanged: backgrounddrawing.signal()
+        }
+
+        Rectangle {
+            id: stash
+            color: "black"
+            height: parent.height
+            width: parent.width - drawingarea.width
+            anchors.left: drawingarea.right
+            anchors.top: parent.top
+
+            Rectangle {
+               height: parent.height
+                width: 5
+                anchors.left: parent.left
+                anchors.top: parent.top
+                color: "#555"
+
+            }
         }
 
         Item {
@@ -460,6 +481,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: elephant
@@ -479,6 +501,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: giraffe
@@ -497,6 +520,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: hippo
@@ -516,6 +540,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: lion
@@ -535,6 +560,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: crocodile
@@ -554,6 +580,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: rhino
@@ -574,6 +601,7 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
             Character {
                 id: leopard
@@ -593,17 +621,20 @@ Window {
                     friction: 1
                     restitution: 0.1
                 }
+                stash: stash
             }
 
             Character {
                 id: toychild1
                 name: "toychild1"
                 image: "res/child_1.svg"
+                stash: stash
             }
             Character {
                 id: toychild4
                 name: "toychild4"
                 image: "res/child_4.svg"
+                stash: stash
             }
 
 

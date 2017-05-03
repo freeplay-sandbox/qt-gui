@@ -71,7 +71,6 @@ Window {
             anchors.fill: parent
 
 
-            property int nbCubes: 40
             property bool showRobotChild: false
             property bool publishRobotChild: false
 
@@ -442,16 +441,6 @@ Window {
             Body {
                 id: anchor
                 world: physicsWorld
-            }
-
-            Repeater {
-                model: interactiveitems.nbCubes
-                InteractiveItem {
-                    name: "cube_" + index
-                    x: 0.1 * parent.width + Math.random() * 0.8 * parent.width
-                    y: 0.1 * parent.height + Math.random() * 0.8 * parent.height
-                }
-
             }
 
             Character {

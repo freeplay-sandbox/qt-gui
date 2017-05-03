@@ -446,7 +446,7 @@ Window {
 
             Repeater {
                 model: interactiveitems.nbCubes
-                Cube {
+                InteractiveItem {
                     name: "cube_" + index
                     x: 0.1 * parent.width + Math.random() * 0.8 * parent.width
                     y: 0.1 * parent.height + Math.random() * 0.8 * parent.height

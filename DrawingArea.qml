@@ -8,7 +8,7 @@ Item {
 
     property double pixelscale: 1.0 // how many meters does 1 pixel represent?
 
-    property color bgColor: "white"
+    property color bgColor: "transparent"
     property string bgImage: "res/map.svg"
     property int lineWidth: 50
 
@@ -64,7 +64,7 @@ Item {
                     if(children[i].selected)
                         return children[i].color;
 
-                return "black";
+                return "transparent";
             }
 
             columns: colorPickerCols
@@ -93,8 +93,31 @@ Item {
         }
 
         Image {
-            id: okbutton
+            id: eraserbutton
             anchors.top: colorGrid.bottom
+            anchors.horizontalCenter: colorGrid.horizontalCenter
+
+            source: "res/eraser.svg"
+
+            width: 60
+            height: width
+            rotation: -90
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    for (var i = 0; i < colorGrid.children.length; i++) {
+                        colorGrid.children[i].selected = false;
+                    }
+
+
+                }
+            }
+        }
+
+        Image {
+            id: okbutton
+            anchors.top: eraserbutton.bottom
             anchors.horizontalCenter: colorGrid.horizontalCenter
 
             source: "res/ok.svg"
@@ -185,22 +208,10 @@ Item {
         opacity: 1
         property real alpha: 1
 
-        property var lastCanvasData: ""
+        property var lastCanvasData: null
+        property var bgCanvasData: null
 
         anchors.fill: parent
-
-        function clear() {
-
-            var ctx = canvas.getContext('2d');
-            ctx.fillStyle=drawingarea.bgColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if(drawingarea.bgImage) {
-                ctx.drawImage(drawingarea.bgImage,0,0);
-            }
-
-            requestPaint();
-
-        }
 
         function storeCurrentDrawing() {
             var ctx = canvas.getContext('2d');
@@ -217,20 +228,23 @@ Item {
 
         onPaint: {
 
-
             var strokeIdx = 0;
             var i = 0;
             var ctx = canvas.getContext('2d');
 
-            if (lastCanvasData) {
-                ctx.putImageData(lastCanvasData);
-            }
-            else {
-                clear(); // white background or optional bg image
-            }
+            //ctx.reset();
 
             ctx.globalAlpha = canvas.alpha;
 
+            // storing the background image -- needed to repaint behind the rubber
+            if (!bgCanvasData && isImageLoaded(drawingarea.bgImage)) {
+                bgCanvasData = ctx.createImageData(drawingarea.bgImage);
+                ctx.drawImage(bgCanvasData,0,0);
+            }
+
+            //if(bgCanvasData) ctx.drawImage(bgCanvasData,0,0);
+
+            if (lastCanvasData) ctx.drawImage(lastCanvasData,0,0);
 
             ctx.lineJoin = "round"
             ctx.lineCap="round";
@@ -253,7 +267,19 @@ Item {
                 ctx.lineWidth = width;
 
                 ctx.beginPath();
-                ctx.strokeStyle = currentStrokes[strokeIdx].color;
+
+                var prevCompositeMode = ctx.globalCompositeOperation;
+
+                // are we in 'eraser' mode (ie, 'transparent' color)?
+                // if yes, change the composite mode to erase the canvas
+                // instead of painting over
+                if(currentStrokes[strokeIdx].color === "#00000000") {
+                    ctx.globalCompositeOperation = "destination-out";
+                    ctx.strokeStyle = "black";
+                }
+                else {
+                    ctx.strokeStyle = currentStrokes[strokeIdx].color;
+                }
 
                 var p1 = points[0];
                 var p2 = points[1];
@@ -272,6 +298,17 @@ Item {
                 }
                 ctx.lineTo(p1.x, p1.y);
                 ctx.stroke();
+
+                // if in eraser mode,
+                // 1- restore the composite mode ('paint over')
+                // 2- redraw the background
+                // 3- overlay the drawings
+                if(currentStrokes[strokeIdx].color === "#00000000") {
+                    ctx.globalCompositeOperation = prevCompositeMode;
+                    lastCanvasData = ctx.getImageData(0,0,canvas.width, canvas.height);
+                    ctx.drawImage(bgCanvasData,0,0);
+                    ctx.drawImage(lastCanvasData,0,0);
+                }
             }
 
             drawingPublisher.publish();
@@ -284,7 +321,7 @@ Item {
             };
         }
 
-        Component.onCompleted: clear();
+        Component.onCompleted: loadImage(drawingarea.bgImage);
 
     }
 

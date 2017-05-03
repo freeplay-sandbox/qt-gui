@@ -35,5 +35,6 @@
         <file>ColorSample.qml</file>
         <file>res/ok.svg</file>
         <file>res/paint-brush.svg</file>
+        <file>res/eraser.svg</file>
     </qresource>
 </RCC>

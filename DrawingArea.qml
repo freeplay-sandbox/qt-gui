@@ -142,63 +142,71 @@ Item {
         id:touchs
         enabled: drawingarea.drawEnabled
         anchors.fill: parent
-        touchPoints: [
-            TouchPoint {
-                id: touch1
-                property var currentStroke: []
-                onYChanged: drawingarea.addPoint(x, y, currentStroke)
-                onPressedChanged: {
-                    if (!pressed) {
-                        drawingarea.finishStroke(currentStroke);
-                        currentStroke = [];
-                    }
+    touchPoints: [
+        TouchPoint {
+            id: touch1
+            property var currentStroke: []
+            property color color: "black"
+            onYChanged: drawingarea.addPoint(x, y, currentStroke)
+            onPressedChanged: {
+                if (pressed) {
+                    color = drawingarea.fgColor;
                 }
-
-                property alias color: drawingarea.fgColor
-            },
-            TouchPoint {
-                id: touch2
-                property var currentStroke: []
-                onYChanged: drawingarea.addPoint(x, y, currentStroke)
-                onPressedChanged: {
-                    if (!pressed) {
-                        drawingarea.finishStroke(currentStroke);
-                        currentStroke = [];
-                    }
+                if (!pressed) {
+                    drawingarea.finishStroke(currentStroke);
+                    currentStroke = [];
                 }
-
-                property alias color: drawingarea.fgColor
-
-            },
-            TouchPoint {
-                id: touch3
-                property var currentStroke: []
-                onYChanged: drawingarea.addPoint(x, y, currentStroke)
-                onPressedChanged: {
-                    if (!pressed) {
-                        drawingarea.finishStroke(currentStroke);
-                        currentStroke = [];
-                    }
-                }
-
-                property alias color: drawingarea.fgColor
-
-            },
-            TouchPoint {
-                id: touch4
-                property var currentStroke: []
-                onYChanged: drawingarea.addPoint(x, y, currentStroke)
-                onPressedChanged: {
-                    if (!pressed) {
-                        drawingarea.finishStroke(currentStroke);
-                        currentStroke = [];
-                    }
-                }
-
-                property alias color: drawingarea.fgColor
-
             }
-        ]
+        },
+        TouchPoint {
+            id: touch2
+            property var currentStroke: []
+            property color color: "black"
+            onYChanged: drawingarea.addPoint(x, y, currentStroke)
+            onPressedChanged: {
+                if (pressed) {
+                    color = drawingarea.fgColor;
+                }
+                if (!pressed) {
+                    drawingarea.finishStroke(currentStroke);
+                    currentStroke = [];
+                }
+            }
+
+        },
+        TouchPoint {
+            id: touch3
+            property var currentStroke: []
+            property color color: "black"
+            onYChanged: drawingarea.addPoint(x, y, currentStroke)
+            onPressedChanged: {
+                if (pressed) {
+                    color = drawingarea.fgColor;
+                }
+                if (!pressed) {
+                    drawingarea.finishStroke(currentStroke);
+                    currentStroke = [];
+                }
+            }
+
+        },
+        TouchPoint {
+            id: touch4
+            property var currentStroke: []
+            property color color: "black"
+            onYChanged: drawingarea.addPoint(x, y, currentStroke)
+            onPressedChanged: {
+                if (pressed) {
+                    color = drawingarea.fgColor;
+                }
+                if (!pressed) {
+                    drawingarea.finishStroke(currentStroke);
+                    currentStroke = [];
+                }
+            }
+
+        }
+    ]
 
     }
 
@@ -253,9 +261,9 @@ Item {
             for (var i = 0; i < touchs.touchPoints.length; i++) {
 
                 if(touchs.touchPoints[i].currentStroke.length !== 0) {
-                    currentStrokes.push({color: drawingarea.fgColor.toString(),
-                                    points: touchs.touchPoints[i].currentStroke,
-                                    width: drawingarea.lineWidth
+                    currentStrokes.push({color: touchs.touchPoints[i].color.toString(),
+                                         points: touchs.touchPoints[i].currentStroke,
+                                         width: drawingarea.lineWidth
                                 });
                 }
             }

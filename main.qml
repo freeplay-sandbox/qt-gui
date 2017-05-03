@@ -609,38 +609,12 @@ Window {
             Character {
                 id: toychild1
                 name: "toychild1"
-                image: "res/child_1.png"
-                scale:0.75
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(toychild1.origin.x + 93*toychild1.bbratio, toychild1.origin.y),
-                        Qt.point(toychild1.origin.x + 181*toychild1.bbratio, toychild1.origin.y + 27*toychild1.bbratio),
-                        Qt.point(toychild1.origin.x + 175*toychild1.bbratio, toychild1.origin.y + 122*toychild1.bbratio),
-                        Qt.point(toychild1.origin.x + 15*toychild1.bbratio, toychild1.origin.y + 122*toychild1.bbratio),
-                        Qt.point(toychild1.origin.x,  toychild1.origin.y + 32*toychild1.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                image: "res/child_1.svg"
             }
             Character {
                 id: toychild4
                 name: "toychild4"
-                image: "res/child_4.png"
-                scale:0.7
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(toychild4.origin.x + 93*toychild4.bbratio, toychild4.origin.y),
-                        Qt.point(toychild4.origin.x + 181*toychild4.bbratio, toychild4.origin.y + 27*toychild4.bbratio),
-                        Qt.point(toychild4.origin.x + 175*toychild4.bbratio, toychild4.origin.y + 142*toychild4.bbratio),
-                        Qt.point(toychild4.origin.x + 15*toychild4.bbratio, toychild4.origin.y + 142*toychild4.bbratio),
-                        Qt.point(toychild4.origin.x,  toychild4.origin.y + 32*toychild4.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                image: "res/child_4.svg"
             }
 
 

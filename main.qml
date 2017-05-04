@@ -668,7 +668,7 @@ Window {
     Image {
         id: drawModeButton
         source: "res/paint-brush.svg"
-        width: 80
+        width: 100
         height: width
         rotation: -90
         anchors.verticalCenter: parent.verticalCenter

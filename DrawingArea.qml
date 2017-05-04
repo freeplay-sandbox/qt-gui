@@ -33,7 +33,8 @@ Item {
         border.width: 5
         border.color: "black"
 
-        color: "transparent"
+        color: "#33FFFFFF"
+        radius: 10
 
         Behavior on opacity {
             NumberAnimation {
@@ -43,7 +44,34 @@ Item {
 
         property alias paintbrushColor: colorGrid.color
 
+        Image {
+            anchors.horizontalCenter: colorGrid.horizontalCenter
+            id: eraserbutton
+
+            property bool selected: false
+
+            source: selected ? "res/eraser_selected.svg" : "res/eraser.svg"
+
+            width: 80
+            height: width
+            rotation: -90
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    eraserbutton.selected = true;
+                    for (var i = 0; i < colorGrid.children.length; i++) {
+                        colorGrid.children[i].selected = false;
+                    }
+
+
+                }
+            }
+        }
+
         Grid {
+            anchors.top: eraserbutton.bottom
+
             x: 5
             y: 5
             id: colorGrid
@@ -73,6 +101,7 @@ Item {
 
 
             function uniqueSelect(sampler) {
+                eraserbutton.selected=false;
                 for (var i = 0; i < children.length; i++) {
                     children[i].selected = false;
                 }
@@ -93,36 +122,13 @@ Item {
         }
 
         Image {
-            id: eraserbutton
-            anchors.top: colorGrid.bottom
-            anchors.horizontalCenter: colorGrid.horizontalCenter
-
-            source: "res/eraser.svg"
-
-            width: 60
-            height: width
-            rotation: -90
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    for (var i = 0; i < colorGrid.children.length; i++) {
-                        colorGrid.children[i].selected = false;
-                    }
-
-
-                }
-            }
-        }
-
-        Image {
             id: okbutton
-            anchors.top: eraserbutton.bottom
+            anchors.top: colorGrid.bottom
             anchors.horizontalCenter: colorGrid.horizontalCenter
 
             source: "res/ok.svg"
 
-            width: 60
+            width: 80
             height: width
             rotation: -90
 

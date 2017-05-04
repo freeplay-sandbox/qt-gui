@@ -326,7 +326,6 @@ Item {
                 }
             }
 
-            drawingPublisher.publish();
         }
 
         function midPointBtw(p1, p2) {
@@ -346,6 +345,7 @@ Item {
     }
 
     function finishStroke(stroke) {
+        drawingPublisher.publish();
         canvas.storeCurrentDrawing();
         stroke = [];
     }

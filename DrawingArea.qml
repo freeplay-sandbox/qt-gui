@@ -216,8 +216,8 @@ Item {
         opacity: 1
         property real alpha: 1
 
-        property var lastCanvasData: null
-        property var bgCanvasData: null
+        property var lastCanvasData
+        property var bgCanvasData
 
         anchors.fill: parent
 
@@ -314,6 +314,7 @@ Item {
                 if(currentStrokes[strokeIdx].color === "#00000000") {
                     ctx.globalCompositeOperation = prevCompositeMode;
                     lastCanvasData = ctx.getImageData(0,0,canvas.width, canvas.height);
+                    gc(); // explicitely call the garbage collector, otherwise, memory leaks
                     ctx.drawImage(bgCanvasData,0,0);
                     ctx.drawImage(lastCanvasData,0,0);
                 }

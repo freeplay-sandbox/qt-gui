@@ -19,6 +19,10 @@ InteractiveItem {
     property double bbRadius: bbScale * character.width/2
     property point bbOrigin: Qt.point(character.width/2, character.height/2)
 
+    property alias friction: bbpoly.friction
+    property alias restitution: bbpoly.restitution
+    property alias density: bbpoly.density
+
 
     boundingbox: Polygon {
                 id:bbpoly

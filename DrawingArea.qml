@@ -8,8 +8,7 @@ Item {
 
     property double pixelscale: 1.0 // how many meters does 1 pixel represent?
 
-    property color bgColor: "transparent"
-    property string bgImage: "res/map.svg"
+    property string bgImage
     property int lineWidth: 50
 
     property color fgColor: colorpicker.paintbrushColor

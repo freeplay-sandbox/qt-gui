@@ -11,8 +11,8 @@ Item {
 
         objectName: "interactive"
 
-        property string name: ""
-        property string image: "res/cube.svg"
+        property string name
+        property string image
 
         property var boundingbox:
             Polygon {

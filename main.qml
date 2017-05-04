@@ -50,6 +50,8 @@ Window {
             anchors.left: parent.left
             anchors.top: parent.top
 
+            bgImage: "res/map.svg"
+
             pixelscale: sandbox.pixel2meter
 
             Item {
@@ -61,11 +63,12 @@ Window {
                 x: parent.x // + (parent.width - parent.paintedWidth)/2
                 y: parent.y //+ (parent.height - parent.paintedHeight)/2
             }
-           RosSignal {
+
+            RosSignal {
                 id: backgrounddrawing
                 topic: "sandtray_drawing"
-           }
-           onDrawEnabledChanged: backgrounddrawing.signal()
+            }
+            onDrawEnabledChanged: backgrounddrawing.signal()
         }
 
         Rectangle {
@@ -582,58 +585,50 @@ Window {
                 }
                 stash: stash
             }
+
             Character {
-                id: rhino
-                name: "rhino"
-                scale: 1.5
-                image: "res/sprite-rhino.png"
+                id: caravan
+                name: "caravan"
+                image: "res/caravan.png"
+                scale: 2.5
+                stash: stash
+
                 boundingbox: Polygon {
                     vertices: [
-                        Qt.point(rhino.origin.x + 112*rhino.bbratio, rhino.origin.y + 15*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 270*rhino.bbratio, rhino.origin.y + 70*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 306*rhino.bbratio, rhino.origin.y + 109*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 296*rhino.bbratio, rhino.origin.y + 229*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 129*rhino.bbratio, rhino.origin.y + 230*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 10*rhino.bbratio, rhino.origin.y + 144*rhino.bbratio),
-                        Qt.point(rhino.origin.x + 8*rhino.bbratio, rhino.origin.y + 51*rhino.bbratio)
+                        Qt.point(caravan.origin.x +  55*caravan.bbratio, caravan.origin.y),
+                        Qt.point(caravan.origin.x + 377*caravan.bbratio, caravan.origin.y +  46*caravan.bbratio),
+                        Qt.point(caravan.origin.x + 495*caravan.bbratio, caravan.origin.y + 133*caravan.bbratio),
+                        Qt.point(caravan.origin.x + 440*caravan.bbratio, caravan.origin.y + 175*caravan.bbratio),
+                        Qt.point(caravan.origin.x + 55*caravan.bbratio, caravan.origin.y + 175*caravan.bbratio),
+                        Qt.point(caravan.origin.x +  0*caravan.bbratio, caravan.origin.y +  94*caravan.bbratio)
                     ]
-                    density: 1
-                    friction: 1
+                    density: 2
+                    friction: 2
                     restitution: 0.1
                 }
-                stash: stash
+
             }
             Character {
-                id: leopard
-                name: "leopard"
-                image: "res/sprite-leopard.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(leopard.origin.x, leopard.origin.y),
-                        Qt.point(leopard.origin.x + 111*leopard.bbratio, leopard.origin.y),
-                        Qt.point(leopard.origin.x + 228*leopard.bbratio, leopard.origin.y + 31*leopard.bbratio),
-                        Qt.point(leopard.origin.x + 284*leopard.bbratio, leopard.origin.y + 89*leopard.bbratio),
-                        Qt.point(leopard.origin.x + 231*leopard.bbratio, leopard.origin.y + 185*leopard.bbratio),
-                        Qt.point(leopard.origin.x + 64*leopard.bbratio, leopard.origin.y + 187*leopard.bbratio),
-                        Qt.point(leopard.origin.x + 13*leopard.bbratio, leopard.origin.y + 60*leopard.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                id: ball
+                name: "ball"
+                image: "res/ball.svg"
+                scale: 0.7
                 stash: stash
+                friction:0.1
+                restitution: 0.7
+                density: 0.5
             }
 
             Character {
-                id: toychild1
-                name: "toychild1"
-                image: "res/child_1.svg"
+                id: boy
+                name: "boy"
+                image: "res/child-face-boy.svg"
                 stash: stash
             }
             Character {
-                id: toychild4
-                name: "toychild4"
-                image: "res/child_4.svg"
+                id: girl
+                name: "girl"
+                image: "res/child-face-girl.svg"
                 stash: stash
             }
 
@@ -651,37 +646,27 @@ Window {
             }
 
             function getActiveItems() {
-                var targets= [zebra,elephant,leopard,lion,giraffe,rhino,crocodile,hippo,toychild1, toychild4];
-                for (var childIdx=0; childIdx < interactiveitems.children.length; childIdx++) {
-                    var child = interactiveitems.children[childIdx];
-                    if("name" in child)
-                        if (child.name.substr(0,5) === "cube_") {
-                            targets.push(child);
-                        }
+                return [zebra,elephant,ball,lion,giraffe,caravan,crocodile,hippo,boy, girl];
+            }
+        }
+
+        Image {
+            id: drawModeButton
+            source: "res/paint-brush.svg"
+            width: 100
+            height: width
+            rotation: -90
+            anchors.verticalCenter: parent.verticalCenter
+            x: 30
+            visible: opacity === 0 ? false : true
+
+            Behavior on opacity {
+                NumberAnimation {
+                    duration:300
                 }
-                return targets;
-
             }
-        }
-    }
 
-    Image {
-        id: drawModeButton
-        source: "res/paint-brush.svg"
-        width: 100
-        height: width
-        rotation: -90
-        anchors.verticalCenter: parent.verticalCenter
-        x: 30
-        visible: opacity === 0 ? false : true
-
-        Behavior on opacity {
-            NumberAnimation {
-                duration:300
-            }
-        }
-
-        MouseArea {
+            MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     interactiveitems.opacity = 0.4;
@@ -691,6 +676,7 @@ Window {
                 }
             }
 
+        }
     }
 
     Item {
@@ -717,7 +703,6 @@ Window {
                 onClicked: (window.visibility === Window.FullScreen) ? window.visibility = Window.Windowed : window.visibility = Window.FullScreen;
             }
         }
-
         Rectangle {
             id: visualAttentionButton
             x: 250

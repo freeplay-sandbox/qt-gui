@@ -125,7 +125,7 @@ Item {
             onStopped: {
                 calibratingvisualfocus.signal();
                 visualtracking.visible=false;
-                zoo.visible=true;
+                sandbox.visible=true;
             }
         }
 

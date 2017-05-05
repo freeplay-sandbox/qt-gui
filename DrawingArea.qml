@@ -336,6 +336,18 @@ Item {
 
         Component.onCompleted: loadImage(drawingarea.bgImage);
 
+        RosSignal {
+            topic: "signal_sandtray_clear_drawing"
+
+            onTriggered: {
+                canvas.lastCanvasData = null;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(canvas.bgCanvasData,0,0);
+                canvas.requestPaint();
+                drawingPublisher.publish();
+            }
+        }
+
     }
 
     function addPoint(x, y, stroke) {

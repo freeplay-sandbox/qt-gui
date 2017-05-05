@@ -648,6 +648,38 @@ Window {
             function getActiveItems() {
                 return [zebra,elephant,ball,lion,giraffe,caravan,crocodile,hippo,boy, girl];
             }
+
+            function shuffleItems() {
+                var items = getActiveItems();
+                for(var i = 0; i < items.length; i++) {
+                    var item = items[i]
+                    item.x = interactiveitems.x + interactiveitems.width * 0.1 + Math.random() * 0.8 * interactiveitems.width;
+                    item.y = interactiveitems.y + interactiveitems.height * 0.1 + Math.random() * 0.8 * interactiveitems.height;
+                    item.rotation = Math.random() * 360;
+                 }
+            }
+
+            RosSignal {
+                topic: "signal_sandtray_shuffle_items"
+                onTriggered: interactiveitems.shuffleItems();
+            }
+
+
+            function itemsToStash() {
+                var items = getActiveItems();
+                for(var i = 0; i < items.length; i++) {
+                    var item = items[i]
+                    item.x = item.stash.x + 10 + Math.random() * 0.5 * item.stash.width;
+                    item.y = item.stash.y + 10 + Math.random() * 0.9 * item.stash.height;
+                    item.rotation = Math.random() * 360;
+               }
+            }
+
+            RosSignal {
+                topic: "signal_sandtray_items_to_stash"
+                onTriggered: interactiveitems.itemsToStash();
+            }
+
         }
 
         Image {

@@ -11,7 +11,7 @@ Window {
     id: window
 
     visible: true
-    visibility: Window.FullScreen
+    //visibility: Window.FullScreen
     //width: Screen.width
     //height: Screen.height
     width:800

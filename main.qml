@@ -849,17 +849,42 @@ Window {
         visible: false
     }
 
-    Image {
+    Rectangle {
         id: fiducialmarker
-        // set the actual size of the SVG page
-        width: 0.60 / sandbox.pixel2meter
-        height: 0.33 / sandbox.pixel2meter
-        // make sure the image is in the corner ie, the sandtray origin
-        x: 0
-        y: 0
-        fillMode: Image.PreserveAspectCrop
-        source: "res/tags/markers.svg"
+        color:"white"
+        opacity:0.8
         visible: false
+        anchors.fill:parent
+
+        Image {
+            // set the actual size of the SVG page
+            width: 0.60 / sandbox.pixel2meter
+            height: 0.33 / sandbox.pixel2meter
+            // make sure the image is in the corner ie, the sandtray origin
+            x: 0
+            y: 0
+            fillMode: Image.PreserveAspectCrop
+            source: "res/tags/markers.svg"
+
+        }
+
+        RosSignal {
+            id: localising
+            topic: "signal_sandtray_robot_localising"
+            onTriggered: {
+                    fiducialmarker.visible=true;
+                    hide_fiducial_markers.start();
+            }
+        }
+
+        Timer {
+            id: hide_fiducial_markers
+            interval: 5000; running: false; repeat: false
+            onTriggered: {
+                fiducialmarker.visible = false;
+            }
+
+        }
 
     }
 
@@ -887,28 +912,10 @@ Window {
             clicks += 1;
             if (clicks === 3) {
                 localising.signal();
-                interactiveitems.visible = false;
-                window.color = "white";
                 fiducialmarker.visible = true;
                 clicks = 0;
-                restore.start();
+                hide_fiducial_markers.start();
             }
-        }
-
-        Timer {
-            id: restore
-            interval: 5000; running: false; repeat: false
-            onTriggered: {
-                fiducialmarker.visible = false;
-                window.color = "black"
-                interactiveitems.visible = true;
-            }
-
-        }
-
-        RosSignal {
-            id: localising
-            topic: "sandtray_localising"
         }
     }
 

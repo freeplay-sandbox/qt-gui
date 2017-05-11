@@ -234,9 +234,11 @@ Item {
         ImagePublisher {
             id: drawingPublisher
             target: parent
-            topic: "/sandbox/image"
+            topic: "/sandtray/background/image"
+            latched: true
             frame: "sandtray"
             pixelscale: drawingarea.pixelscale
+
         }
 
         onPaint: {
@@ -344,6 +346,14 @@ Item {
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(canvas.bgCanvasData,0,0);
                 canvas.requestPaint();
+                drawingPublisher.publish();
+            }
+        }
+
+        Timer {
+            interval: 3000; running: true; repeat: false
+            onTriggered: {
+                console.log("Initial publishing of the background");
                 drawingPublisher.publish();
             }
         }

@@ -35,5 +35,6 @@
         <file>res/child-face-boy.svg</file>
         <file>res/child-face-girl.svg</file>
         <file>ColorPicker.qml</file>
+        <file>StaticImage.qml</file>
     </qresource>
 </RCC>

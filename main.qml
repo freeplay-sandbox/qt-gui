@@ -537,6 +537,21 @@ Window {
                 world: physicsWorld
             }
 
+            StaticImage{
+                id: rocket
+                name: "rocket"
+                image: "res/rocket.svg"
+                x: 200
+                y: 200
+            }
+            StaticImage{
+                id: alternateRocket
+                name: "alternate_rocket"
+                image: "res/alternate_rocket.svg"
+                x: 600
+                y: 200
+            }
+
             Character {
                 id: zebra
                 name: "zebra"

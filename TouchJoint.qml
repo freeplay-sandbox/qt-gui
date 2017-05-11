@@ -4,7 +4,8 @@ import Box2D 2.0
 
 TouchPoint {
 
-    property var touchedItem
+    property bool movingItem: false
+    property bool drawing: false
 
     // when used to draw on the background:
     property var currentStroke: []
@@ -18,20 +19,19 @@ TouchPoint {
 
     onXChanged: {
 
-        if(touchedItem) {
+        if(movingItem) {
             joint.target = Qt.point(x, y);
         }
-        else {
-            //only add stroke point in one dimension (Y) to avoid double drawing
-            //drawingarea.addPoint(x, y, currentStroke);
-        }
+
+        // (only add stroke point in one dimension (Y) to avoid double drawing)
     }
 
     onYChanged: {
-        if(touchedItem) {
+        if(movingItem) {
             joint.target = Qt.point(x, y);
         }
-        else {
+
+        if (drawing) {
             currentStroke.push(Qt.point(x,y));
             drawingarea.update();
         }
@@ -44,7 +44,7 @@ TouchPoint {
             // find out whether we touched an item
             var obj = interactiveitems.childAt(x, y);
             if (obj.objectName === "interactive") {
-                touchedItem = obj;
+                movingItem = true;
                 joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);
                 joint.bodyB = obj.body;
@@ -52,15 +52,18 @@ TouchPoint {
             else {
                 currentStroke = [];
                 color = drawingarea.fgColor;
+                drawing = true;
             }
 
         }
         else { // released
-            if(touchedItem) {
+            if(movingItem) {
                 joint.bodyB = null;
-                touchedItem = null;
+                movingItem = false;
             }
-            else {
+
+            if(drawing) {
+                drawing = false;
                 drawingarea.finishStroke(currentStroke);
                 currentStroke = [];
             }

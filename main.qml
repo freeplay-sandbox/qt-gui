@@ -50,7 +50,10 @@ Window {
             anchors.left: parent.left
             anchors.top: parent.top
 
+            fgColor: colorpicker.paintbrushColor
             bgImage: "res/map.svg"
+
+            touchs: touchArea
 
             pixelscale: sandbox.pixel2meter
 
@@ -112,18 +115,18 @@ Window {
             }
 
             MultiPointTouchArea {
-                id: mouseArea
+                id: touchArea
                 anchors.fill: parent
 
                 enabled: parent.opacity < 0.5 ? false : true
 
                 touchPoints: [
-                    TouchJoint {},
-                    TouchJoint {},
-                    TouchJoint {},
-                    TouchJoint {},
-                    TouchJoint {},
-                    TouchJoint {}
+                    TouchJoint {id:touch1},
+                    TouchJoint {id:touch2},
+                    TouchJoint {id:touch3},
+                    TouchJoint {id:touch4},
+                    TouchJoint {id:touch5},
+                    TouchJoint {id:touch6}
                 ]
             }
 
@@ -682,6 +685,16 @@ Window {
 
         }
 
+        ColorPicker {
+            id: colorpicker
+            x:10
+            anchors.verticalCenter: parent.verticalCenter
+
+            opacity: drawingarea.drawEnabled ? 1 : 0
+
+        }
+
+/*
         Image {
             id: drawModeButton
             source: "res/paint-brush.svg"
@@ -709,6 +722,8 @@ Window {
             }
 
         }
+*/
+
     }
 
     Item {
@@ -745,7 +760,30 @@ Window {
                 text:  "Start visual target tracking"
                 anchors.centerIn: parent
             }
-            color: "#DEDEDE"
+            color: "#FFDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    sandbox.visible = false;
+                    debugToolbar.visible = false;
+                    visualtracking.visible = true;
+                    visualtracking.start();
+                }
+            }
+        }
+        Rectangle {
+            id: tutorialButton
+            x: 550
+            y: 50
+            width: 250
+            height: 30
+            Text {
+                text:  "Start tutorial"
+                anchors.centerIn: parent
+            }
+            color: "#FFDEDE"
             border.color: "#999"
             radius: 5
             MouseArea {

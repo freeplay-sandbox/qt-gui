@@ -121,12 +121,12 @@ Window {
                 enabled: parent.opacity < 0.5 ? false : true
 
                 touchPoints: [
-                    TouchJoint {id:touch1},
-                    TouchJoint {id:touch2},
-                    TouchJoint {id:touch3},
-                    TouchJoint {id:touch4},
-                    TouchJoint {id:touch5},
-                    TouchJoint {id:touch6}
+                    TouchJoint {id:touch1;name:"touch1"},
+                    TouchJoint {id:touch2;name:"touch2"},
+                    TouchJoint {id:touch3;name:"touch3"},
+                    TouchJoint {id:touch4;name:"touch4"},
+                    TouchJoint {id:touch5;name:"touch5"},
+                    TouchJoint {id:touch6;name:"touch6"}
                 ]
             }
 

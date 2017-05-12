@@ -2,8 +2,13 @@ import QtQuick 2.0
 
 import Box2D 2.0
 
+import Ros 1.0
+
 TouchPoint {
 
+    id: touch
+
+    property string name: "touch"
     property bool movingItem: false
     property bool drawing: false
 
@@ -36,7 +41,6 @@ TouchPoint {
             drawingarea.update();
         }
     }
-
     onPressedChanged: {
 
         if (pressed) {
@@ -69,5 +73,23 @@ TouchPoint {
             }
         }
     }
+
+    property var tf: Item {
+                        // the TF broadcaster can not directly target 'touch' as TouchPoint is not a QtQuickItem
+                        id: touchtracker
+                        x: touch.x
+                        y: touch.y
+                        TFBroadcaster {
+                            active: drawing || touch.movingItem
+                            target: parent
+                            frame: touch.name
+
+                            origin: mapOrigin
+                            parentframe: mapOrigin.name
+                            pixelscale: sandbox.pixel2meter
+                        }
+    }
+
+
 }
 

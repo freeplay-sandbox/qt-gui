@@ -89,6 +89,7 @@ Item {
         TFBroadcaster {
             target: parent
             frame: parent.parent.name
+            active: sandbox.visible
 
             origin: mapOrigin
             parentframe: mapOrigin.name

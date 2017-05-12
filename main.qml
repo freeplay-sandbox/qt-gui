@@ -769,7 +769,7 @@ Window {
                     sandbox.visible = false;
                     debugToolbar.visible = false;
                     visualtracking.visible = true;
-                    visualtracking.start();
+                    visualtracking.signal_and_start();
                 }
             }
         }
@@ -792,7 +792,7 @@ Window {
                     interactiveitems.visible = false;
                     debugToolbar.visible = false;
                     visualtracking.visible = true;
-                    visualtracking.start();
+                    visualtracking.signal_and_start();
                 }
             }
         }

@@ -8,21 +8,44 @@ Item {
 
     anchors.fill: parent
 
-    function start() {
+    function signal_and_start() {
         calibratingvisualfocus.signal();
+        start();
+    }
+
+    function start() {
         visualtarget_animation.start();
         rocket_color_animation.start();
     }
 
     RosSignal {
         id: calibratingvisualfocus
-        topic: "visualfocus_calibration"
+        topic: "sandtray/signals/start_visual_tracking_calibration"
+
+        onTriggered: {
+             sandbox.visible = false;
+             visualtracking.visible = true;
+             visualtracking.start();
+        }
     }
+
+    RosSignal {
+        id: calibratingvisualfocus_end
+        topic: "sandtray/signals/visual_tracking_calibration_ended"
+    }
+
 
     Item {
         id: visualtarget
         width:parent.width * 0.05
         height: width
+
+        function reset() {
+           x = mid_x;
+           y = mid_y;
+           rotation = 0;
+           alternate_rocket.opacity = 0;
+        }
 
         Image {
             anchors.fill: parent
@@ -120,14 +143,22 @@ Item {
             SmoothedAnimation { target: visualtarget; property: "y"; to: visualtarget.mid_y; duration: visualtarget.base_duration * 0.3}
             SmoothedAnimation { target: visualtarget; property: "rotation"; to: 720; duration: 1000 }
             NumberAnimation { target: visualtarget; property: "x"; easing.type: Easing.InQuad; easing.period: visualtarget.base_duration; to: visualtarget.max_x + 3 * visualtarget.margin; duration: visualtarget.base_duration}
-            PauseAnimation { duration: 1000 }
 
             onStopped: {
-                calibratingvisualfocus.signal();
+                calibratingvisualfocus_end.signal();
+                end_delay.start();
+            }
+        }
+        Timer {
+            id: end_delay
+            interval: 2000; running: false; repeat: false
+            onTriggered: {
                 visualtracking.visible=false;
+                visualtarget.reset();
                 sandbox.visible=true;
             }
         }
+
 
 
 

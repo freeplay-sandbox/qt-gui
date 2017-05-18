@@ -54,14 +54,11 @@ Item {
 
             ctx.globalAlpha = canvas.alpha;
 
-            // storing the background image -- needed to repaint behind the rubber
-            if (!bgCanvasData && isImageLoaded(drawingarea.bgImage)) {
-                bgCanvasData = ctx.createImageData(drawingarea.bgImage);
-                ctx.drawImage(bgCanvasData,0,0);
-            }
 
-            //if(bgCanvasData) ctx.drawImage(bgCanvasData,0,0);
+            // background image not yet loaded
+            // if(!bgCanvasData) return;
 
+            if (bgCanvasData) ctx.drawImage(bgCanvasData,0,0);
             if (lastCanvasData) ctx.drawImage(lastCanvasData,0,0);
 
             ctx.lineJoin = "round"
@@ -72,9 +69,9 @@ Item {
 
                 if(touchs.touchPoints[i].currentStroke.length !== 0) {
                     currentStrokes.push({color: touchs.touchPoints[i].color.toString(),
-                                         points: touchs.touchPoints[i].currentStroke,
-                                         width: drawingarea.lineWidth
-                                });
+                                points: touchs.touchPoints[i].currentStroke,
+                                width: drawingarea.lineWidth
+                            });
                 }
             }
 
@@ -140,19 +137,8 @@ Item {
             };
         }
 
-        Component.onCompleted: loadImage(drawingarea.bgImage);
+        // Component.onCompleted: loadImage(drawingarea.bgImage);
 
-        RosSignal {
-            topic: "signal_sandtray_clear_drawing"
-
-            onTriggered: {
-                canvas.lastCanvasData = null;
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(canvas.bgCanvasData,0,0);
-                canvas.requestPaint();
-                drawingPublisher.publish();
-            }
-        }
 
         Timer {
             interval: 3000; running: true; repeat: false
@@ -162,10 +148,49 @@ Item {
             }
         }
 
+        onImageLoaded: {
+            lastCanvasData = null;
+            bgCanvasData = null;
+            // storing the background image -- needed to repaint background when using the rubber
+            var ctx = canvas.getContext('2d');
+            bgCanvasData = ctx.createImageData(drawingarea.bgImage);
+            requestPaint();
+        }
+
+    }
+
+    function clearDrawing() {
+        canvas.lastCanvasData = null;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(canvas.bgCanvasData,0,0);
+        canvas.requestPaint();
+        drawingPublisher.publish();
+    }
+
+    RosSignal {
+        topic: "signal_sandtray_clear_drawing"
+
+        onTriggered: {
+            drawingarea.clearDrawing();
+        }
     }
 
     function update() {
         canvas.requestPaint();
+    }
+
+    onBgImageChanged: {
+        if(canvas.isImageLoaded(drawingarea.bgImage)) {
+            canvas.lastCanvasData = null;
+            canvas.bgCanvasData = null;
+            // storing the background image -- needed to repaint background when using the rubber
+            var ctx = canvas.getContext('2d');
+            canvas.bgCanvasData = ctx.createImageData(drawingarea.bgImage);
+            canvas.requestPaint();
+        }
+        else {
+            canvas.loadImage(drawingarea.bgImage);
+        }
     }
 
     function finishStroke(stroke) {

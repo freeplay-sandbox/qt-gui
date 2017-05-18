@@ -118,8 +118,6 @@ Window {
                 id: touchArea
                 anchors.fill: parent
 
-                enabled: parent.opacity < 0.5 ? false : true
-
                 touchPoints: [
                     TouchJoint {id:touch1;name:"touch1"},
                     TouchJoint {id:touch2;name:"touch2"},
@@ -652,6 +650,19 @@ Window {
                 return [zebra,elephant,ball,lion,giraffe,caravan,crocodile,hippo,boy, girl];
             }
 
+            function hideItems(items) {
+                for (var i = 0; i < items.length; i++) {
+                    items[i].visible = false;
+                }
+            }
+
+            function restoreAllItems() {
+                var items = getActiveItems();
+                for (var i = 0; i < items.length; i++) {
+                    items[i].visible = true;
+                }
+            }
+
             function shuffleItems() {
                 var items = getActiveItems();
                 for(var i = 0; i < items.length; i++) {
@@ -678,9 +689,34 @@ Window {
                }
             }
 
+            function startTutorial() {
+                drawingarea.clearDrawing();
+                drawingarea.bgImage = "res/tutorial_bg.svg";
+                itemsToStash();
+                interactiveitems.hideItems([hippo, giraffe, ball, elephant, zebra, caravan, lion, crocodile]);
+            }
+
+            function startFreeplay() {
+                drawingarea.clearDrawing();
+                drawingarea.bgImage = "res/map.svg";
+                itemsToStash();
+
+                interactiveitems.restoreAllItems();
+            }
+
             RosSignal {
                 topic: "signal_sandtray_items_to_stash"
                 onTriggered: interactiveitems.itemsToStash();
+            }
+
+            RosSignal {
+                topic: "sandtray/signals/start_tutorial"
+                onTriggered: interactiveitems.startTutorial();
+            }
+
+            RosSignal {
+                topic: "sandtray/signals/start_freeplay"
+                onTriggered: interactiveitems.startFreeplay();
             }
 
         }
@@ -789,12 +825,33 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    interactiveitems.visible = false;
                     debugToolbar.visible = false;
-                    visualtracking.visible = true;
-                    visualtracking.signal_and_start();
+                    interactiveitems.startTutorial();
                 }
             }
+
+        }
+        Rectangle {
+            id: freeplayButton
+            x: 850
+            y: 50
+            width: 250
+            height: 30
+            Text {
+                text:  "Start freeplay"
+                anchors.centerIn: parent
+            }
+            color: "#FFDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    debugToolbar.visible = false;
+                    interactiveitems.startFreeplay();
+                }
+            }
+
         }
         Rectangle {
             id: debugButton

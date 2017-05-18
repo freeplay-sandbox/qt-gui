@@ -156,6 +156,7 @@ Item {
                 visualtracking.visible=false;
                 visualtarget.reset();
                 sandbox.visible=true;
+                interactiveitems.startTutorial();
             }
         }
 

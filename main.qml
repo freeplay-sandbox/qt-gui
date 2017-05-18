@@ -51,7 +51,7 @@ Window {
             anchors.top: parent.top
 
             fgColor: colorpicker.paintbrushColor
-            bgImage: "res/map.svg"
+            bgImage: "res/tutorial_bg.svg"
 
             touchs: touchArea
 
@@ -97,6 +97,7 @@ Window {
 
             anchors.fill: parent
 
+            visible: false
 
             property bool showRobotChild: false
             property bool publishRobotChild: false
@@ -690,6 +691,7 @@ Window {
             }
 
             function startTutorial() {
+                interactiveitems.visible = true;
                 drawingarea.clearDrawing();
                 drawingarea.bgImage = "res/tutorial_bg.svg";
                 itemsToStash();
@@ -697,6 +699,8 @@ Window {
             }
 
             function startFreeplay() {
+                interactiveitems.visible = true;
+
                 drawingarea.clearDrawing();
                 drawingarea.bgImage = "res/map.svg";
                 itemsToStash();
@@ -718,6 +722,7 @@ Window {
                 topic: "sandtray/signals/start_freeplay"
                 onTriggered: interactiveitems.startFreeplay();
             }
+
 
         }
 

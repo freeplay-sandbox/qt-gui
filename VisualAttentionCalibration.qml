@@ -8,29 +8,20 @@ Item {
 
     anchors.fill: parent
 
-    function signal_and_start() {
-        calibratingvisualfocus.signal();
-        start();
-    }
-
     function start() {
-        visualtarget_animation.start();
-        rocket_color_animation.start();
+        visualtarget.reset();
+        calibratingvisualfocus_started.signal();
+        visualtarget_animation.restart();
+        rocket_color_animation.restart();
     }
 
     RosSignal {
-        id: calibratingvisualfocus
-        topic: "sandtray/signals/start_visual_tracking_calibration"
-
-        onTriggered: {
-             sandbox.visible = false;
-             visualtracking.visible = true;
-             visualtracking.start();
-        }
+        id: calibratingvisualfocus_started
+        topic: "sandtray/signals/visual_tracking_calibration_started"
     }
 
     RosSignal {
-        id: calibratingvisualfocus_end
+        id: calibratingvisualfocus_ended
         topic: "sandtray/signals/visual_tracking_calibration_ended"
     }
 
@@ -145,23 +136,9 @@ Item {
             NumberAnimation { target: visualtarget; property: "x"; easing.type: Easing.InQuad; easing.period: visualtarget.base_duration; to: visualtarget.max_x + 3 * visualtarget.margin; duration: visualtarget.base_duration}
 
             onStopped: {
-                calibratingvisualfocus_end.signal();
-                end_delay.start();
+                calibratingvisualfocus_ended.signal();
             }
         }
-        Timer {
-            id: end_delay
-            interval: 2000; running: false; repeat: false
-            onTriggered: {
-                visualtracking.visible=false;
-                visualtarget.reset();
-                sandbox.visible=true;
-                interactiveitems.startTutorial();
-            }
-        }
-
-
-
 
     }
 }

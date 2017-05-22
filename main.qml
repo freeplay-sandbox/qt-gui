@@ -33,9 +33,77 @@ Window {
     color: "black"
     title: qsTr("Free-play sandbox")
 
+    StateGroup {
+        id: globalstates
+
+        states: [
+            // default state ("") is a blank, black, screen
+
+            State {
+                name: "visualtracking"
+                PropertyChanges {
+                    target: visualtracking
+                    visible: true
+                }
+                StateChangeScript {
+                    script: visualtracking.start();
+
+                }
+            },
+
+            State {
+                name: "tutorial"
+                PropertyChanges {
+                    target: sandbox
+                    visible: true
+                }
+                StateChangeScript {
+                    script: interactiveitems.startTutorial();
+
+                }
+
+            },
+
+            State {
+                name: "freeplay-sandbox"
+                 PropertyChanges {
+                    target: sandbox
+                    visible: true
+                }
+               StateChangeScript {
+                    script: interactiveitems.startFreeplay();
+
+                }
+            }
+
+        ]
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/start_visual_tracking"
+        onTriggered: globalstates.state = "visualtracking";
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/start_tutorial"
+        onTriggered: globalstates.state = "tutorial";
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/start_freeplay"
+        onTriggered: globalstates.state = "freeplay-sandbox";
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/blank_interface"
+        onTriggered: globalstates.state = "";
+    }
+
+
     Item {
         id: sandbox
         anchors.fill:parent
+        visible: false
 
         //property double physicalMapWidth: 553 //mm (desktop acer monitor)
         property double physicalMapWidth: 600 //mm (sandtray)
@@ -69,7 +137,7 @@ Window {
 
             RosSignal {
                 id: backgrounddrawing
-                topic: "sandtray_drawing"
+                topic: "sandtray/signals/background_drawing"
             }
             onDrawEnabledChanged: backgrounddrawing.signal()
         }
@@ -675,7 +743,7 @@ Window {
             }
 
             RosSignal {
-                topic: "signal_sandtray_shuffle_items"
+                topic: "sandtray/signals/shuffle_items"
                 onTriggered: interactiveitems.shuffleItems();
             }
 
@@ -709,19 +777,10 @@ Window {
             }
 
             RosSignal {
-                topic: "signal_sandtray_items_to_stash"
+                topic: "sandtray/signals/items_to_stash"
                 onTriggered: interactiveitems.itemsToStash();
             }
 
-            RosSignal {
-                topic: "sandtray/signals/start_tutorial"
-                onTriggered: interactiveitems.startTutorial();
-            }
-
-            RosSignal {
-                topic: "sandtray/signals/start_freeplay"
-                onTriggered: interactiveitems.startFreeplay();
-            }
 
 
         }
@@ -807,10 +866,8 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    sandbox.visible = false;
                     debugToolbar.visible = false;
-                    visualtracking.visible = true;
-                    visualtracking.signal_and_start();
+                    globalstates.state = "visualtracking";
                 }
             }
         }
@@ -831,7 +888,7 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     debugToolbar.visible = false;
-                    interactiveitems.startTutorial();
+                    globalstates.state = "tutorial";
                 }
             }
 
@@ -853,7 +910,7 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     debugToolbar.visible = false;
-                    interactiveitems.startFreeplay();
+                    globalstates.state = "freeplay-sandbox";
                 }
             }
 
@@ -970,7 +1027,7 @@ Window {
 
         RosSignal {
             id: localising
-            topic: "signal_sandtray_robot_localising"
+            topic: "sandtray/signals/robot_localising"
             onTriggered: {
                     fiducialmarker.visible=true;
                     hide_fiducial_markers.start();

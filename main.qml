@@ -787,11 +787,13 @@ Window {
 
         ColorPicker {
             id: colorpicker
-            x:10
+            //anchors.right: stash.left
+            //anchors.rightMargin: 10
+            anchors.left: parent.left
+            anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
 
             opacity: drawingarea.drawEnabled ? 1 : 0
-
         }
 
 /*

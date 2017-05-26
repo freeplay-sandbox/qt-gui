@@ -439,6 +439,7 @@ Window {
                         if (obj.objectName === "interactive") {
                             draggedObject = obj.name;
                             console.log("ROS controller touched object: " + obj.name);
+                            interactionEvents.text = "touching_" + draggedObject;
 
                             target = obj.body
 

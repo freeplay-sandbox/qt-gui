@@ -44,6 +44,7 @@ TouchPoint {
     onPressedChanged: {
 
         if (pressed) {
+            interactionEvents.text = "touch"
 
             // find out whether we touched an item
             var obj = interactiveitems.childAt(x, y);
@@ -62,6 +63,7 @@ TouchPoint {
         }
         else { // released
             if(movingItem) {
+		interactionEvents.text = "release"
                 joint.bodyB = null;
                 movingItem = false;
             }

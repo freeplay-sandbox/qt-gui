@@ -20,7 +20,6 @@
         <file>TouchJoint.qml</file>
         <file>VisualAttentionCalibration.qml</file>
         <file>res/rocket.svg</file>
-        <file>res/alternate_rocket.svg</file>
         <file>res/tags/markers.svg</file>
         <file>DrawingArea.qml</file>
         <file>ColorSample.qml</file>
@@ -36,5 +35,6 @@
         <file>res/child-face-girl.svg</file>
         <file>ColorPicker.qml</file>
         <file>StaticImage.qml</file>
+        <file>res/alternaterocket.svg</file>
     </qresource>
 </RCC>

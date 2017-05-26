@@ -546,8 +546,8 @@ Window {
             }
             StaticImage{
                 id: alternateRocket
-                name: "alternate_rocket"
-                image: "res/alternate_rocket.svg"
+                name: "alternaterocket"
+                image: "res/alternaterocket.svg"
                 x: 600
                 y: 200
             }

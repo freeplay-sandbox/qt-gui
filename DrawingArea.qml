@@ -168,7 +168,7 @@ Item {
     }
 
     RosSignal {
-        topic: "signal_sandtray_clear_drawing"
+        topic: "sandtray/signals/clear_drawing"
 
         onTriggered: {
             drawingarea.clearDrawing();

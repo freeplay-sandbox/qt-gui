@@ -63,6 +63,28 @@ Window {
                 }
 
             },
+            State {
+                name: "items-placement"
+                PropertyChanges {
+                    target: interactiveitems
+                    collisionCategories: Box.Category2 // disable collisions between items
+                }
+                 PropertyChanges {
+                    target: stash
+                    color: "transparent"
+                }
+                PropertyChanges {
+                    target: drawingarea
+                    drawEnabled: false
+                }
+                PropertyChanges {
+                    target: sandbox
+                    visible: true
+                }
+               StateChangeScript {
+                    script: interactiveitems.startItemsPlacement();
+                }
+            },
 
             State {
                 name: "freeplay-sandbox"
@@ -72,7 +94,6 @@ Window {
                 }
                StateChangeScript {
                     script: interactiveitems.startFreeplay();
-
                 }
             }
 
@@ -87,6 +108,11 @@ Window {
     RosSignal {
         topic: "sandtray/signals/start_tutorial"
         onTriggered: globalstates.state = "tutorial";
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/start_items_placement"
+        onTriggered: globalstates.state = "items-placement";
     }
 
     RosSignal {
@@ -167,7 +193,7 @@ Window {
 
             visible: false
 
-            property var collisionCategories: Box.Category2
+            property var collisionCategories: Box.All
             property int currentMaxZ: 0 // hold the max Z value, incremented every time an interactive item is clicked. This allows proper restacking of objects by sequentially clicking them
 
             property bool showRobotChild: false
@@ -776,14 +802,27 @@ Window {
             }
 
             function startTutorial() {
+                console.log("Starting task 'tutorial'");
                 interactiveitems.visible = true;
                 drawingarea.clearDrawing();
                 drawingarea.bgImage = "res/tutorial_bg.svg";
                 itemsToStash();
+                interactiveitems.restoreAllItems();
                 interactiveitems.hideItems([hippo, giraffe, ball, elephant, zebra, caravan, lion, crocodile]);
             }
 
+            function startItemsPlacement() {
+                console.log("Starting task 'items placement'");
+                interactiveitems.visible = true;
+                drawingarea.clearDrawing();
+                drawingarea.bgImage = "res/map.svg";
+                itemsToStash();
+                interactiveitems.restoreAllItems();
+                interactiveitems.hideItems([girl, caravan]);
+            }
+
             function startFreeplay() {
+                console.log("Starting task 'freeplay'");
                 interactiveitems.visible = true;
 
                 drawingarea.clearDrawing();
@@ -891,8 +930,30 @@ Window {
             }
         }
         Rectangle {
-            id: tutorialButton
+            id: itemsPlacementButton
             x: 550
+            y: 50
+            width: 250
+            height: 30
+            Text {
+                text:  "Start items placement"
+                anchors.centerIn: parent
+            }
+            color: "#FFDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    debugToolbar.visible = false;
+                    globalstates.state = "items-placement";
+                }
+            }
+
+        }
+        Rectangle {
+            id: tutorialButton
+            x: 850
             y: 50
             width: 250
             height: 30
@@ -914,7 +975,7 @@ Window {
         }
         Rectangle {
             id: freeplayButton
-            x: 850
+            x: 1150
             y: 50
             width: 250
             height: 30

@@ -14,6 +14,7 @@ Item {
         property string name
         property string image
 
+
         property var boundingbox:
             Polygon {
                 id:bbpoly

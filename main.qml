@@ -167,6 +167,8 @@ Window {
 
             visible: false
 
+            property var collisionCategories: Box.Category2
+
             property bool showRobotChild: false
             property bool publishRobotChild: false
 
@@ -491,7 +493,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
-                categories: Box.Category1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: leftwall
@@ -505,7 +507,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
-                categories: Box.Category1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: top
@@ -519,7 +521,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
-                categories: Box.Category1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: bottom
@@ -533,7 +535,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
-                categories: Box.Category1
+                categories: Box.Category2
             }
 
             Body {
@@ -557,6 +559,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -577,6 +580,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -596,6 +600,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -616,6 +621,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -636,6 +642,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -656,6 +663,7 @@ Window {
                     density: 1
                     friction: 1
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
                 stash: stash
             }
@@ -679,6 +687,7 @@ Window {
                     density: 2
                     friction: 2
                     restitution: 0.1
+                    collidesWith: interactiveitems.collisionCategories
                 }
 
             }
@@ -691,6 +700,7 @@ Window {
                 friction:0.1
                 restitution: 0.7
                 density: 0.5
+                collidesWith: interactiveitems.collisionCategories
             }
 
             Character {
@@ -698,12 +708,14 @@ Window {
                 name: "boy"
                 image: "res/child-face-boy.svg"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
             Character {
                 id: girl
                 name: "girl"
                 image: "res/child-face-girl.svg"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
 
 
@@ -938,6 +950,31 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     debugDraw.visible = !debugDraw.visible;
+                }
+            }
+        }
+        Rectangle {
+            id: toggleCollisionsButton
+            x: 250
+            y: 100
+            width: 180
+            height: 30
+            Text {
+                text: interactiveitems.collisionCategories == Box.Category2 ? "Items collisions: off" : "Items collisions: on"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    if(interactiveitems.collisionCategories == Box.Category2) {
+                        interactiveitems.collisionCategories = Box.All;
+                    }
+                    else {
+                        interactiveitems.collisionCategories = Box.Category2;
+                    }
                 }
             }
         }

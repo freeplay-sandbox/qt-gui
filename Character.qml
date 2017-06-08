@@ -22,6 +22,7 @@ InteractiveItem {
     property alias friction: bbpoly.friction
     property alias restitution: bbpoly.restitution
     property alias density: bbpoly.density
+    property alias collidesWith: bbpoly.collidesWith
 
 
     boundingbox: Polygon {

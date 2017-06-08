@@ -482,54 +482,58 @@ Window {
             RectangleBoxBody {
                 id: rightwall
                 color: "#000000FF"
-                width: 20
+                width: 32
                 anchors {
-                    right: parent.right
+                    left: parent.right
                     bottom: parent.bottom
                     top: parent.top
                 }
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category1
             }
             RectangleBoxBody {
                 id: leftwall
                 color: "#000000FF"
-                width: 20
+                width: 32
                 anchors {
-                    left: parent.left
+                    right: parent.left
                     bottom: parent.bottom
                     top: parent.top
                 }
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category1
             }
             RectangleBoxBody {
                 id: top
                 color: "#000000FF"
-                height: 20
+                height: 32
                 anchors {
                     left: parent.left
                     right: parent.right
-                    top: parent.top
+                    bottom: parent.top
                 }
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category1
             }
             RectangleBoxBody {
-                id: ground
+                id: bottom
                 color: "#000000FF"
-                height: 20
+                height: 32
                 anchors {
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
+                    top: parent.bottom
                 }
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category1
             }
 
             Body {

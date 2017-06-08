@@ -114,7 +114,7 @@ Window {
         DrawingArea {
             id: drawingarea
             height: parent.height
-            width: parent.width * 0.88
+            width: parent.width
             anchors.left: parent.left
             anchors.top: parent.top
 
@@ -144,10 +144,10 @@ Window {
 
         Rectangle {
             id: stash
-            color: "black"
+            color: "#111"
             height: parent.height
-            width: parent.width - drawingarea.width
-            anchors.left: drawingarea.right
+            width: parent.width * 0.12
+            anchors.right: parent.right
             anchors.top: parent.top
 
             Rectangle {
@@ -155,7 +155,7 @@ Window {
                 width: 5
                 anchors.left: parent.left
                 anchors.top: parent.top
-                color: "#555"
+                color: Qt.lighter(parent.color,5)
 
             }
         }

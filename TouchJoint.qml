@@ -48,7 +48,14 @@ TouchPoint {
             // find out whether we touched an item
             var obj = interactiveitems.childAt(x, y);
             if (obj.objectName === "interactive") {
+
                 movingItem = true;
+
+                // restack item to the top
+                interactiveitems.currentMaxZ += 1;
+                obj.z=interactiveitems.currentMaxZ;
+
+                // update the join forces
                 joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);
                 joint.bodyB = obj.body;

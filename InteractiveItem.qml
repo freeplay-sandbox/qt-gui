@@ -4,7 +4,7 @@ import Box2D 2.0
 import Ros 1.0
 
 Item {
-        id:cube
+        id:item
         width: 2*parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
         height: width
         rotation: Math.random() * 360
@@ -51,16 +51,22 @@ Item {
                 bbratio= image.paintedWidth/image.sourceSize.width;
             }
 
+            // Draw a red border around the interactive items
+            //Rectangle {
+            //    color:"transparent"
+            //    anchors.fill:parent
+            //    border.color: "red"
+            //}
         }
         Body {
                 id: cubeBody
 
-                target: cube
+                target: item
                 world: physicsWorld
                 bodyType: Body.Dynamic
 
                 Component.onCompleted: {
-                    cubeBody.addFixture(cube.boundingbox);
+                    cubeBody.addFixture(item.boundingbox);
                 }
 
                 angularDamping: 5
@@ -78,10 +84,12 @@ Item {
 
 //           MouseArea {
 //                   anchors.fill: parent
-//                   drag.target: cube
+//                   drag.target: item
 //                   scrollGestureEnabled: false
 //           }
 //   }
+
+
 
     Item {
         id: objectCenter

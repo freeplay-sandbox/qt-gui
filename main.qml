@@ -168,6 +168,7 @@ Window {
             visible: false
 
             property var collisionCategories: Box.Category2
+            property int currentMaxZ: 0 // hold the max Z value, incremented every time an interactive item is clicked. This allows proper restacking of objects by sequentially clicking them
 
             property bool showRobotChild: false
             property bool publishRobotChild: false

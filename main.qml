@@ -882,6 +882,20 @@ Window {
         }
 */
 
+
+        function screenshot(path) {
+            sandbox.grabToImage(function(result) {
+                console.log("Screenshot saved to " + path)
+                result.saveToFile(path);
+                });
+
+        }
+        RosStringSubscriber {
+            topic: "sandtray/screenshot"
+            onTextChanged: {
+                sandbox.screenshot(text)
+            }
+        }
     }
 
     Item {
@@ -1100,6 +1114,26 @@ Window {
                 onClicked: {
                     gazeFocus.visible = !gazeFocus.visible;
                 }
+            }
+        }
+        Rectangle {
+            id: screenshotButton
+            x: 350
+            y: 250
+            width: 180
+            height: 30
+            Text {
+                text: "Take screenshot"
+                anchors.centerIn: parent
+            }
+            color: "#DEDEDE"
+            border.color: "#999"
+            radius: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    sandbox.screenshot("/tmp/screenshot.png");
+                       }
             }
         }
     }

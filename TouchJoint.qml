@@ -61,9 +61,11 @@ TouchPoint {
                 joint.bodyB = obj.body;
             }
             else {
-                currentStroke = [];
-                color = drawingarea.fgColor;
-                drawing = true;
+                if (drawingarea.drawEnabled) {
+                    currentStroke = [];
+                    color = drawingarea.fgColor;
+                    drawing = true;
+                }
             }
 
         }
@@ -75,7 +77,9 @@ TouchPoint {
 
             if(drawing) {
                 drawing = false;
-                drawingarea.finishStroke(currentStroke);
+                if (drawingarea.drawEnabled) {
+                    drawingarea.finishStroke(currentStroke);
+                }
                 currentStroke = [];
             }
         }

@@ -17,6 +17,9 @@ Item {
 
     property var touchs
 
+    property bool bgHasChanged: true
+    property int rosBackgroundPublishingPeriod: 250 //ms
+
 
     Canvas {
         id: canvas
@@ -141,10 +144,13 @@ Item {
 
 
         Timer {
-            interval: 3000; running: true; repeat: false
+            interval: rosBackgroundPublishingPeriod
+            running: true; repeat: true
             onTriggered: {
-                console.log("Initial publishing of the background");
-                drawingPublisher.publish();
+                if (bgHasChanged) {
+                    drawingPublisher.publish();
+                    bgHasChanged = false;
+                }
             }
         }
 
@@ -164,7 +170,7 @@ Item {
         var ctx = canvas.getContext('2d');
         ctx.drawImage(canvas.bgCanvasData,0,0);
         canvas.requestPaint();
-        drawingPublisher.publish();
+        bgHasChanged = true; //will trigger publishing of background on ROS
     }
 
     RosSignal {
@@ -194,7 +200,7 @@ Item {
     }
 
     function finishStroke(stroke) {
-        drawingPublisher.publish();
+        bgHasChanged = true; //will trigger publishing of background on ROS
         canvas.storeCurrentDrawing();
         stroke = [];
     }

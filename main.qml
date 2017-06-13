@@ -441,6 +441,7 @@ Window {
                     visible: false
 
                 }
+
                 //Rectangle {
                 //    anchors.centerIn: parent
                 //    width: 5
@@ -450,7 +451,7 @@ Window {
                 //    z:1
                 //}
 
-                z:100
+                z:5000
                 property var target: null
                 property string draggedObject: ""
                 origin: mapOrigin

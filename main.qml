@@ -473,8 +473,16 @@ Window {
                     }
                 }
                 RosStringPublisher {
-                    id: interactionEvents
+                    id: interactionEventsPub
                     topic: "sandtray/interaction_events"
+                }
+                RosStringSubscriber {
+                    id: interactionEventsSub
+                    topic: "sandtray/interaction_events"
+                    onTextChanged: {
+                        if(text === "supervisor_ready")
+                            publishItems();
+                    }
                 }
             }
 
@@ -598,7 +606,10 @@ Window {
             }
 
             function getActiveItems() {
-                return [zebra,elephant,ball,lion,giraffe,caravan,crocodile,hippo,boy, girl];
+                return [horse, cow, dog, cat]
+            }
+            function getStaticItems() {
+                return [hay, steak]
             }
 
             function hideItems(items) {
@@ -994,6 +1005,13 @@ Window {
         }
     }
     Timer {
+        id: initialise
+        interval: 900; running: false; repeat: false
+        onTriggered: {
+            globalstates.state = "freeplay-sandbox"
+        }
+    }
+
     Timer {
         id: hunger
         interval: 1000; running: true; repeat: true
@@ -1014,5 +1032,20 @@ Window {
         topic: "sparc/partial_state"
     }
 
+    function publishItems(){
+        var message = "characters"
+        var items = interactiveitems.getActiveItems()
+        for(var i = 0; i < items.length; i++)
+            message += "_"+items[i].name
+        interactionEventsPub.text = message
+        sleep(100)
+        message = "targets"
+        items = interactiveitems.getStaticItems()
+        for(var i = 0; i < items.length; i++)
+            message += "_"+items[i].name
+        sleep(100)
+        interactionEventsPub.text = message
+    }
+    }
 
 }

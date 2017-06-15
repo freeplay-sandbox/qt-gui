@@ -439,7 +439,7 @@ Window {
                         if (obj.objectName === "interactive") {
                             draggedObject = obj.name;
                             console.log("ROS controller touched object: " + obj.name);
-                            interactionEvents.text = "touching_" + draggedObject;
+                            interactionEventsPub.text = "robottouching_" + draggedObject;
 
                             target = obj.body
 
@@ -461,7 +461,7 @@ Window {
                     running: false
                     onTriggered: {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
-                        interactionEvents.text = "releasing_" + parent.draggedObject;
+                        interactionEventsPub.text = "robotreleasing_" + parent.draggedObject;
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;

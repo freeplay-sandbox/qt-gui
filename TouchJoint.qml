@@ -42,12 +42,11 @@ TouchPoint {
         }
     }
     onPressedChanged: {
-
+        var obj = interactiveitems.childAt(x, y);
         if (pressed) {
-            interactionEvents.text = "touch"
+            interactionEventsPub.text = "childtouch_"+obj.name
 
             // find out whether we touched an item
-            var obj = interactiveitems.childAt(x, y);
             if (obj.objectName === "interactive") {
                 movingItem = true;
                 joint.maxForce = obj.body.getMass() * 500;
@@ -63,7 +62,8 @@ TouchPoint {
         }
         else { // released
             if(movingItem) {
-		interactionEvents.text = "release"
+                obj.testCloseImages()
+                interactionEventsPub.text = "childreleasing_"+obj.name
                 joint.bodyB = null;
                 movingItem = false;
             }

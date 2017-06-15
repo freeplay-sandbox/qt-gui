@@ -5,7 +5,7 @@ import Ros 1.0
 
 Item {
         id:cube
-        width: 2*parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
+        width: 1.5 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
         height: width
         rotation: Math.random() * 360
 

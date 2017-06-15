@@ -13,7 +13,7 @@ InteractiveItem {
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
     y: stash.y + 10 + Math.random() * 0.9 * stash.height
 
-    width: scale * 2 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
+    width: scale * 4 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     rotation: Math.random() * 360
 
     property double bbRadius: bbScale * character.width/2

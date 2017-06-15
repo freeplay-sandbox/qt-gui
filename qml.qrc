@@ -36,5 +36,11 @@
         <file>ColorPicker.qml</file>
         <file>StaticImage.qml</file>
         <file>res/alternaterocket.svg</file>
+        <file>res/hay.png</file>
+        <file>res/steak.png</file>
+        <file>res/horse.png</file>
+        <file>res/dog.png</file>
+        <file>res/cow.png</file>
+        <file>res/cat.png</file>
     </qresource>
 </RCC>

@@ -9,6 +9,8 @@ InteractiveItem {
     property double bbScale: 1.0
 
     property var stash: parent
+    property string eatingFood: []
+    property double life: 1
 
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
     y: stash.y + 10 + Math.random() * 0.9 * stash.height

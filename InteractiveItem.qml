@@ -1,5 +1,7 @@
 import QtQuick 2.2
 import Box2D 2.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
 import Ros 1.0
 
@@ -65,7 +67,32 @@ Item {
                 angularDamping: 5
                 linearDamping: 5
         }
+        ProgressBar {
+            id: lifeSlider
+            anchors.bottom: image.top
+            anchors.bottomMargin: image.height/10
+            anchors.horizontalCenter: image.horizontalCenter
+            width: image.width
+            value: life
+            height: image.height/10
 
+            style: ProgressBarStyle {
+                background: Rectangle {
+                    radius: 2
+                    color: "Crimson"
+                    border.color: "black"
+                    border.width: 1
+                    implicitWidth: 200
+                    implicitHeight: 24
+                }
+                progress: Rectangle {
+                    color: "lime"
+                    border.color: "black"
+                    implicitWidth: 200
+                    implicitHeight: 24
+                }
+            }
+        }
 //   PinchArea {
 //           anchors.fill: parent
 //           pinch.target: parent

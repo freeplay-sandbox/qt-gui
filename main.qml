@@ -539,185 +539,47 @@ Window {
             }
 
             StaticImage{
-                id: rocket
-                name: "rocket"
-                image: "res/rocket.svg"
+                id: hay
+                name: "hay"
+                image: "res/hay.png"
                 x: 200
                 y: 200
             }
             StaticImage{
-                id: alternateRocket
-                name: "alternaterocket"
-                image: "res/alternaterocket.svg"
+                id: steak
+                name: "steak"
+                image: "res/steak.png"
                 x: 600
                 y: 200
             }
-
             Character {
-                id: zebra
-                name: "zebra"
-                image: "res/sprite-zebra.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(zebra.origin.x + 0,                 zebra.origin.y + 60*zebra.bbratio),
-                        Qt.point(zebra.origin.x + 100*zebra.bbratio, zebra.origin.y + 0),
-                        Qt.point(zebra.origin.x + 180*zebra.bbratio, zebra.origin.y + 100*zebra.bbratio),
-                        Qt.point(zebra.origin.x + 260*zebra.bbratio, zebra.origin.y + 150*zebra.bbratio),
-                        Qt.point(zebra.origin.x + 235*zebra.bbratio, zebra.origin.y + 280*zebra.bbratio),
-                        Qt.point(zebra.origin.x + 100*zebra.bbratio, zebra.origin.y + 280*zebra.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                id: horse
+                name: "horse"
+                image: "res/horse.png"
+                eatingFood: "hay"
                 stash: stash
             }
             Character {
-                id: elephant
-                name: "elephant"
-                scale: 1.5
-                image: "res/sprite-elephant.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(elephant.origin.x +  23*elephant.bbratio, elephant.origin.y + 24*elephant.bbratio),
-                        Qt.point(elephant.origin.x + 216*elephant.bbratio, elephant.origin.y + 0),
-                        Qt.point(elephant.origin.x + 300*elephant.bbratio, elephant.origin.y + 90*elephant.bbratio),
-                        Qt.point(elephant.origin.x + 270*elephant.bbratio, elephant.origin.y + 200*elephant.bbratio),
-                        Qt.point(elephant.origin.x + 135*elephant.bbratio, elephant.origin.y + 200*elephant.bbratio),
-                        Qt.point(elephant.origin.x + 0,                    elephant.origin.y + 107*elephant.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                id: cow
+                name: "cow"
+                image: "res/cow.png"
+                eatingFood: "hay"
                 stash: stash
             }
             Character {
-                id: giraffe
-                name: "giraffe"
-                scale: 1.5
-                image: "res/sprite-giraffe.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(giraffe.origin.x + 88*giraffe.bbratio, giraffe.origin.y + 0),
-                        Qt.point(giraffe.origin.x + 200*giraffe.bbratio, giraffe.origin.y + 190*giraffe.bbratio),
-                        Qt.point(giraffe.origin.x + 188*giraffe.bbratio, giraffe.origin.y + 324*giraffe.bbratio),
-                        Qt.point(giraffe.origin.x + 85*giraffe.bbratio, giraffe.origin.y + 321*giraffe.bbratio),
-                        Qt.point(giraffe.origin.x + 0,                    giraffe.origin.y + 55*giraffe.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                id: dog
+                name: "dog"
+                image: "res/dog.png"
+                eatingFood: "steak"
                 stash: stash
             }
             Character {
-                id: hippo
-                name: "hippo"
-                scale: 1.5
-                image: "res/sprite-hippo.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(hippo.origin.x + 133*hippo.bbratio, hippo.origin.y + 0),
-                        Qt.point(hippo.origin.x + 321*hippo.bbratio, hippo.origin.y + 71*hippo.bbratio),
-                        Qt.point(hippo.origin.x + 305*hippo.bbratio, hippo.origin.y + 200*hippo.bbratio),
-                        Qt.point(hippo.origin.x + 133*hippo.bbratio, hippo.origin.y + 200*hippo.bbratio),
-                        Qt.point(hippo.origin.x + 37*hippo.bbratio, hippo.origin.y + 138*hippo.bbratio),
-                        Qt.point(hippo.origin.x + 0,                 hippo.origin.y + 40*hippo.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
+                id: cat
+                name: "cat"
+                image: "res/cat.png"
+                eatingFood: "steak"
                 stash: stash
             }
-            Character {
-                id: lion
-                name: "lion"
-                image: "res/sprite-lion.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(lion.origin.x + 90*lion.bbratio, lion.origin.y + 0),
-                        Qt.point(lion.origin.x + 184*lion.bbratio, lion.origin.y + 47*lion.bbratio),
-                        Qt.point(lion.origin.x + 224*lion.bbratio, lion.origin.y + 161*lion.bbratio),
-                        Qt.point(lion.origin.x + 133*lion.bbratio, lion.origin.y + 263*lion.bbratio),
-                        Qt.point(lion.origin.x + 38*lion.bbratio, lion.origin.y + 240*lion.bbratio),
-                        Qt.point(lion.origin.x + 0,                 lion.origin.y + 87*lion.bbratio),
-                        Qt.point(lion.origin.x + 23*lion.bbratio, lion.origin.y + 27*lion.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
-                stash: stash
-            }
-            Character {
-                id: crocodile
-                name: "crocodile"
-                image: "res/sprite-crocodile.png"
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(crocodile.origin.x + 76*crocodile.bbratio, crocodile.origin.y + 37*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 127*crocodile.bbratio, crocodile.origin.y + 7*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 213*crocodile.bbratio, crocodile.origin.y + 5*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 221*crocodile.bbratio, crocodile.origin.y + 221*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 43*crocodile.bbratio, crocodile.origin.y + 241*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 0,                 crocodile.origin.y + 213*crocodile.bbratio),
-                        Qt.point(crocodile.origin.x + 5*crocodile.bbratio, crocodile.origin.y + 185*crocodile.bbratio)
-                    ]
-                    density: 1
-                    friction: 1
-                    restitution: 0.1
-                }
-                stash: stash
-            }
-
-            Character {
-                id: caravan
-                name: "caravan"
-                image: "res/caravan.png"
-                scale: 2.5
-                stash: stash
-
-                boundingbox: Polygon {
-                    vertices: [
-                        Qt.point(caravan.origin.x +  55*caravan.bbratio, caravan.origin.y),
-                        Qt.point(caravan.origin.x + 377*caravan.bbratio, caravan.origin.y +  46*caravan.bbratio),
-                        Qt.point(caravan.origin.x + 495*caravan.bbratio, caravan.origin.y + 133*caravan.bbratio),
-                        Qt.point(caravan.origin.x + 440*caravan.bbratio, caravan.origin.y + 175*caravan.bbratio),
-                        Qt.point(caravan.origin.x + 55*caravan.bbratio, caravan.origin.y + 175*caravan.bbratio),
-                        Qt.point(caravan.origin.x +  0*caravan.bbratio, caravan.origin.y +  94*caravan.bbratio)
-                    ]
-                    density: 2
-                    friction: 2
-                    restitution: 0.1
-                }
-
-            }
-            Character {
-                id: ball
-                name: "ball"
-                image: "res/ball.svg"
-                scale: 0.7
-                stash: stash
-                friction:0.1
-                restitution: 0.7
-                density: 0.5
-            }
-
-            Character {
-                id: boy
-                name: "boy"
-                image: "res/child-face-boy.svg"
-                stash: stash
-            }
-            Character {
-                id: girl
-                name: "girl"
-                image: "res/child-face-girl.svg"
-                stash: stash
-            }
-
 
 
             FootprintsPublisher {

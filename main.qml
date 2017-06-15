@@ -462,6 +462,10 @@ Window {
                     onTriggered: {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
                         interactionEventsPub.text = "robotreleasing_" + parent.draggedObject;
+                        var items = interactiveitems.getActiveItems()
+                        for(var i = 0;i<items.length;i++)
+                            if(items[i].name === parent.draggedObject)
+                                items[i].testCloseImages()
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
@@ -989,5 +993,26 @@ Window {
 
         }
     }
+    Timer {
+    Timer {
+        id: hunger
+        interval: 1000; running: true; repeat: true
+        onTriggered: {
+            var items = interactiveitems.getActiveItems()
+            var list=[]
+            for(var i = 0; i < items.length; i++){
+                items[i].life -= 0.01
+                list.push(items[i].life)
+            }
+            lifePub.list = list
+            lifePub.publish()
+        }
+    }
+
+    RosListFloatPublisher{
+        id: lifePub
+        topic: "sparc/partial_state"
+    }
+
 
 }

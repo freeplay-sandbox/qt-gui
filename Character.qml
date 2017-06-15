@@ -10,7 +10,7 @@ InteractiveItem {
 
     property var stash: parent
 
-    x: stash.x + 10 + Math.random() * 0.5 * stash.width
+    x: stash.x + 10 + Math.random() * 0.4 * stash.width
     y: stash.y + 10 + Math.random() * 0.9 * stash.height
 
     width: scale * 2 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth

@@ -18,11 +18,9 @@
         <file>res/nao_head.svg</file>
         <file>res/child_head.svg</file>
         <file>TouchJoint.qml</file>
-        <file>VisualAttentionCalibration.qml</file>
         <file>res/rocket.svg</file>
         <file>res/tags/markers.svg</file>
         <file>DrawingArea.qml</file>
-        <file>ColorSample.qml</file>
         <file>res/ok.svg</file>
         <file>res/paint-brush.svg</file>
         <file>res/eraser.svg</file>
@@ -33,7 +31,6 @@
         <file>res/caravan.png</file>
         <file>res/child-face-boy.svg</file>
         <file>res/child-face-girl.svg</file>
-        <file>ColorPicker.qml</file>
         <file>StaticImage.qml</file>
         <file>res/alternaterocket.svg</file>
         <file>res/hay.png</file>

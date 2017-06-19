@@ -67,12 +67,6 @@ TouchPoint {
                 joint.bodyB = null;
                 movingItem = false;
             }
-
-            if(drawing) {
-                drawing = false;
-                drawingarea.finishStroke(currentStroke);
-                currentStroke = [];
-            }
         }
     }
 
@@ -91,7 +85,5 @@ TouchPoint {
                             pixelscale: sandbox.pixel2meter
                         }
     }
-
-
 }
 

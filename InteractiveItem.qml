@@ -93,21 +93,7 @@ Item {
                 }
             }
         }
-//   PinchArea {
-//           anchors.fill: parent
-//           pinch.target: parent
-//           pinch.minimumRotation: -360
-//           pinch.maximumRotation: 360
-//           //pinch.minimumScale: 1
-//           //pinch.maximumScale: 1
-//           pinch.dragAxis: Pinch.XAndYAxis
 
-//           MouseArea {
-//                   anchors.fill: parent
-//                   drag.target: cube
-//                   scrollGestureEnabled: false
-//           }
-//   }
 
     Item {
         id: objectCenter

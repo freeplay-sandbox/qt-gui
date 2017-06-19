@@ -4,7 +4,7 @@ import Box2D 2.0
 InteractiveItem {
     id: character
 
-
+    visible: true
     property double scale: 1.0
     property double bbScale: 1.0
 
@@ -24,7 +24,6 @@ InteractiveItem {
     property alias friction: bbpoly.friction
     property alias restitution: bbpoly.restitution
     property alias density: bbpoly.density
-
 
     boundingbox: Polygon {
                 id:bbpoly

@@ -33,77 +33,10 @@ Window {
     color: "black"
     title: qsTr("Free-play sandbox")
 
-    StateGroup {
-        id: globalstates
-
-        states: [
-            // default state ("") is a blank, black, screen
-
-            State {
-                name: "visualtracking"
-                PropertyChanges {
-                    target: visualtracking
-                    visible: true
-                }
-                StateChangeScript {
-                    script: visualtracking.start();
-
-                }
-            },
-
-            State {
-                name: "tutorial"
-                PropertyChanges {
-                    target: sandbox
-                    visible: true
-                }
-                StateChangeScript {
-                    script: interactiveitems.startTutorial();
-
-                }
-
-            },
-
-            State {
-                name: "freeplay-sandbox"
-                 PropertyChanges {
-                    target: sandbox
-                    visible: true
-                }
-               StateChangeScript {
-                    script: interactiveitems.startFreeplay();
-
-                }
-            }
-
-        ]
-    }
-
-    RosSignal {
-        topic: "sandtray/signals/start_visual_tracking"
-        onTriggered: globalstates.state = "visualtracking";
-    }
-
-    RosSignal {
-        topic: "sandtray/signals/start_tutorial"
-        onTriggered: globalstates.state = "tutorial";
-    }
-
-    RosSignal {
-        topic: "sandtray/signals/start_freeplay"
-        onTriggered: globalstates.state = "freeplay-sandbox";
-    }
-
-    RosSignal {
-        topic: "sandtray/signals/blank_interface"
-        onTriggered: globalstates.state = "";
-    }
-
-
     Item {
         id: sandbox
         anchors.fill:parent
-        visible: false
+        visible: true
 
         //property double physicalMapWidth: 553 //mm (desktop acer monitor)
         property double physicalMapWidth: 600 //mm (sandtray)
@@ -117,11 +50,7 @@ Window {
             width: parent.width * 0.88
             anchors.left: parent.left
             anchors.top: parent.top
-
-            fgColor: colorpicker.paintbrushColor
-            bgImage: "res/tutorial_bg.svg"
-
-            touchs: touchArea
+            visible: true
 
             pixelscale: sandbox.pixel2meter
 
@@ -165,7 +94,7 @@ Window {
 
             anchors.fill: parent
 
-            visible: false
+            visible: true
 
             property bool showRobotChild: false
             property bool publishRobotChild: false
@@ -651,21 +580,9 @@ Window {
                }
             }
 
-            function startTutorial() {
-                interactiveitems.visible = true;
-                drawingarea.clearDrawing();
-                drawingarea.bgImage = "res/tutorial_bg.svg";
-                itemsToStash();
-                interactiveitems.hideItems([hippo, giraffe, ball, elephant, zebra, caravan, lion, crocodile]);
-            }
 
             function startFreeplay() {
-                interactiveitems.visible = true;
-
-                drawingarea.clearDrawing();
-                drawingarea.bgImage = "res/map.svg";
                 itemsToStash();
-
                 interactiveitems.restoreAllItems();
             }
 
@@ -677,48 +594,6 @@ Window {
 
 
         }
-
-        ColorPicker {
-            id: colorpicker
-            //anchors.right: stash.left
-            //anchors.rightMargin: 10
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.verticalCenter: parent.verticalCenter
-
-            opacity: drawingarea.drawEnabled ? 1 : 0
-        }
-
-/*
-        Image {
-            id: drawModeButton
-            source: "res/paint-brush.svg"
-            width: 100
-            height: width
-            rotation: -90
-            anchors.verticalCenter: parent.verticalCenter
-            x: 30
-            visible: opacity === 0 ? false : true
-
-            Behavior on opacity {
-                NumberAnimation {
-                    duration:300
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    interactiveitems.opacity = 0.4;
-                    drawModeButton.opacity = 0;
-                    drawingarea.drawEnabled = true;
-
-                }
-            }
-
-        }
-*/
-
     }
 
     Item {
@@ -940,11 +815,6 @@ Window {
 
     }
 
-    VisualAttentionCalibration {
-        id: visualtracking
-        visible: false
-    }
-
     MouseArea {
         width:30
         height:width
@@ -1008,7 +878,7 @@ Window {
         id: initialise
         interval: 900; running: false; repeat: false
         onTriggered: {
-            globalstates.state = "freeplay-sandbox"
+            startFreeplay()
         }
     }
 

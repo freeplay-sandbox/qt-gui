@@ -499,19 +499,21 @@ Window {
                 x: 600
                 y: 200
             }
+
             Character {
                 id: horse
                 name: "horse"
                 image: "res/horse.png"
-                eatingFood: "hay"
+                food: "hay"
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
+
             Character {
                 id: cow
                 name: "cow"
                 image: "res/cow.png"
-                eatingFood: "hay"
+                food: "hay"
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -519,15 +521,16 @@ Window {
                 id: dog
                 name: "dog"
                 image: "res/dog.png"
-                eatingFood: "steak"
+                food: "steak"
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
+
             Character {
                 id: cat
                 name: "cat"
                 image: "res/cat.png"
-                eatingFood: "steak"
+                food: ["cow","steak"]
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }

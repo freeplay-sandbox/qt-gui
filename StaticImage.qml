@@ -57,7 +57,6 @@ Item {
                 }
             }
     }
-
     function relocate(){
         x = drawingarea.width * (.15 + 0.7 * Math.random())
         y = drawingarea.height * (.15 + 0.7 * Math.random())

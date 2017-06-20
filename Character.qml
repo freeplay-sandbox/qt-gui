@@ -9,7 +9,7 @@ InteractiveItem {
     property double bbScale: 1.0
 
     property var stash: parent
-    property string eatingFood: []
+    property var food: []
     property double life: 1
 
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
@@ -44,11 +44,23 @@ InteractiveItem {
             }
 
     function testCloseImages(){
-        var list = interactiveitems.getStaticItems()
+        var list = interactiveitems.getActiveItems()
+        console.log("eats:" + food)
+        for(var i=0 ; i < list.length; i++){
+           var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+            if(dist<8000){
+                if(food.indexOf(list[i].name)>-1){
+                    list[i].relocate()
+                    life += 0.3
+                }
+            }
+        }
+
+        list = interactiveitems.getStaticItems()
         for(var i=0 ; i < list.length; i++){
                 var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
                 if(dist<8000){
-                    if(eatingFood.indexOf(list[i].name)>-1){
+                    if(food.indexOf(list[i].name)>-1){
                         list[i].relocate()
                         life += 0.3
                     }
@@ -60,5 +72,9 @@ InteractiveItem {
             life = 1
         if(life<0)
             life = 0
+    }
+    function relocate(){
+        x = drawingarea.width * (.15 + 0.7 * Math.random())
+        y = drawingarea.height * (.15 + 0.7 * Math.random())
     }
 }

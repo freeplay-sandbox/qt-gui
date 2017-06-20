@@ -96,6 +96,8 @@ Window {
 
             visible: true
 
+            property var collisionCategories: Box.Category2
+
             property bool showRobotChild: false
             property bool publishRobotChild: false
 
@@ -433,6 +435,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: leftwall
@@ -446,6 +449,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: top
@@ -459,6 +463,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category2
             }
             RectangleBoxBody {
                 id: ground
@@ -472,6 +477,7 @@ Window {
                 world: physicsWorld
                 friction: 1
                 density: 1
+                categories: Box.Category2
             }
 
             Body {
@@ -499,6 +505,7 @@ Window {
                 image: "res/horse.png"
                 eatingFood: "hay"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
             Character {
                 id: cow
@@ -506,6 +513,7 @@ Window {
                 image: "res/cow.png"
                 eatingFood: "hay"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
             Character {
                 id: dog
@@ -513,6 +521,7 @@ Window {
                 image: "res/dog.png"
                 eatingFood: "steak"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
             Character {
                 id: cat
@@ -520,6 +529,7 @@ Window {
                 image: "res/cat.png"
                 eatingFood: "steak"
                 stash: stash
+                collidesWith: interactiveitems.collisionCategories
             }
 
 

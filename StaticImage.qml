@@ -45,18 +45,6 @@ Item {
         }
     }
 
-    function testCloseImages(){
-        var list = interactiveitems.getActiveItems()
-        for(var i=0 ; i < list.length; i++){
-                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<8000){
-                    if(list[i].eatingFood.indexOf(name)>-1){
-                        relocate()
-                        list[i].life += 0.3
-                    }
-                }
-            }
-    }
     function relocate(){
         x = drawingarea.width * (.15 + 0.7 * Math.random())
         y = drawingarea.height * (.15 + 0.7 * Math.random())

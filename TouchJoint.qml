@@ -10,6 +10,7 @@ TouchPoint {
 
     property string name: "touch"
     property bool movingItem: false
+    property var itemMoved: ""
     property bool drawing: false
 
     // when used to draw on the background:
@@ -49,6 +50,7 @@ TouchPoint {
             // find out whether we touched an item
             if (obj.objectName === "interactive") {
                 movingItem = true;
+                itemMoved = obj;
                 joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);
                 joint.bodyB = obj.body;
@@ -62,7 +64,7 @@ TouchPoint {
         }
         else { // released
             if(movingItem) {
-                obj.testCloseImages()
+                itemMoved.testCloseImages()
                 interactionEventsPub.text = "childreleasing_"+obj.name
                 joint.bodyB = null;
                 movingItem = false;

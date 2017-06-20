@@ -45,13 +45,16 @@ InteractiveItem {
 
     function testCloseImages(){
         var list = interactiveitems.getActiveItems()
-        console.log("eats:" + food)
         for(var i=0 ; i < list.length; i++){
            var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
             if(dist<8000){
                 if(food.indexOf(list[i].name)>-1){
                     list[i].relocate()
                     life += 0.3
+                }
+                if(list[i].food.indexOf(name)>-1){
+                    relocate()
+                    list[i].life += .3
                 }
             }
         }

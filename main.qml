@@ -197,9 +197,12 @@ Window {
                         console.log("Auto-releasing ROS contact with " + parent.draggedObject);
                         interactionEventsPub.text = "robotreleasing_" + parent.draggedObject;
                         var items = interactiveitems.getActiveItems()
-                        for(var i = 0;i<items.length;i++)
-                            if(items[i].name === parent.draggedObject)
+                        for(var i = 0;i<items.length;i++){
+                            if(items[i].name === parent.draggedObject){
                                 items[i].testCloseImages()
+                                items[i].checkProximity()
+                            }
+                        }
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;

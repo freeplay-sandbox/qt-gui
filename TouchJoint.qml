@@ -51,6 +51,7 @@ TouchPoint {
             if (obj.objectName === "interactive") {
                 movingItem = true;
                 itemMoved = obj;
+                itemMoved.isMoved = true
                 joint.maxForce = obj.body.getMass() * 500;
                 joint.target = Qt.point(x, y);
                 joint.bodyB = obj.body;
@@ -68,6 +69,8 @@ TouchPoint {
                 interactionEventsPub.text = "childreleasing_"+obj.name
                 joint.bodyB = null;
                 movingItem = false;
+                itemMoved.isMoved = false
+                itemMoved.checkProximity()
             }
         }
     }

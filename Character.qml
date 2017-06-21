@@ -11,6 +11,7 @@ InteractiveItem {
     property var stash: parent
     property var food: []
     property double life: 1
+    property bool isMoved: false
 
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
     y: stash.y + 10 + Math.random() * 0.9 * stash.height
@@ -69,6 +70,8 @@ InteractiveItem {
                     }
                 }
             }
+
+        checkProximity()
     }
     onLifeChanged: {
         if(life>1)
@@ -76,8 +79,34 @@ InteractiveItem {
         if(life<0)
             life = 0
     }
+
     function relocate(){
         x = drawingarea.width * (.15 + 0.7 * Math.random())
         y = drawingarea.height * (.15 + 0.7 * Math.random())
+    }
+    function  checkProximity(){
+        if(isMoved)
+            return
+        var list = interactiveitems.getActiveItems()
+        for(var i=0 ; i < list.length; i++){
+           var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+            if(dist<10000 && list[i].name !== name){
+                console.log(x+" "+list[i].x)
+                x += 20/(x-list[i].x)
+                y += 20/(y-list[i].y)
+                startProximityTimer()
+                list[i].startProximityTimer()
+            }
+        }
+    }
+    Timer {
+        id: proximityTimer
+        interval: 10; running: false; repeat: false
+        onTriggered: {
+            checkProximity()
+        }
+    }
+    function startProximityTimer(){
+        proximityTimer.running = true
     }
 }

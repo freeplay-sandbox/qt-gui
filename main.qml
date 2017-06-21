@@ -548,10 +548,10 @@ Window {
             }
 
             function getActiveItems() {
-                return [horse, cow, dog, cat]
+                return [eagle, wolf, rat, python]
             }
             function getStaticItems() {
-                return [hay, steak]
+                return [lavender, flower]
             }
 
             function hideItems(items) {

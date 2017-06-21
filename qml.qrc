@@ -11,5 +11,19 @@
         <file>res/tags/markers.svg</file>
         <file>DrawingArea.qml</file>
         <file>StaticImage.qml</file>
+        <file>res/wolf.png</file>
+        <file>res/rat.png</file>
+        <file>res/python.png</file>
+        <file>res/mango.png</file>
+        <file>res/lavender.png</file>
+        <file>res/frog.png</file>
+        <file>res/fly.png</file>
+        <file>res/eagle.png</file>
+        <file>res/dragonfly.png</file>
+        <file>res/corn.png</file>
+        <file>res/butterfly.png</file>
+        <file>res/bird.png</file>
+        <file>res/flower.png</file>
+        <file>res/grasshopper.png</file>
     </qresource>
 </RCC>

@@ -289,51 +289,106 @@ Window {
             }
 
             StaticImage{
-                id: hay
-                name: "hay"
-                image: "res/hay.png"
+                id: flower
+                name: "flower"
                 x: 200
                 y: 200
             }
             StaticImage{
-                id: steak
-                name: "steak"
-                image: "res/steak.png"
+                id: lavender
+                name: "lavender"
                 x: 600
+                y: 200
+            }
+            StaticImage{
+                id: mango
+                name: "mango"
+                x: 400
+                y: 200
+            }
+
+            StaticImage{
+                id: corn
+                name: "corn"
+                x: 800
                 y: 200
             }
 
             Character {
-                id: horse
-                name: "horse"
-                image: "res/horse.png"
-                food: "hay"
+                id: grasshopper
+                name: "grasshopper"
+                food: "corn"
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
 
             Character {
-                id: cow
-                name: "cow"
-                image: "res/cow.png"
-                food: "hay"
-                stash: stash
-                collidesWith: interactiveitems.collisionCategories
-            }
-            Character {
-                id: dog
-                name: "dog"
-                image: "res/dog.png"
-                food: "steak"
+                id: butterfly
+                name: "butterfly"
+                food: ["flower","lavender"]
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
 
             Character {
-                id: cat
-                name: "cat"
-                image: "res/cat.png"
-                food: ["cow","steak"]
+                id: fly
+                name: "fly"
+                food: "mango"
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: bird
+                name: "bird"
+                food: ["dragonfly","fly"]
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: dragonfly
+                name: "dragonfly"
+                food: ["butterfly","fly"]
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: frog
+                name: "frog"
+                food: ["grasshopper","butterfly","dragonfly","fly"]
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: eagle
+                name: "eagle"
+                food: ["python","rat","wolf","frog","bird"]
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+            Character {
+                id: rat
+                name: "rat"
+                food: "grasshopper"
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: wolf
+                name: "wolf"
+                food: ["rat","bird"]
+                stash: stash
+                collidesWith: interactiveitems.collisionCategories
+            }
+
+            Character {
+                id: python
+                name: "python"
+                food: ["rat","frog","wolf"]
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -351,10 +406,10 @@ Window {
             }
 
             function getActiveItems() {
-                return [eagle, wolf, rat, python]
+                return [eagle, wolf, rat, python,bird,frog,dragonfly,fly,butterfly,grasshopper]
             }
             function getStaticItems() {
-                return [lavender, flower]
+                return [lavender, flower, mango, corn]
             }
 
             function hideItems(items) {

@@ -11,7 +11,7 @@ Item {
     rotation: 0
 
     property string name: ""
-    property string image: "res/cube.svg"
+    property string image: "res/"+name+".png"
     property int epsilon: 20
 
     Image {

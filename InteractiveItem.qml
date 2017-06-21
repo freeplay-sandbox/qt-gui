@@ -14,7 +14,7 @@ Item {
         objectName: "interactive"
 
         property string name
-        property string image
+        property string image: "res/"+name+".png"
 
         property var boundingbox:
             Polygon {

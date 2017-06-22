@@ -453,10 +453,17 @@ Window {
                     item.rotation = Math.random() * 360;
                }
             }
+            function itemsToRandom(items) {
+                for(var i = 0; i < items.length; i++) {
+                    items[i].relocate()
+                    items[i].rotation = Math.random() * 360;
+               }
+            }
 
 
             function startFreeplay() {
-                itemsToStash();
+                itemsToRandom(getActiveItems());
+                itemsToRandom(getStaticItems());
                 interactiveitems.restoreAllItems();
             }
 
@@ -570,9 +577,9 @@ Window {
     }
     Timer {
         id: initialise
-        interval: 900; running: false; repeat: false
+        interval: 200; running: true; repeat: false
         onTriggered: {
-            startFreeplay()
+            interactiveitems.startFreeplay()
         }
     }
 

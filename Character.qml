@@ -81,8 +81,27 @@ InteractiveItem {
     }
 
     function relocate(){
-        x = drawingarea.width * (.15 + 0.7 * Math.random())
-        y = drawingarea.height * (.15 + 0.7 * Math.random())
+        var good = false
+        while(!good){
+            good = true
+            x = drawingarea.width * (.15 + 0.7 * Math.random())
+            y = drawingarea.height * (.15 + 0.7 * Math.random())
+            var list = interactiveitems.getActiveItems()
+            for(var i=0 ; i < list.length; i++){
+               var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+                if(dist<20000 && list[i].name !== name){
+                    good = false
+                }
+            }
+            list = interactiveitems.getStaticItems()
+            for(var i=0 ; i < list.length; i++){
+                console.log(list[i].name)
+               var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+                if(dist<20000 && list[i].name !== name){
+                    good = false
+                }
+            }
+        }
     }
     function  checkProximity(){
         if(isMoved)

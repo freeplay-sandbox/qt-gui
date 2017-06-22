@@ -45,7 +45,7 @@ Window {
         DrawingArea {
             id: drawingarea
             height: parent.height
-            width: parent.width * 0.88
+            width: parent.width
             anchors.left: parent.left
             anchors.top: parent.top
             visible: true
@@ -73,9 +73,10 @@ Window {
             id: stash
             color: "black"
             height: parent.height
-            width: parent.width - drawingarea.width
-            anchors.left: drawingarea.right
+            width: parent.width *.12
+            anchors.right: parent.right
             anchors.top: parent.top
+            visible: false
 
             Rectangle {
                height: parent.height

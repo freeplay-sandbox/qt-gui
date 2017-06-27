@@ -6,7 +6,7 @@ interface](https://github.com/severin-lemaignan/freeplay-sandbox-ros) of the
 'Free-play Sandbox' experimental framework for Cognitive Human-Robot
 Interaction research.*
 
-![Screenshot of the Zoo playground](docs/zoo-activity2.png)
+![Screenshot of the playground](docs/freeplay-sandbox.png)
 
 
 Pre-requisites

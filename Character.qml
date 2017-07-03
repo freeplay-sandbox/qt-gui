@@ -95,7 +95,6 @@ InteractiveItem {
             }
             list = interactiveitems.getStaticItems()
             for(var i=0 ; i < list.length; i++){
-                console.log(list[i].name)
                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
                 if(dist<20000 && list[i].name !== name){
                     good = false

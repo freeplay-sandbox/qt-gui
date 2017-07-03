@@ -56,12 +56,6 @@ TouchPoint {
                 joint.target = Qt.point(x, y);
                 joint.bodyB = obj.body;
             }
-            else {
-                currentStroke = [];
-                color = drawingarea.fgColor;
-                drawing = true;
-            }
-
         }
         else { // released
             if(movingItem) {

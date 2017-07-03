@@ -11,7 +11,7 @@ Window {
     id: window
 
     visible: true
-    //visibility: Window.FullScreen
+    visibility: Window.FullScreen
     //width: Screen.width
     //height: Screen.height
     width:800
@@ -451,7 +451,6 @@ Window {
                 topic: "sandtray/signals/shuffle_items"
                 onTriggered: interactiveitems.shuffleItems();
             }
-
 
             function itemsToStash() {
                 var items = getActiveItems();

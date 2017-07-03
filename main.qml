@@ -322,6 +322,7 @@ Window {
                 id: grasshopper
                 name: "grasshopper"
                 food: "corn"
+                scale:.8
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -330,6 +331,7 @@ Window {
                 id: butterfly
                 name: "butterfly"
                 food: ["flower","lavender"]
+                scale:.8
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -338,6 +340,7 @@ Window {
                 id: fly
                 name: "fly"
                 food: "mango"
+                scale: 0.5
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -346,6 +349,7 @@ Window {
                 id: bird
                 name: "bird"
                 food: ["dragonfly","fly"]
+                scale:.9
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -354,6 +358,7 @@ Window {
                 id: dragonfly
                 name: "dragonfly"
                 food: ["butterfly","fly"]
+                scale:.8
                 stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -371,6 +376,7 @@ Window {
                 name: "eagle"
                 food: ["python","rat","wolf","frog","bird"]
                 stash: stash
+                scale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
@@ -386,6 +392,7 @@ Window {
                 name: "wolf"
                 food: ["rat","bird"]
                 stash: stash
+                scale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
 
@@ -394,6 +401,7 @@ Window {
                 name: "python"
                 food: ["rat","frog","wolf"]
                 stash: stash
+                scale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
 
@@ -608,13 +616,13 @@ Window {
         var message = "characters"
         var items = interactiveitems.getActiveItems()
         for(var i = 0; i < items.length; i++)
-            message += "_"+items[i].name
+            message += "_"+items[i].name + "-" + items[i].scale
         interactionEventsPub.text = message
         sleep(100)
         message = "targets"
         items = interactiveitems.getStaticItems()
         for(var i = 0; i < items.length; i++)
-            message += "_"+items[i].name
+            message += "_"+items[i].name + "-" + items[i].scale
         sleep(100)
         interactionEventsPub.text = message
     }

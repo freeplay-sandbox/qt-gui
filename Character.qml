@@ -16,7 +16,7 @@ InteractiveItem {
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
     y: stash.y + 10 + Math.random() * 0.9 * stash.height
 
-    width: scale * 4 * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
+    width: 2 * scale * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     rotation: Math.random() * 360
 
     property double bbRadius: bbScale * character.width/2
@@ -109,8 +109,7 @@ InteractiveItem {
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
            var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-            if(dist<10000 && list[i].name !== name){
-                console.log(x+" "+list[i].x)
+            if(dist<10000 * Math.pow(Math.max(list[i].scale,scale),2) && list[i].name !== name){
                 x += 20/(x-list[i].x)
                 y += 20/(y-list[i].y)
                 startProximityTimer()

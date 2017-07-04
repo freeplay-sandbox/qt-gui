@@ -48,8 +48,7 @@ InteractiveItem {
     function testCloseImages(){
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
-           var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-            if(dist<8000){
+            if(testProximity(list[i])){
                 if(food.indexOf(list[i].name)>-1){
                     list[i].relocate()
                     life += 0.3
@@ -63,14 +62,11 @@ InteractiveItem {
 
         list = interactiveitems.getStaticItems()
         for(var i=0 ; i < list.length; i++){
-                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<8000){
-                    if(food.indexOf(list[i].name)>-1){
-                        list[i].relocate()
-                        life += 0.3
-                    }
-                }
+            if(testProximity(list[i]) && food.indexOf(list[i].name)>-1){
+                list[i].relocate()
+                life += 0.3
             }
+        }
 
         checkProximity()
     }
@@ -101,17 +97,13 @@ InteractiveItem {
             y = drawingarea.height * (.15 + 0.7 * Math.random())
             var list = interactiveitems.getActiveItems()
             for(var i=0 ; i < list.length; i++){
-               var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<20000 && list[i].name !== name){
+                if(testProximity(list[i]))
                     good = false
-                }
             }
             list = interactiveitems.getStaticItems()
             for(var i=0 ; i < list.length; i++){
-               var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<20000 && list[i].name !== name){
+                if(testProximity(list[i]))
                     good = false
-                }
             }
         }
     }
@@ -120,8 +112,7 @@ InteractiveItem {
             return
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
-           var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-            if(dist<10000 * Math.pow(Math.max(list[i].scale,scale),2) && list[i].name !== name){
+            if(testProximity(list[i])){
                 x += 20/(x-list[i].x)
                 y += 20/(y-list[i].y)
                 startProximityTimer()
@@ -138,5 +129,13 @@ InteractiveItem {
     }
     function startProximityTimer(){
         proximityTimer.running = true
+    }
+
+    function testProximity(item){
+        var dist = Math.pow(x-item.x,2)+Math.pow(y-item.y,2)
+        if(dist<10000 * Math.pow(Math.max(item.scale,scale),2) && item.name !== name)
+            return true
+        else
+            return false
     }
 }

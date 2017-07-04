@@ -26,7 +26,6 @@ Window {
     }
     onHeightChanged: {
         prevHeight=height;
-
     }
 
     color: "black"
@@ -45,6 +44,45 @@ Window {
         property int livingAnimals: 10
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
         property double points: 0
+        property var startingTime: 0
+
+        onLivingAnimalsChanged: {
+            if(livingAnimals == 0){
+                transitionScreen.visible = true
+            }
+        }
+
+        Item {
+            id: transitionScreen
+            anchors.fill: parent
+            visible: false
+            z: 10
+
+            Rectangle {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.width / 2
+                height: parent.height / 2
+                color: "AliceBlue"
+                border.color: "black"
+                border.width: width/100
+                radius: width / 10
+                Label {
+                    id: lab
+                    font.pixelSize: 60
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                }
+            }
+            onVisibleChanged: {
+                var d = new Date()
+                console.log(sandbox.startingTime)
+                var n = d.getTime() - sandbox.startingTime
+                lab.text = "You had animals for "+Number(n).toLocaleString()+" seconds \n Well done!"
+
+            }
+        }
 
         DrawingArea {
             id: drawingarea
@@ -494,10 +532,13 @@ Window {
             }
 
 
-            function startFreeplay() {
+            function startFoodChain() {
                 itemsToRandom(getActiveItems());
                 itemsToRandom(getStaticItems());
                 interactiveitems.restoreAllItems();
+
+                var d = new Date()
+                sandbox.startingTime = d.getTime()
             }
 
             RosSignal {
@@ -612,7 +653,7 @@ Window {
         id: initialise
         interval: 200; running: true; repeat: false
         onTriggered: {
-            interactiveitems.startFreeplay()
+            interactiveitems.startFoodChain()
         }
     }
 
@@ -661,5 +702,4 @@ Window {
         }
       }
     }
-
 }

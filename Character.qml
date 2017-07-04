@@ -10,7 +10,7 @@ InteractiveItem {
 
     property var stash: parent
     property var food: []
-    property double life: 1
+    property double life: .1
     property bool alive: true
     property bool isMoved: false
 

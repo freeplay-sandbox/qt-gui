@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
+import QtQuick.Controls 1.4
 
 import Box2D 2.0
 
@@ -43,6 +44,7 @@ Window {
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
         property int livingAnimals: 10
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
+        property double points: 0
 
         DrawingArea {
             id: drawingarea
@@ -69,6 +71,27 @@ Window {
                 topic: "sandtray/signals/background_drawing"
             }
             onDrawEnabledChanged: backgrounddrawing.signal()
+        }
+
+        Label {
+            id: animalCounter
+            text: "Living animals: " + sandbox.livingAnimals
+            font.pixelSize: 40
+            anchors.top:parent.top
+            anchors.left:parent.left
+        }
+        Label {
+            id: lifeCounter
+            text: "Total life: " + Number(sandbox.totalLife).toLocaleString()
+            anchors.top:animalCounter.bottom
+            font.pixelSize: 40
+            anchors.left:parent.left
+        }
+        Label {
+            text: "Points: " + Number(sandbox.points).toLocaleString()
+            anchors.top:lifeCounter.bottom
+            font.pixelSize: 40
+            anchors.left:parent.left
         }
 
         Rectangle {
@@ -600,11 +623,13 @@ Window {
             var items = interactiveitems.getActiveItems()
             var list=[]
             for(var i = 0; i < items.length; i++){
-                items[i].life -= 0.01
+                if(items[i].life>0)
+                    items[i].life -= 0.01
                 list.push(items[i].life)
             }
             lifePub.list = list
             lifePub.publish()
+            sandbox.points += sandbox.totalLife
         }
     }
 

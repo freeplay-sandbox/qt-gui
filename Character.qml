@@ -50,10 +50,12 @@ InteractiveItem {
         for(var i=0 ; i < list.length; i++){
             if(testProximity(list[i])){
                 if(food.indexOf(list[i].name)>-1){
+                    list[i].life -= 0.25
                     list[i].relocate()
                     life += 0.3
                 }
                 if(list[i].food.indexOf(name)>-1){
+                    life -= 0.25
                     relocate()
                     list[i].life += .3
                 }

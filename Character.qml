@@ -11,6 +11,7 @@ InteractiveItem {
     property var stash: parent
     property var food: []
     property double life: 1
+    property bool alive: true
     property bool isMoved: false
 
     x: stash.x + 10 + Math.random() * 0.4 * stash.width
@@ -76,11 +77,23 @@ InteractiveItem {
     onLifeChanged: {
         if(life>1)
             life = 1
-        if(life<0)
+        if(life<=0){
             life = 0
+            alive = false
+        }
+    }
+    onAliveChanged: {
+        if(!alive){
+            visible = false
+            x=-100
+            y=-100
+            sandbox.livingAnimals--
+        }
     }
 
     function relocate(){
+        if(!visible)
+            return
         var good = false
         while(!good){
             good = true

@@ -41,6 +41,8 @@ Window {
         property double physicalCubeSize: 30 //mm
         //property double pixel2meter: (physicalMapWidth / 1000) / drawingarea.paintedWidth
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
+        property int livingAnimals: 10
+        property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
 
         DrawingArea {
             id: drawingarea

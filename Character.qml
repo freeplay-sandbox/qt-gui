@@ -9,8 +9,8 @@ InteractiveItem {
 
     property var stash: parent
     property var food: []
-    property double life: .1
-    property bool alive: true
+    property double initialLife: 1
+    property double life: initialLife
     property bool alive: false
     property bool isMoved: false
     visible: false
@@ -73,8 +73,8 @@ InteractiveItem {
         checkProximity()
     }
     onLifeChanged: {
-        if(life>1)
-            life = 1
+        if(life>initialLife)
+            life = initialLife
         if(life<=0){
             life = 0
             alive = false

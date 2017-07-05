@@ -73,7 +73,7 @@ Item {
             anchors.bottomMargin: image.height/10
             anchors.horizontalCenter: image.horizontalCenter
             width: image.width
-            value: life
+            value: life/initialLife
             height: image.height/10
 
             style: ProgressBarStyle {

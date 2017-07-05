@@ -358,27 +358,19 @@ Window {
             StaticImage{
                 id: flower
                 name: "flower"
-                x: 200
-                y: 200
             }
             StaticImage{
                 id: lavender
                 name: "lavender"
-                x: 600
-                y: 200
             }
             StaticImage{
                 id: mango
                 name: "mango"
-                x: 400
-                y: 200
             }
 
             StaticImage{
                 id: corn
                 name: "corn"
-                x: 800
-                y: 200
             }
 
             Character {
@@ -524,6 +516,7 @@ Window {
                     item.rotation = Math.random() * 360;
                }
             }
+
             function itemsToRandom(items) {
                 for(var i = 0; i < items.length; i++) {
                     items[i].relocate()

@@ -6,8 +6,9 @@ Item {
     property double scale: 1.0
     width: 2*parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     height: width
-    x: 0
-    y: 0
+    x: -100
+    y: -100
+    visible: false
     rotation: 0
 
     property string name: ""
@@ -67,5 +68,6 @@ Item {
                 }
             }
         }
+        visible = true
     }
 }

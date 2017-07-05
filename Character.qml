@@ -4,7 +4,6 @@ import Box2D 2.0
 InteractiveItem {
     id: character
 
-    visible: true
     property double scale: 1.0
     property double bbScale: 1.0
 
@@ -14,8 +13,9 @@ InteractiveItem {
     property bool alive: true
     property bool isMoved: false
 
-    x: stash.x + 10 + Math.random() * 0.4 * stash.width
-    y: stash.y + 10 + Math.random() * 0.9 * stash.height
+    visible: false
+    x: -100
+    y: -100
 
     width: 2 * scale * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     rotation: Math.random() * 360

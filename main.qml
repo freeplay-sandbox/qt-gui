@@ -41,14 +41,13 @@ Window {
         property double physicalCubeSize: 30 //mm
         //property double pixel2meter: (physicalMapWidth / 1000) / drawingarea.paintedWidth
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
-        property int livingAnimals: 10
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
         property double points: 0
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
             if(livingAnimals == 0){
-                transitionScreen.visible = true
+                endGame()
             }
         }
 
@@ -524,9 +523,17 @@ Window {
                }
             }
 
+            function setAlive(items) {
+                for(var i = 0; i < items.length; i++) {
+                   items[i].alive = true
+                   items[i].life = items[i].initialLife
+                }
+              }
 
             function startFoodChain() {
-                itemsToRandom(getActiveItems());
+                interactiveitems.restoreAllItems();
+                setAlive(getActiveItems())
+                //itemsToRandom(getActiveItems());
                 itemsToRandom(getStaticItems());
                 interactiveitems.restoreAllItems();
 
@@ -694,5 +701,11 @@ Window {
           break;
         }
       }
+    }
+
+    function endGame(){
+        informationScreen.visible = true
+        hunger.running = false
+        interactiveitems.hideItems(interactiveitems.getStaticItems())
     }
 }

@@ -11,8 +11,8 @@ InteractiveItem {
     property var food: []
     property double life: .1
     property bool alive: true
+    property bool alive: false
     property bool isMoved: false
-
     visible: false
     x: -100
     y: -100
@@ -81,11 +81,16 @@ InteractiveItem {
         }
     }
     onAliveChanged: {
-        if(!alive){
-            visible = false
+        if(alive){
+            relocate()
+            sandbox.livingAnimals++
+            visible = true
+        }
+        else {
             x=-100
             y=-100
             sandbox.livingAnimals--
+            visible = false
         }
     }
 
@@ -110,7 +115,7 @@ InteractiveItem {
         }
     }
     function  checkProximity(){
-        if(isMoved)
+        if(isMoved || !alive)
             return
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){

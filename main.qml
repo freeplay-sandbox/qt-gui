@@ -2,6 +2,7 @@ import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
 import Box2D 2.0
 
@@ -41,6 +42,7 @@ Window {
         property double physicalCubeSize: 30 //mm
         //property double pixel2meter: (physicalMapWidth / 1000) / drawingarea.paintedWidth
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
+        property int livingAnimals: 0 //eagle.alife + wolf.alife + rat.alife + python.alife + bird.alife + frog.alife + dragonfly.alife + fly.alife + butterfly.alife + grasshopper.alife
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
         property double points: 0
         property var startingTime: 0
@@ -52,9 +54,9 @@ Window {
         }
 
         Item {
-            id: transitionScreen
+            id: informationScreen
             anchors.fill: parent
-            visible: false
+            visible: true
             z: 10
 
             Rectangle {
@@ -68,18 +70,43 @@ Window {
                 radius: width / 10
                 Label {
                     id: lab
-                    font.pixelSize: 60
+                    font.pixelSize: 50
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignHCenter
+                    text: "Welcome to the food chain game, \n try to keep as many animal alive \n as possible."
+                }
+                Button {
+                    id: buttonStart
+                    width: parent.width/5
+                    height: parent.height/8
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: parent.height/3
+                    text: "Start"
+                    style: ButtonStyle {
+                        label: Text {
+                            font.family: "Helvetica"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            font.pointSize: 30
+                            text: buttonStart.text
+                        }
+                    }
+                    onClicked: {
+                        interactiveitems.startFoodChain()
+                    }
+
                 }
             }
             onVisibleChanged: {
                 var d = new Date()
                 console.log(sandbox.startingTime)
                 var n = d.getTime() - sandbox.startingTime
-                lab.text = "You had animals for "+Number(n).toLocaleString()+" seconds \n Well done!"
-
+                lab.text = //"You had animals for "+Number(n/1000).toLocaleString(Qt.locale("en_UK"),'f',2)+" seconds. \n" +
+                            "You finished with " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2) +" points. \n" +
+                            "Well done!"
+                buttonStart.text = "Try Again"
             }
         }
 
@@ -539,6 +566,9 @@ Window {
 
                 var d = new Date()
                 sandbox.startingTime = d.getTime()
+                hunger.start()
+
+                informationScreen.visible = false
             }
 
             RosSignal {
@@ -651,7 +681,7 @@ Window {
     }
     Timer {
         id: initialise
-        interval: 200; running: true; repeat: false
+        interval: 200; running: false; repeat: false
         onTriggered: {
             interactiveitems.startFoodChain()
         }
@@ -659,7 +689,7 @@ Window {
 
     Timer {
         id: hunger
-        interval: 1000; running: true; repeat: true
+        interval: 1000; running: false; repeat: true
         onTriggered: {
             var items = interactiveitems.getActiveItems()
             var list=[]

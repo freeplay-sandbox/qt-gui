@@ -138,6 +138,7 @@ Window {
         }
 
         Label {
+            visible: ! informationScreen.visible
             id: animalCounter
             text: "Living animals: " + sandbox.livingAnimals
             font.pixelSize: 40
@@ -145,14 +146,42 @@ Window {
             anchors.left:parent.left
         }
         Label {
+            visible: ! informationScreen.visible
             id: lifeCounter
-            text: "Total life: " + Number(sandbox.totalLife).toLocaleString()
+            text: "Total life:  " //+ Number(sandbox.totalLife).toLocaleString(Qt.locale("en_UK"),'f',2)
             anchors.top:animalCounter.bottom
             font.pixelSize: 40
             anchors.left:parent.left
         }
+        ProgressBar {
+            visible: ! informationScreen.visible
+            id: totalLifeBar
+            anchors.left: lifeCounter.right
+            anchors.verticalCenter: lifeCounter.verticalCenter
+            width: sandbox.width/5
+            value: sandbox.totalLife / (eagle.initialLife + wolf.initialLife + rat.initialLife + python.initialLife + bird.initialLife + frog.initialLife + dragonfly.initialLife + fly.initialLife + butterfly.initialLife + grasshopper.initialLife)
+            height: lifeCounter.height / 2
+
+            style: ProgressBarStyle {
+                background: Rectangle {
+                    radius: 2
+                    color: "Crimson"
+                    border.color: "black"
+                    border.width: 1
+                    implicitWidth: totalLifeBar.width
+                    implicitHeight: totalLifeBar.height
+                }
+                progress: Rectangle {
+                    color: "lime"
+                    border.color: "black"
+                    implicitWidth: totalLifeBar.width
+                    implicitHeight: totalLifeBar.height
+                }
+            }
+        }
         Label {
-            text: "Points: " + Number(sandbox.points).toLocaleString()
+            visible: ! informationScreen.visible
+            text: "Points: " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2)
             anchors.top:lifeCounter.bottom
             font.pixelSize: 40
             anchors.left:parent.left

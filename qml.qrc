@@ -25,5 +25,6 @@
         <file>res/bird.png</file>
         <file>res/flower.png</file>
         <file>res/grasshopper.png</file>
+        <file>Question.qml</file>
     </qresource>
 </RCC>

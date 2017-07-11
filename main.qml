@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.1
 
 import Box2D 2.0
 
@@ -31,6 +32,38 @@ Window {
 
     color: "black"
     title: qsTr("Free-play sandbox")
+
+    StateGroup {
+        id: globalStates
+        states: [
+            State {
+                    name: "question"
+                    PropertyChanges { target: initialTest; visible: true}
+                    PropertyChanges { target: informationScreen; visible: false}
+                    PropertyChanges { target: labels; visible: false}
+            },
+            State {
+                    name: "game"
+                    PropertyChanges { target: initialTest; visible: false}
+                    PropertyChanges { target: informationScreen; visible: false}
+                    PropertyChanges { target: labels; visible: true}
+            },
+            State {
+                    name: "endGame"
+                    PropertyChanges { target: initialTest; visible: false}
+                    PropertyChanges { target: informationScreen; visible: true}
+                    PropertyChanges { target: labels; visible: false}
+                    PropertyChanges { target: buttonStart; text: "Try again"}
+            },
+            State {
+                    name: "prepareGame"
+                    PropertyChanges { target: initialTest; visible: false}
+                    PropertyChanges { target: informationScreen; visible: true}
+                    PropertyChanges { target: labels; visible: false}
+                    PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep as many animal alive \n as possible."}
+            }
+        ]
+    }
 
     Item {
         id: sandbox
@@ -74,7 +107,7 @@ Window {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignHCenter
-                    text: "Welcome to the food chain game, \n try to keep as many animal alive \n as possible."
+                    text: "Welcome to the food chain game, \n We will start with some questions."
                 }
                 Button {
                     id: buttonStart
@@ -94,7 +127,10 @@ Window {
                         }
                     }
                     onClicked: {
-                        interactiveitems.startFoodChain()
+                        if(globalStates.state != "")
+                            interactiveitems.startFoodChain()
+                        else
+                            globalStates.state = "question"
                     }
 
                 }
@@ -106,8 +142,20 @@ Window {
                 lab.text = //"You had animals for "+Number(n/1000).toLocaleString(Qt.locale("en_UK"),'f',2)+" seconds. \n" +
                             "You finished with " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2) +" points. \n" +
                             "Well done!"
-                buttonStart.text = "Try Again"
             }
+        }
+
+        Question {
+            id: initialTest
+            mainImageName: "eagle"
+            image1Name: "rat"
+            image2Name: "python"
+            image3Name: "butterfly"
+            image4Name: "grasshopper"
+            text: "What does an eagle eat?"
+            nextState: "prepareGame"
+            visible: false
+            z:11
         }
 
         DrawingArea {
@@ -137,54 +185,52 @@ Window {
             onDrawEnabledChanged: backgrounddrawing.signal()
         }
 
-        Label {
-            visible: ! informationScreen.visible
-            id: animalCounter
-            text: "Living animals: " + sandbox.livingAnimals
-            font.pixelSize: 40
+        ColumnLayout {
+            id: labels
+            visible: false
             anchors.top:parent.top
             anchors.left:parent.left
-        }
-        Label {
-            visible: ! informationScreen.visible
-            id: lifeCounter
-            text: "Total life:  " //+ Number(sandbox.totalLife).toLocaleString(Qt.locale("en_UK"),'f',2)
-            anchors.top:animalCounter.bottom
-            font.pixelSize: 40
-            anchors.left:parent.left
-        }
-        ProgressBar {
-            visible: ! informationScreen.visible
-            id: totalLifeBar
-            anchors.left: lifeCounter.right
-            anchors.verticalCenter: lifeCounter.verticalCenter
-            width: sandbox.width/5
-            value: sandbox.totalLife / (eagle.initialLife + wolf.initialLife + rat.initialLife + python.initialLife + bird.initialLife + frog.initialLife + dragonfly.initialLife + fly.initialLife + butterfly.initialLife + grasshopper.initialLife)
-            height: lifeCounter.height / 2
+            spacing: 20
+            Label {
+                id: animalCounter
+                text: "Living animals: " + sandbox.livingAnimals
+                font.pixelSize: 40
+            }
+            Label {
+                id: lifeCounter
+                text: "Total life:  " //+ Number(sandbox.totalLife).toLocaleString(Qt.locale("en_UK"),'f',2)
+                font.pixelSize: 40
+            }
+            Label {
+                text: "Points: " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2)
+                font.pixelSize: 40
+                anchors.left:parent.left
+            }
+            ProgressBar {
+                id: totalLifeBar
+                anchors.left: lifeCounter.right
+                anchors.verticalCenter: lifeCounter.verticalCenter
+                width: sandbox.width/5
+                value: sandbox.totalLife / (eagle.initialLife + wolf.initialLife + rat.initialLife + python.initialLife + bird.initialLife + frog.initialLife + dragonfly.initialLife + fly.initialLife + butterfly.initialLife + grasshopper.initialLife)
+                height: lifeCounter.height / 2
 
-            style: ProgressBarStyle {
-                background: Rectangle {
-                    radius: 2
-                    color: "Crimson"
-                    border.color: "black"
-                    border.width: 1
-                    implicitWidth: totalLifeBar.width
-                    implicitHeight: totalLifeBar.height
-                }
-                progress: Rectangle {
-                    color: "lime"
-                    border.color: "black"
-                    implicitWidth: totalLifeBar.width
-                    implicitHeight: totalLifeBar.height
+                style: ProgressBarStyle {
+                    background: Rectangle {
+                        radius: 2
+                        color: "Crimson"
+                        border.color: "black"
+                        border.width: 1
+                        implicitWidth: totalLifeBar.width
+                        implicitHeight: totalLifeBar.height
+                    }
+                    progress: Rectangle {
+                        color: "lime"
+                        border.color: "black"
+                        implicitWidth: totalLifeBar.width
+                        implicitHeight: totalLifeBar.height
+                    }
                 }
             }
-        }
-        Label {
-            visible: ! informationScreen.visible
-            text: "Points: " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2)
-            anchors.top:lifeCounter.bottom
-            font.pixelSize: 40
-            anchors.left:parent.left
         }
 
         Rectangle {
@@ -597,7 +643,7 @@ Window {
                 sandbox.startingTime = d.getTime()
                 hunger.start()
 
-                informationScreen.visible = false
+                globalStates.state = "game"
             }
 
             RosSignal {
@@ -763,8 +809,8 @@ Window {
     }
 
     function endGame(){
-        informationScreen.visible = true
         hunger.running = false
         interactiveitems.hideItems(interactiveitems.getStaticItems())
+        globalStates.state = "endGame"
     }
 }

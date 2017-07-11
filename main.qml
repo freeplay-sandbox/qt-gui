@@ -23,6 +23,8 @@ Window {
     property int prevWidth:800
     property int prevHeight:600
 
+    property string  qlogfilename: "test.csv"
+
     onWidthChanged: {
         prevWidth=width;
     }

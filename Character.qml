@@ -17,8 +17,11 @@ InteractiveItem {
     x: -100
     y: -100
 
+
     width: 2 * scale * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
-    rotation: Math.random() * 360
+    rotation: 0
+
+    onRotationChanged: rotation = 0
 
     property double bbRadius: bbScale * character.width/2
     property point bbOrigin: Qt.point(character.width/2, character.height/2)

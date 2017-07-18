@@ -601,7 +601,7 @@ Window {
                     var item = items[i]
                     item.x = interactiveitems.x + interactiveitems.width * 0.1 + Math.random() * 0.8 * interactiveitems.width;
                     item.y = interactiveitems.y + interactiveitems.height * 0.1 + Math.random() * 0.8 * interactiveitems.height;
-                    item.rotation = Math.random() * 360;
+                    //item.rotation = Math.random() * 360;
                  }
             }
 
@@ -616,14 +616,14 @@ Window {
                     var item = items[i]
                     item.x = item.stash.x + 10 + Math.random() * 0.5 * item.stash.width;
                     item.y = item.stash.y + 10 + Math.random() * 0.9 * item.stash.height;
-                    item.rotation = Math.random() * 360;
+                    //item.rotation = Math.random() * 360;
                }
             }
 
             function itemsToRandom(items) {
                 for(var i = 0; i < items.length; i++) {
                     items[i].relocate()
-                    items[i].rotation = Math.random() * 360;
+                    //items[i].rotation = Math.random() * 360;
                }
             }
 

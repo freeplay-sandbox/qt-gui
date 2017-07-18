@@ -367,7 +367,7 @@ Window {
                         for(var i = 0;i<items.length;i++){
                             if(items[i].name === parent.draggedObject){
                                 items[i].testCloseImages()
-                                items[i].checkProximity()
+                                //items[i].checkProximity()
                             }
                         }
                         parent.draggedObject = "";

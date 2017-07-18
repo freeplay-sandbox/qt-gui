@@ -11,6 +11,8 @@ InteractiveItem {
     property var food: []
     property double initialLife: 1
     property double life: initialLife
+    property double fleeX: 0
+    property double fleeY: 0
     property bool alive: false
     property bool isMoved: false
     visible: false
@@ -48,19 +50,28 @@ InteractiveItem {
                 restitution: 0.1
             }
 
+    ParallelAnimation{
+        id:flee
+        NumberAnimation {target: character; property: "x"; from: x; to: x+fleeX; duration: 500; easing.type: Easing.OutInBounce}
+        NumberAnimation {target: character; property: "y";from: y; to: y+fleeY; duration: 500; easing.type: Easing.InOutBounce}
+    }
+
     function testCloseImages(){
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
             if(testProximity(list[i])){
                 if(food.indexOf(list[i].name)>-1){
                     list[i].life -= 0.25
-                    list[i].relocate()
+                    list[i].flee()
                     life += 0.3
                 }
-                if(list[i].food.indexOf(name)>-1){
+                else if(list[i].food.indexOf(name)>-1){
                     life -= 0.25
-                    relocate()
+                    flee()
                     list[i].life += .3
+                }
+                else {
+                    list[i].flee()
                 }
             }
         }
@@ -73,7 +84,7 @@ InteractiveItem {
             }
         }
 
-        checkProximity()
+        //checkProximity()
     }
     onLifeChanged: {
         if(life>initialLife)
@@ -107,13 +118,17 @@ InteractiveItem {
             y = drawingarea.height * (.15 + 0.7 * Math.random())
             var list = interactiveitems.getActiveItems()
             for(var i=0 ; i < list.length; i++){
-                if(testProximity(list[i]))
-                    good = false
+                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+                 if(dist<60000 && list[i].name !== name){
+                     good = false
+                 }
             }
             list = interactiveitems.getStaticItems()
             for(var i=0 ; i < list.length; i++){
-                if(testProximity(list[i]))
-                    good = false
+                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
+                 if(dist<60000 && list[i].name !== name){
+                     good = false
+                 }
             }
         }
     }
@@ -147,5 +162,37 @@ InteractiveItem {
             return true
         else
             return false
+    }
+
+    function flee(){
+        var angle = 0
+        var distance = 0
+        var good = false
+        var counter = 0
+        while(!good){
+            counter++
+            good = true
+            angle = 2 * Math.PI * Math.random()
+            distance = 50 + counter + 200 * Math.random()
+            fleeX = distance * Math.cos(angle)
+            fleeY = distance * Math.sin(angle)
+            if (x+fleeX < 0 || x+fleeX > sandbox.width || y+fleeY<0 || y+fleeY>sandbox.height){
+                good=false
+                continue
+            }
+            if(counter > 150){
+                console.log("breaking")
+                break
+            }
+            var list = interactiveitems.getActiveItems()
+            for(var i=0 ; i < list.length; i++){
+                var dist = Math.pow(x+fleeX-list[i].x,2)+Math.pow(y+fleeY-list[i].y,2)
+                 if(dist<60000 && list[i].name !== name){
+                     good = false
+                 }
+            }
+        }
+
+        flee.start()
     }
 }

@@ -64,7 +64,7 @@ TouchPoint {
                 joint.bodyB = null;
                 movingItem = false;
                 itemMoved.isMoved = false
-                itemMoved.checkProximity()
+                //itemMoved.checkProximity()
             }
         }
     }

@@ -26,5 +26,6 @@
         <file>res/flower.png</file>
         <file>res/grasshopper.png</file>
         <file>Question.qml</file>
+        <file>Lifebar.qml</file>
     </qresource>
 </RCC>

@@ -15,7 +15,6 @@ Item {
 
         property string name
         property string image: "res/"+name+".png"
-
         property var boundingbox:
             Polygon {
                 id:bbpoly
@@ -51,7 +50,6 @@ Item {
             onPaintedWidthChanged: {
                 bbratio= image.paintedWidth/image.sourceSize.width;
             }
-
         }
         Body {
                 id: cubeBody
@@ -67,33 +65,6 @@ Item {
                 angularDamping: 5
                 linearDamping: 5
         }
-        ProgressBar {
-            id: lifeSlider
-            anchors.bottom: image.top
-            anchors.bottomMargin: image.height/10
-            anchors.horizontalCenter: image.horizontalCenter
-            width: image.width
-            value: life/initialLife
-            height: image.height/10
-
-            style: ProgressBarStyle {
-                background: Rectangle {
-                    radius: 2
-                    color: "Crimson"
-                    border.color: "black"
-                    border.width: 1
-                    implicitWidth: 200
-                    implicitHeight: 24
-                }
-                progress: Rectangle {
-                    color: "lime"
-                    border.color: "black"
-                    implicitWidth: 200
-                    implicitHeight: 24
-                }
-            }
-        }
-
 
     Item {
         id: objectCenter

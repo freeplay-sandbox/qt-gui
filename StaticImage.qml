@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import Ros 1.0
+import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 
 Item {
     id: staticImage
@@ -11,6 +13,9 @@ Item {
     y: -100
     visible: false
     rotation: 0
+    property double initialLife: .25
+    property double life: initialLife
+    property double lifeChange: 0
 
     property string name: ""
     property string image: "res/"+name+".png"
@@ -33,6 +38,8 @@ Item {
     }
 
     NumberAnimation {id: death; target: staticImage; property: "scale"; from: scale; to: 0.1; duration: 1000}
+    NumberAnimation {id: lifeChangeAnimation; target: staticImage; property: "life"; from: life; to: life+lifeChange; duration: 800}
+
     Item {
         id: objectCenter
         anchors.centerIn: parent
@@ -72,4 +79,19 @@ Item {
         }
         visible = true
     }
+
+    function changeLife(value){
+        lifeChange = value
+        /*
+        lifeChangeAnimation.start()
+        if(value<0)
+        {
+            lifeSlider.blinkColor = "red"
+        }
+        else{
+            lifeSlider.blinkColor = "green"
+        }
+        lifeSlider.animation.start()*/
+    }
+    onLifeChanged: if(life<=0) death.start()
 }

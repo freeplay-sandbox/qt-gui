@@ -69,21 +69,23 @@ InteractiveItem {
     }
 
     function testCloseImages(){
+        if(!visible || !alive)
+            return
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
-            if(testProximity(list[i])){
+            if(list[i].visible && list[i].life > 0 && testProximity(list[i])){
                 if(food.indexOf(list[i].name)>-1){
-                    list[i].flee()
                     list[i].changeLife(-.25)
+                    list[i].fleeing()
                     changeLife(0.3)
                 }
                 else if(list[i].food.indexOf(name)>-1){
-                    flee()
                     changeLife(-.25)
+                    fleeing()
                     list[i].changeLife(.3)
                 }
                 else {
-                    list[i].flee()
+                    list[i].fleeing()
                 }
             }
         }
@@ -91,7 +93,6 @@ InteractiveItem {
         list = interactiveitems.getStaticItems()
         for(var i=0 ; i < list.length; i++){
             if(testProximity(list[i]) && food.indexOf(list[i].name)>-1){
-                list[i].relocate()
                 list[i].changeLife(-.25)
                 changeLife(0.3)
             }
@@ -184,7 +185,7 @@ InteractiveItem {
             return false
     }
 
-    function flee(){
+    function fleeing(){
         var angle = 0
         var distance = 0
         var good = false
@@ -196,12 +197,11 @@ InteractiveItem {
             distance = 50 + counter + 200 * Math.random()
             fleeX = distance * Math.cos(angle)
             fleeY = distance * Math.sin(angle)
-            if (x+fleeX < 0 || x+fleeX > sandbox.width || y+fleeY<0 || y+fleeY>sandbox.height){
+            if (x+fleeX < 100 || x+fleeX > sandbox.width - 100 || y+fleeY< 100 || y+fleeY>sandbox.height - 100){
                 good=false
                 continue
             }
             if(counter > 150){
-                console.log("breaking")
                 break
             }
             var list = interactiveitems.getActiveItems()

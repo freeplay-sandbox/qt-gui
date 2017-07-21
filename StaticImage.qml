@@ -40,6 +40,15 @@ Item {
     NumberAnimation {id: death; target: staticImage; property: "scale"; from: scale; to: 0.1; duration: 1000}
     NumberAnimation {id: lifeChangeAnimation; target: staticImage; property: "life"; from: life; to: life+lifeChange; duration: 800}
 
+    onScaleChanged: {
+        if(scale <= 0.1 && visible){
+            x=-100
+            y=-100
+            visible = false
+            scale = initialScale
+        }
+    }
+
     Item {
         id: objectCenter
         anchors.centerIn: parent

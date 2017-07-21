@@ -143,6 +143,10 @@ Item {
                 globalStates.state = nextState
                 var log=[mainImageName,image1Name,image1.selected,image2Name,image2.selected,image3Name,image3.selected,image4Name,image4.selected]
                 var a = fileio.write(window.qlogfilename, log.join(","));
+                image1.selected = false
+                image2.selected = false
+                image3.selected = false
+                image4.selected = false
             }
         }
     }

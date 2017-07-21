@@ -3,8 +3,9 @@ import Ros 1.0
 
 Item {
     id: staticImage
-    property double scale: 1.0
-    width: 2*parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
+    property double scale: initialScale
+    property double initialScale: 1
+    width: 2 * scale * parent.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
     height: width
     x: -100
     y: -100
@@ -31,6 +32,7 @@ Item {
         }
     }
 
+    NumberAnimation {id: death; target: staticImage; property: "scale"; from: scale; to: 0.1; duration: 1000}
     Item {
         id: objectCenter
         anchors.centerIn: parent

@@ -4,7 +4,8 @@ import Box2D 2.0
 InteractiveItem {
     id: character
 
-    property double scale: 1.0
+    property double scale: initialScale
+    property double initialScale: 1
     property double bbScale: 1.0
 
     property var stash: parent
@@ -55,6 +56,7 @@ InteractiveItem {
         NumberAnimation {target: character; property: "x"; from: x; to: x+fleeX; duration: 500; easing.type: Easing.OutInBounce}
         NumberAnimation {target: character; property: "y";from: y; to: y+fleeY; duration: 500; easing.type: Easing.InOutBounce}
     }
+    NumberAnimation {id: death; target: character; property: "scale"; from: scale; to: 0.1; duration: 1000}
 
     function testCloseImages(){
         var list = interactiveitems.getActiveItems()
@@ -101,10 +103,16 @@ InteractiveItem {
             visible = true
         }
         else {
+            death.start()
+        }
+    }
+    onScaleChanged: {
+        if(scale <= 0.1 && visible){
             x=-100
             y=-100
             sandbox.livingAnimals--
             visible = false
+            scale = initialScale
         }
     }
 

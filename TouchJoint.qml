@@ -59,7 +59,7 @@ TouchPoint {
         }
         else { // released
             if(movingItem) {
-                itemMoved.testCloseImages()
+                //itemMoved.testCloseImages()
                 interactionEventsPub.text = "childreleasing_"+obj.name
                 joint.bodyB = null;
                 movingItem = false;

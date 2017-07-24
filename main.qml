@@ -785,10 +785,11 @@ Window {
         onClicked: {
             clicks += 1;
             if (clicks === 3) {
-                localising.signal();
-                fiducialmarker.visible = true;
+                //localising.signal();
+                //fiducialmarker.visible = true;
                 clicks = 0;
-                hide_fiducial_markers.start();
+                endGame()
+                //hide_fiducial_markers.start();
             }
         }
     }
@@ -811,9 +812,10 @@ Window {
         onClicked: {
             clicks += 1;
             if (clicks === 3) {
-                debugToolbar.visible=true;
+                //debugToolbar.visible=true;
+                globalStates.state = "question1"
                 clicks = 0;
-                timerHideDebug.start();
+                //timerHideDebug.start();
             }
         }
 

@@ -490,21 +490,44 @@ Window {
             }
 
             StaticImage{
-                id: flower
-                name: "flower"
+                id: flower1
+                name: "flower-1"
+            }
+            StaticImage{
+                id: flower2
+                name: "flower-2"
+            }
+            StaticImage{
+                id: flower3
+                name: "flower-3"
             }
             StaticImage{
                 id: lavender
-                name: "lavender"
+                name: "lavender-1"
             }
             StaticImage{
-                id: mango
-                name: "mango"
+                id: mango1
+                name: "mango-1"
             }
-
             StaticImage{
-                id: corn
-                name: "corn"
+                id: mango2
+                name: "mango-2"
+            }
+            StaticImage{
+                id: mango3
+                name: "mango-3"
+            }
+            StaticImage{
+                id: corn1
+                name: "corn-1"
+            }
+            StaticImage{
+                id: corn2
+                name: "corn-2"
+            }
+            StaticImage{
+                id: corn3
+                name: "corn-3"
             }
 
             Character {
@@ -610,7 +633,7 @@ Window {
                 return [eagle, wolf, rat, python,bird,frog,dragonfly,fly,butterfly,grasshopper]
             }
             function getStaticItems() {
-                return [lavender, flower, mango, corn]
+                return [lavender, flower1, flower2, flower3, mango1, mango2, mango3, corn1, corn2, corn3]
             }
 
             function hideItems(items) {
@@ -658,6 +681,22 @@ Window {
                }
             }
 
+            function itemsToRandomByName(items) {
+                var currentType = ""
+                var initialItem
+                for(var i = 0; i < items.length; i++) {
+                    if(items[i].type !== currentType){
+                        currentType = items[i].type
+                        items[i].relocate()
+                        initialItem = items[i]
+                    }
+                    else
+                        items[i].locateCloseTo(initialItem)
+                    //items[i].rotation = Math.random() * 360;
+               }
+
+            }
+
             function setAlive(items) {
                 for(var i = 0; i < items.length; i++) {
                    items[i].alive = true
@@ -669,7 +708,7 @@ Window {
                 interactiveitems.restoreAllItems();
                 setAlive(getActiveItems())
                 //itemsToRandom(getActiveItems());
-                itemsToRandom(getStaticItems());
+                itemsToRandomByName(getStaticItems());
                 interactiveitems.restoreAllItems();
 
                 var d = new Date()
@@ -821,15 +860,15 @@ Window {
         var message = "characters"
         var items = interactiveitems.getActiveItems()
         for(var i = 0; i < items.length; i++)
-            message += "_"+items[i].name + "-" + items[i].initialScale
+            message += "_"+items[i].name + "," + items[i].initialScale
         interactionEventsPub.text = message
         sleep(100)
         message = "targets"
         items = interactiveitems.getStaticItems()
         for(var i = 0; i < items.length; i++)
-            message += "_"+items[i].name + "-" + items[i].initialScale
-        sleep(100)
+            message += "_"+items[i].name + "," + items[i].initialScale
         interactionEventsPub.text = message
+
     }
 
     function sleep(milliseconds) {

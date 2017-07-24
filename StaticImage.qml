@@ -18,7 +18,8 @@ Item {
     property double lifeChange: 0
 
     property string name: ""
-    property string image: "res/"+name+".png"
+    property string type: ""
+    property string image: "res/"+type+".png"
     property int epsilon: 20
 
     Image {
@@ -65,23 +66,23 @@ Item {
     }
 
     function relocate(){
-        var good = false
+        var counter = 0
+        var good=false
         while(!good){
-            good = true
+            good=true
             x = drawingarea.width * (.15 + 0.7 * Math.random())
             y = drawingarea.height * (.15 + 0.7 * Math.random())
             var list = interactiveitems.getActiveItems()
             for(var i=0 ; i < list.length; i++){
                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<20000 && list[i].name !== name){
+                if(dist<60000 && list[i].name !== name){
                     good = false
                 }
             }
             list = interactiveitems.getStaticItems()
             for(var i=0 ; i < list.length; i++){
-                console.log(list[i].name)
                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)
-                if(dist<20000 && list[i].name !== name){
+                if(dist<60000 && list[i].type !== type){
                     good = false
                 }
             }
@@ -89,8 +90,17 @@ Item {
         visible = true
     }
 
+    function locateCloseTo(item){
+        var angle = 2*Math.PI *Math.random()
+        x=item.x+40*Math.cos(angle)
+        y=item.y+40*Math.sin(angle)
+        console.log("Locating "+name+" x "+x+" y "+y)
+        visible = true
+    }
+
     function changeLife(value){
         lifeChange = value
+        lifeChangeAnimation.start()
         /*
         lifeChangeAnimation.start()
         if(value<0)
@@ -102,5 +112,6 @@ Item {
         }
         lifeSlider.animation.start()*/
     }
+    onNameChanged: type = name.split("-")[0]
     onLifeChanged: if(life<=0) death.start()
 }

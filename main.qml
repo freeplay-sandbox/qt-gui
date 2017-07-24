@@ -39,30 +39,38 @@ Window {
         id: globalStates
         states: [
             State {
-                    name: "question"
-                    PropertyChanges { target: initialTest; visible: true}
+                    name: "question1"
+                    PropertyChanges { target: question1; visible: true}
                     PropertyChanges { target: informationScreen; visible: false}
                     PropertyChanges { target: labels; visible: false}
             },
             State {
+                    name: "question2"
+                    PropertyChanges { target: question1; visible: false}
+                    PropertyChanges { target: question2; visible: true}
+            },
+            State {
+                    name: "question3"
+                    PropertyChanges { target: question2; visible: false}
+                    PropertyChanges { target: question3; visible: true}
+            },
+            State {
                     name: "game"
-                    PropertyChanges { target: initialTest; visible: false}
                     PropertyChanges { target: informationScreen; visible: false}
-                    PropertyChanges { target: labels; visible: true}
+                    PropertyChanges { target: labels; visible: false}
             },
             State {
                     name: "endGame"
-                    PropertyChanges { target: initialTest; visible: false}
                     PropertyChanges { target: informationScreen; visible: true}
                     PropertyChanges { target: labels; visible: false}
                     PropertyChanges { target: buttonStart; text: "Try again"}
             },
             State {
                     name: "prepareGame"
-                    PropertyChanges { target: initialTest; visible: false}
+                    PropertyChanges { target: question3; visible: false}
                     PropertyChanges { target: informationScreen; visible: true}
                     PropertyChanges { target: labels; visible: false}
-                    PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep as many animal alive \n as possible."}
+                    PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
             }
         ]
     }
@@ -148,18 +156,41 @@ Window {
         }
 
         Question {
-            id: initialTest
+            id: question1
             mainImageName: "eagle"
             image1Name: "rat"
             image2Name: "python"
             image3Name: "butterfly"
-            image4Name: "grasshopper"
+            image4Name: "flower"
             text: "What does an eagle eat?"
+            nextState: "question2"
+            visible: false
+            z:11
+        }
+        Question {
+            id: question2
+            mainImageName: "bird"
+            image1Name: "dragonfly"
+            image2Name: "grasshopper"
+            image3Name: "wolf"
+            image4Name: "frog"
+            text: "What does a bird eat?"
+            nextState: "question3"
+            visible: false
+            z:11
+        }
+        Question {
+            id: question3
+            mainImageName: "dragonfly"
+            image1Name: "mango"
+            image2Name: "rat"
+            image3Name: "fly"
+            image4Name: "grasshopper"
+            text: "What does a dragonfly eat?"
             nextState: "prepareGame"
             visible: false
             z:11
         }
-
         DrawingArea {
             id: drawingarea
             height: parent.height

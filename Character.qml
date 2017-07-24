@@ -12,11 +12,12 @@ InteractiveItem {
     property var food: []
     property double initialLife: 1
     property double life: initialLife
+    property bool eating: false
     property double fleeX: 0
     property double fleeY: 0
     property bool alive: false
     property bool isMoved: false
-    property double lifeChange: 0
+    property double targetLife: 0
     visible: false
     x: -100
     y: -100
@@ -58,7 +59,7 @@ InteractiveItem {
         NumberAnimation {target: character; property: "x"; from: x; to: x+fleeX; duration: 500; easing.type: Easing.OutInBounce}
         NumberAnimation {target: character; property: "y";from: y; to: y+fleeY; duration: 500; easing.type: Easing.InOutBounce}
     }
-    NumberAnimation {id: lifeChangeAnimation; target: character; property: "life"; from: life; to: life+lifeChange; duration: 800}
+    NumberAnimation {id: lifeChangeAnimation; target: character; property: "life"; from: life; to: targetLife; duration: 800; onRunningChanged: eating = running}
     NumberAnimation {id: death; target: character; property: "scale"; from: scale; to: 0.1; duration: 1000}
 
 
@@ -74,12 +75,12 @@ InteractiveItem {
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
             if(list[i].visible && list[i].life > 0 && testProximity(list[i])){
-                if(food.indexOf(list[i].name)>-1){
+                if(food.indexOf(list[i].name)>-1 && !eating && life < .95*initialLife){
                     list[i].changeLife(-.25)
                     list[i].fleeing()
                     changeLife(0.3)
                 }
-                else if(list[i].food.indexOf(name)>-1){
+                else if(list[i].food.indexOf(name)>-1 && !list[i].eating && list[i].life < .95*list[i].initialLife){
                     changeLife(-.25)
                     fleeing()
                     list[i].changeLife(.3)
@@ -92,7 +93,7 @@ InteractiveItem {
 
         list = interactiveitems.getStaticItems()
         for(var i=0 ; i < list.length; i++){
-            if(testProximity(list[i]) && food.indexOf(list[i].name)>-1){
+            if(testProximity(list[i]) && food.indexOf(list[i].type)>-1 && !eating && life < .95*initialLife){
                 list[i].changeLife(-.25)
                 changeLife(0.3)
             }
@@ -217,13 +218,14 @@ InteractiveItem {
     }
 
     function changeLife(value){
-        lifeChange = value
+        targetLife = life + value
         lifeChangeAnimation.start()
         if(value<0){
             blink("red")
         }
         else{
             blink("green")
+            eating =true
         }
     }
 

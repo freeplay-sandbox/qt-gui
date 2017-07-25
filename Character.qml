@@ -202,7 +202,7 @@ InteractiveItem {
                 good=false
                 continue
             }
-            if(counter > 150){
+            if(counter > 1500){
                 break
             }
             var list = interactiveitems.getActiveItems()

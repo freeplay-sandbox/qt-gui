@@ -70,8 +70,8 @@ Item {
         var good=false
         while(!good){
             good=true
-            x = drawingarea.width * (.15 + 0.7 * Math.random())
-            y = drawingarea.height * (.15 + 0.7 * Math.random())
+            x = drawingarea.width * (.1 + 0.8 * Math.random())
+            y = drawingarea.height * (.1 + 0.8 * Math.random())
             var list = interactiveitems.getActiveItems()
             for(var i=0 ; i < list.length; i++){
                var dist = Math.pow(x-list[i].x,2)+Math.pow(y-list[i].y,2)

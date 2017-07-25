@@ -885,6 +885,7 @@ Window {
     function endGame(){
         hunger.running = false
         interactiveitems.hideItems(interactiveitems.getStaticItems())
+        interactiveitems.hideItems(interactiveitems.getActiveItems())
         globalStates.state = "endGame"
     }
 }

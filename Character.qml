@@ -75,15 +75,19 @@ InteractiveItem {
         var list = interactiveitems.getActiveItems()
         for(var i=0 ; i < list.length; i++){
             if(list[i].visible && list[i].life > 0 && testProximity(list[i])){
-                if(food.indexOf(list[i].name)>-1 && !eating && life < .95*initialLife){
-                    list[i].changeLife(-.25)
+                if(food.indexOf(list[i].name)>-1){
                     list[i].fleeing()
-                    changeLife(0.3)
+                    if(!eating && life < .95*initialLife){
+                        list[i].changeLife(-.25)
+                        changeLife(0.3)
+                    }
                 }
-                else if(list[i].food.indexOf(name)>-1 && !list[i].eating && list[i].life < .95*list[i].initialLife){
-                    changeLife(-.25)
+                else if(list[i].food.indexOf(name)>-1){
                     fleeing()
-                    list[i].changeLife(.3)
+                    if (!list[i].eating && list[i].life < .95*list[i].initialLife){
+                        changeLife(-.25)
+                        list[i].changeLife(.3)
+                    }
                 }
                 else {
                     list[i].fleeing()

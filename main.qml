@@ -39,6 +39,13 @@ Window {
         id: globalStates
         states: [
             State {
+                name: "demoQuestion"
+                PropertyChanges { target: questions; visible: true}
+                PropertyChanges { target: genderquestion; visible: true}
+                PropertyChanges { target: informationScreen; visible: false}
+                PropertyChanges { target: drawingarea; visible: false}
+            },
+            State {
                     name: "question1"
                     PropertyChanges { target: question1; visible: true}
                     PropertyChanges { target: informationScreen; visible: false}
@@ -155,42 +162,7 @@ Window {
             }
         }
 
-        Question {
-            id: question1
-            mainImageName: "eagle"
-            image1Name: "rat"
-            image2Name: "python"
-            image3Name: "butterfly"
-            image4Name: "flower"
-            text: "What does an eagle eat?"
-            nextState: "question2"
-            visible: false
-            z:11
-        }
-        Question {
-            id: question2
-            mainImageName: "bird"
-            image1Name: "dragonfly"
-            image2Name: "grasshopper"
-            image3Name: "wolf"
-            image4Name: "frog"
-            text: "What does a bird eat?"
-            nextState: "question3"
-            visible: false
-            z:11
-        }
-        Question {
-            id: question3
-            mainImageName: "dragonfly"
-            image1Name: "mango"
-            image2Name: "rat"
-            image3Name: "fly"
-            image4Name: "grasshopper"
-            text: "What does a dragonfly eat?"
-            nextState: "prepareGame"
-            visible: false
-            z:11
-        }
+
         DrawingArea {
             id: drawingarea
             height: parent.height
@@ -726,6 +698,204 @@ Window {
 
 
         }
+    }
+    ColumnLayout {
+            id: questions
+            y: 191
+            spacing: 80
+            width: 900
+            height: 300
+            anchors.verticalCenter: parent.verticalCenter
+            visible: false
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            property double starttimeTestQuestions: 0
+            property double starttimeQuestionaire: 0
+
+            Column {
+                    id: genderquestion
+                    width: 900
+                    visible: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 50
+
+                    function gender() {
+
+                        if (isFemale.checked) return "female";
+                        if (isMale.checked) return "male";
+                        return "notspecified";
+                    }
+
+                    function reset(){
+                            isFemale.checked = false;
+                            isMale.checked = false;
+                    }
+
+                    Text {
+                            width: parent.width
+                            horizontalAlignment: Text.AlignHCenter
+                            color: "#ffffff"
+                            text: "I am a"
+                            font.pixelSize: 50
+                    }
+
+                    Row {
+                            id: row1
+                            width: childrenRect.width
+                            height: childrenRect.height
+                            spacing: 50
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.leftMargin: 50
+                            ExclusiveGroup { id: tabPositionGroup }
+                            Text {
+                                    color: "#b4b4b4"
+                                    text: "Girl"
+                                    font.pixelSize: 40
+                            }
+
+                            RadioButton {
+                                    id: isFemale
+                                    exclusiveGroup: tabPositionGroup
+                                    style: RadioButtonStyle {
+                                            indicator: Rectangle {
+                                                    width: 60
+                                                    height: width
+                                                    radius: width/2
+                                                    color: "#fff"
+                                                    Rectangle {
+                                                            anchors.fill:parent
+                                                            visible: control.checked
+                                                            color: "#555"
+                                                            width:parent.width - 8
+                                                            radius:width/2
+                                                            height:width
+                                                            anchors.margins: 4
+                                                    }
+                                            }
+                                    }
+                            }
+                            Text {
+                                    color: "#b4b4b4"
+                                    text: "Boy"
+                                    font.pixelSize: 40
+                            }
+
+                            RadioButton {
+                                    id: isMale
+                                    exclusiveGroup: tabPositionGroup
+                                    style: isFemale.style
+                            }
+                    }
+            }
+
+            Column {
+                    id: agequestion
+                    width: 900
+                    visible: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 12
+
+                    property int age: age.value
+
+                    function reset(){
+                            age.value = 5;
+                    }
+
+                    Text {
+                        width: parent.width
+                        horizontalAlignment: Text.AlignHCenter
+                            id: agelabel
+                            color: "#ffffff"
+                            text: "My age"
+                            font.pixelSize: 50
+                    }
+                    Row {
+                            spacing:40
+                            Slider {
+                                    id: age
+                                    width: 1000
+                                    tickmarksEnabled: false
+                                    minimumValue: 4
+                                    value: 5
+                                    stepSize: 1
+                                    maximumValue: 8
+                                    style: SliderStyle {
+                                            handle: Rectangle {
+                                                    width: 60
+                                                    height: width
+                                                    radius: width/2
+                                                    color: "#fff"
+                                            }
+                                            groove: Rectangle {
+                                                    color: "#777"
+                                                    width: parent.width
+                                                    height:10
+                                                    radius: height/2
+                                            }
+                                    }
+
+                            }
+
+                            Text {
+                                    text: age.value
+                                    color: "#aaa"
+                                    font.pixelSize: 40
+                            }
+                    }
+
+            }
+            Button {
+                    id: nextquestionsButton
+                    opacity:1.0
+                    text: qsTr("Continue")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    style: ButtonStyle {
+                            label: Text {
+                                    renderType: Text.NativeRendering
+                                    verticalAlignment: Text.AlignVCenter
+                                    horizontalAlignment: Text.AlignHCenter
+                                    font.pointSize: 30
+                                    text: nextquestionsButton.text
+                            }
+                    }
+                    onClicked:  globalStates.state = "question1";
+            }
+    }
+    Question {
+        id: question1
+        mainImageName: "eagle"
+        image1Name: "rat"
+        image2Name: "python"
+        image3Name: "butterfly"
+        image4Name: "flower"
+        text: "What does an eagle eat?"
+        nextState: "question2"
+        visible: false
+        z:11
+    }
+    Question {
+        id: question2
+        mainImageName: "bird"
+        image1Name: "dragonfly"
+        image2Name: "grasshopper"
+        image3Name: "wolf"
+        image4Name: "frog"
+        text: "What does a bird eat?"
+        nextState: "question3"
+        visible: false
+        z:11
+    }
+    Question {
+        id: question3
+        mainImageName: "dragonfly"
+        image1Name: "mango"
+        image2Name: "rat"
+        image3Name: "fly"
+        image4Name: "grasshopper"
+        text: "What does a dragonfly eat?"
+        nextState: "prepareGame"
+        visible: false
+        z:11
     }
 
     Rectangle {

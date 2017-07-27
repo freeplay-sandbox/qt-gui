@@ -48,7 +48,7 @@ TouchPoint {
             interactionEventsPub.text = "childtouch_"+obj.name
 
             // find out whether we touched an item
-            if (obj.objectName === "interactive") {
+            if (obj.objectName === "interactive" && obj.movable) {
                 movingItem = true;
                 itemMoved = obj;
                 itemMoved.isMoved = true

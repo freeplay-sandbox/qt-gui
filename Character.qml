@@ -19,6 +19,7 @@ InteractiveItem {
     property bool alive: false
     property bool isMoved: false
     property double targetLife: 0
+    property bool movable: true
     visible: false
     x: -100
     y: -100

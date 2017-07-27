@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
-
 import Box2D 2.0
 
 import Ros 1.0
@@ -15,8 +14,6 @@ Window {
 
     visible: true
     visibility: Window.FullScreen
-    //width: Screen.width
-    //height: Screen.height
     width:800
     height: 600
 
@@ -31,7 +28,6 @@ Window {
     onHeightChanged: {
         prevHeight=height;
     }
-
     color: "black"
     title: qsTr("Free-play sandbox")
 
@@ -49,7 +45,6 @@ Window {
                     name: "question1"
                     PropertyChanges { target: question1; visible: true}
                     PropertyChanges { target: informationScreen; visible: false}
-                    PropertyChanges { target: labels; visible: false}
             },
             State {
                     name: "question2"
@@ -64,20 +59,20 @@ Window {
             State {
                     name: "game"
                     PropertyChanges { target: informationScreen; visible: false}
-                    PropertyChanges { target: labels; visible: false}
             },
             State {
                     name: "endGame"
                     PropertyChanges { target: informationScreen; visible: true}
-                    PropertyChanges { target: labels; visible: false}
                     PropertyChanges { target: buttonStart; text: "Try again"}
             },
             State {
                     name: "prepareGame"
                     PropertyChanges { target: question3; visible: false}
                     PropertyChanges { target: informationScreen; visible: true}
-                    PropertyChanges { target: labels; visible: false}
                     PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
+            },
+            State {
+                    name:"tutorialIntro"
             }
         ]
     }
@@ -94,7 +89,7 @@ Window {
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
         property int livingAnimals: 0 //eagle.alife + wolf.alife + rat.alife + python.alife + bird.alife + frog.alife + dragonfly.alife + fly.alife + butterfly.alife + grasshopper.alife
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
-        property double points: 0
+        property int points: 0
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
@@ -102,67 +97,6 @@ Window {
                 endGame()
             }
         }
-
-        Item {
-            id: informationScreen
-            anchors.fill: parent
-            visible: true
-            z: 10
-
-            Rectangle {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                width: parent.width / 2
-                height: parent.height / 2
-                color: "AliceBlue"
-                border.color: "black"
-                border.width: width/100
-                radius: width / 10
-                Label {
-                    id: lab
-                    font.pixelSize: 50
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: "Welcome to the food chain game, \n We will start with some questions."
-                }
-                Button {
-                    id: buttonStart
-                    width: parent.width/5
-                    height: parent.height/8
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: parent.height/3
-                    text: "Start"
-                    style: ButtonStyle {
-                        label: Text {
-                            font.family: "Helvetica"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            font.pointSize: 30
-                            text: buttonStart.text
-                        }
-                    }
-                    onClicked: {
-                        if(globalStates.state != "")
-                            interactiveitems.startFoodChain()
-                        else
-                            globalStates.state = "question"
-                    }
-
-                }
-            }
-            onVisibleChanged: {
-                var d = new Date()
-                console.log(sandbox.startingTime)
-                var n = d.getTime() - sandbox.startingTime
-                lab.text = //"You had animals for "+Number(n/1000).toLocaleString(Qt.locale("en_UK"),'f',2)+" seconds. \n" +
-                            "You finished with " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2) +" points. \n" +
-                            "Well done!"
-            }
-        }
-
-
         DrawingArea {
             id: drawingarea
             height: parent.height
@@ -190,82 +124,12 @@ Window {
             onDrawEnabledChanged: backgrounddrawing.signal()
         }
 
-        ColumnLayout {
-            id: labels
-            visible: false
-            anchors.top:parent.top
-            anchors.left:parent.left
-            spacing: 20
-            Label {
-                id: animalCounter
-                text: "Living animals: " + sandbox.livingAnimals
-                font.pixelSize: 40
-            }
-            Label {
-                id: lifeCounter
-                text: "Total life:  " //+ Number(sandbox.totalLife).toLocaleString(Qt.locale("en_UK"),'f',2)
-                font.pixelSize: 40
-            }
-            Label {
-                text: "Points: " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),'f',2)
-                font.pixelSize: 40
-                anchors.left:parent.left
-            }
-            ProgressBar {
-                id: totalLifeBar
-                anchors.left: lifeCounter.right
-                anchors.verticalCenter: lifeCounter.verticalCenter
-                width: sandbox.width/5
-                value: sandbox.totalLife / (eagle.initialLife + wolf.initialLife + rat.initialLife + python.initialLife + bird.initialLife + frog.initialLife + dragonfly.initialLife + fly.initialLife + butterfly.initialLife + grasshopper.initialLife)
-                height: lifeCounter.height / 2
-
-                style: ProgressBarStyle {
-                    background: Rectangle {
-                        radius: 2
-                        color: "Crimson"
-                        border.color: "black"
-                        border.width: 1
-                        implicitWidth: totalLifeBar.width
-                        implicitHeight: totalLifeBar.height
-                    }
-                    progress: Rectangle {
-                        color: "lime"
-                        border.color: "black"
-                        implicitWidth: totalLifeBar.width
-                        implicitHeight: totalLifeBar.height
-                    }
-                }
-            }
-        }
-
-        Rectangle {
-            id: stash
-            color: "black"
-            height: parent.height
-            width: parent.width *.12
-            anchors.right: parent.right
-            anchors.top: parent.top
-            visible: false
-
-            Rectangle {
-               height: parent.height
-                width: 5
-                anchors.left: parent.left
-                anchors.top: parent.top
-                color: "#555"
-
-            }
-        }
-
         Item {
             id: interactiveitems
-
             anchors.fill: parent
-
             visible: true
 
             property var collisionCategories: Box.Category2
-
             property bool showRobotChild: false
             property bool publishRobotChild: false
 
@@ -298,10 +162,8 @@ Window {
 
             RosPoseSubscriber {
                 id: rostouch
-
                 x: 0
                 y: 0
-
                 topic: "poses"
 
                 Image {
@@ -314,16 +176,7 @@ Window {
                     // tracks the position of the robot
                     transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(rostouch.y, rostouch.x))}
                     visible: false
-
                 }
-                //Rectangle {
-                //    anchors.centerIn: parent
-                //    width: 5
-                //    height: width
-                //    radius: width/2
-                //    color: "red"
-                //    z:1
-                //}
 
                 z:100
                 property var target: null
@@ -332,12 +185,9 @@ Window {
                 pixelscale: sandbox.pixel2meter
 
                 onPositionChanged: {
-
-                    // the playground is hidden, nothing to do
                     if(!interactiveitems.visible) return;
 
                     robot_hand.visible=true;
-
                     if (target === null) {
                         var obj = interactiveitems.childAt(x, y);
                         if (obj.objectName === "interactive") {
@@ -346,12 +196,10 @@ Window {
                             interactionEventsPub.text = "robottouching_" + draggedObject;
 
                             target = obj.body
-
                             externalJoint.maxForce = target.getMass() * 500;
                             externalJoint.target = Qt.point(x,y);
                             externalJoint.bodyB = target;
                         }
-
                     }
                     if (target != null) {
                         externalJoint.target = Qt.point(x, y);
@@ -370,25 +218,12 @@ Window {
                         for(var i = 0;i<items.length;i++){
                             if(items[i].name === parent.draggedObject){
                                 items[i].testCloseImages()
-                                //items[i].checkProximity()
                             }
                         }
                         parent.draggedObject = "";
                         parent.target = null;
                         externalJoint.bodyB = null;
                         robot_hand.visible=false;
-                    }
-                }
-                RosStringPublisher {
-                    id: interactionEventsPub
-                    topic: "sandtray/interaction_events"
-                }
-                RosStringSubscriber {
-                    id: interactionEventsSub
-                    topic: "sandtray/interaction_events"
-                    onTextChanged: {
-                        if(text === "supervisor_ready")
-                            publishItems();
                     }
                 }
             }
@@ -510,59 +345,46 @@ Window {
                 name: "grasshopper"
                 food: "corn"
                 initialScale:.8
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: butterfly
                 name: "butterfly"
                 food: ["flower","lavender"]
                 initialScale:.8
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: fly
                 name: "fly"
                 food: "mango"
                 initialScale: 0.5
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: bird
                 name: "bird"
                 food: ["dragonfly","fly"]
                 initialScale:.9
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: dragonfly
                 name: "dragonfly"
                 food: ["butterfly","fly"]
                 initialScale:.8
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: frog
                 name: "frog"
                 food: ["grasshopper","butterfly","dragonfly","fly"]
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: eagle
                 name: "eagle"
                 food: ["python","rat","wolf","frog","bird"]
-                stash: stash
                 initialScale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -570,28 +392,22 @@ Window {
                 id: rat
                 name: "rat"
                 food: "grasshopper"
-                stash: stash
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: wolf
                 name: "wolf"
                 food: ["rat","bird"]
-                stash: stash
                 initialScale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
-
             Character {
                 id: python
                 name: "python"
                 food: ["rat","frog","wolf"]
-                stash: stash
                 initialScale:1.5
                 collidesWith: interactiveitems.collisionCategories
             }
-
 
             FootprintsPublisher {
                 id:footprints
@@ -634,25 +450,9 @@ Window {
                  }
             }
 
-            RosSignal {
-                topic: "sandtray/signals/shuffle_items"
-                onTriggered: interactiveitems.shuffleItems();
-            }
-
-            function itemsToStash() {
-                var items = getActiveItems();
-                for(var i = 0; i < items.length; i++) {
-                    var item = items[i]
-                    item.x = item.stash.x + 10 + Math.random() * 0.5 * item.stash.width;
-                    item.y = item.stash.y + 10 + Math.random() * 0.9 * item.stash.height;
-                    //item.rotation = Math.random() * 360;
-               }
-            }
-
             function itemsToRandom(items) {
                 for(var i = 0; i < items.length; i++) {
                     items[i].relocate()
-                    //items[i].rotation = Math.random() * 360;
                }
             }
 
@@ -669,7 +469,6 @@ Window {
                         items[i].locateCloseTo(initialItem)
                         initialItem = items[i]
                     }
-                    //items[i].rotation = Math.random() * 360;
                }
 
             }
@@ -679,31 +478,102 @@ Window {
                    items[i].alive = true
                    items[i].life = items[i].initialLife
                 }
-              }
+             }
 
-            function startFoodChain() {
-                interactiveitems.restoreAllItems();
+            function prepareGame(){
+                restoreAllItems();
                 setAlive(getActiveItems())
-                //itemsToRandom(getActiveItems());
                 itemsToRandomByName(getStaticItems());
-                interactiveitems.restoreAllItems();
+                restoreAllItems();
 
-                var d = new Date()
-                sandbox.startingTime = d.getTime()
-                hunger.start()
-
-                globalStates.state = "game"
             }
-
-            RosSignal {
-                topic: "sandtray/signals/items_to_stash"
-                onTriggered: interactiveitems.itemsToStash();
-            }
-
-
-
         }
     }
+
+    RosStringPublisher {
+        id: interactionEventsPub
+        topic: "sandtray/interaction_events"
+    }
+    RosStringSubscriber {
+        id: interactionEventsSub
+        topic: "sandtray/interaction_events"
+        onTextChanged: {
+            if(text === "supervisor_ready")
+                publishItems();
+        }
+    }
+
+    function startFoodChain() {
+        interactiveitems.prepareGame()
+
+        var d = new Date()
+        sandbox.startingTime = d.getTime()
+        hunger.start()
+
+        globalStates.state = "game"
+    }
+
+    Item {
+        id: informationScreen
+        anchors.fill: parent
+        visible: true
+        z: 10
+
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width / 2
+            height: parent.height / 2
+            color: "AliceBlue"
+            border.color: "black"
+            border.width: width/100
+            radius: width / 10
+            Label {
+                id: lab
+                font.pixelSize: 50
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                horizontalAlignment: Text.AlignHCenter
+                text: "Welcome to the food chain game, \n We will start with some questions."
+            }
+            Button {
+                id: buttonStart
+                width: parent.width/5
+                height: parent.height/8
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: parent.height/3
+                text: "Start"
+                style: ButtonStyle {
+                    label: Text {
+                        font.family: "Helvetica"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.pointSize: 30
+                        text: buttonStart.text
+                    }
+                }
+                onClicked: {
+                    //if(globalStates.state == "")
+                        //interactiveitems.startFoodChain()
+                    tutorialIntro()
+                    //else{
+                    //    globalStates.state = "demoQuestion"  //Change if needed to ask questions
+                    //}
+                }
+
+            }
+        }
+        onVisibleChanged: {
+            var d = new Date()
+            console.log(sandbox.startingTime)
+            var n = d.getTime() - sandbox.startingTime
+            lab.text =  "You finished with " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),"f",0) +" points. \n" +
+                        "Well done!"
+        }
+    }
+
+
     ColumnLayout {
             id: questions
             y: 191
@@ -714,9 +584,6 @@ Window {
             visible: false
             anchors.horizontalCenter: parent.horizontalCenter
 
-            property double starttimeTestQuestions: 0
-            property double starttimeQuestionaire: 0
-
             Column {
                     id: genderquestion
                     width: 900
@@ -725,7 +592,6 @@ Window {
                     spacing: 50
 
                     function gender() {
-
                         if (isFemale.checked) return "female";
                         if (isMale.checked) return "male";
                         return "notspecified";
@@ -909,6 +775,7 @@ Window {
         opacity:0.8
         visible: false
         anchors.fill:parent
+        z:10
 
         Image {
             // set the actual size of the SVG page
@@ -937,34 +804,23 @@ Window {
             onTriggered: {
                 fiducialmarker.visible = false;
             }
-
         }
-
     }
 
     MouseArea {
         width:30
         height:width
         z: 100
-
         anchors.bottom: parent.bottom
         anchors.right: parent.right
-
-        //Rectangle {
-        //    anchors.fill: parent
-        //    color: "red"
-        //}
-
         property int clicks: 0
-
         onClicked: {
             clicks += 1;
             if (clicks === 3) {
-                //localising.signal();
-                //fiducialmarker.visible = true;
+                localising.signal();
+                fiducialmarker.visible = true;
                 clicks = 0;
-                endGame()
-                //hide_fiducial_markers.start();
+                //endGame()
             }
         }
     }
@@ -973,17 +829,9 @@ Window {
         width:30
         height:width
         z: 100
-
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-
-        //Rectangle {
-        //    anchors.fill: parent
-        //    color: "red"
-        //}
-
         property int clicks: 0
-
         onClicked: {
             clicks += 1;
             if (clicks === 3) {
@@ -1001,13 +849,6 @@ Window {
                 debugToolbar.visible = false;
             }
 
-        }
-    }
-    Timer {
-        id: initialise
-        interval: 200; running: false; repeat: false
-        onTriggered: {
-            interactiveitems.startFoodChain()
         }
     }
 
@@ -1062,5 +903,46 @@ Window {
         interactiveitems.hideItems(interactiveitems.getStaticItems())
         interactiveitems.hideItems(interactiveitems.getActiveItems())
         globalStates.state = "endGame"
+    }
+
+    function tutorialIntro() {
+        globalStates.state = "tutorialIntro"
+    }
+
+    RosActionPublisher {
+        id: actionPublisher
+        pixelscale: sandbox.pixel2meter
+        target: sandbox
+        frame: "sandtray"
+        origin: sandbox
+        type: "move"
+        topic: "sparc/selected_action"
+        function updateList(){
+            strings.splice(0,strings.length)
+            for(var i=0;i<selectedItems.length;i++){
+                strings.push(selectedItems[i])
+            }
+        }
+        function prepareMove(listener, dragger, name){
+            updateList()
+            origin = listener
+            target = dragger
+            frame = name
+            type = "move"
+        }
+        function executeAction(){
+            if(type == "move")
+                for (var i = 0; i < characters.children.length; i++)
+                    if(characters.children[i].name === frame){
+                        characters.children[i].hideArrow()
+                        break
+                    }
+
+            publish()
+        }
+        function makeMove(listener, dragger, name){
+            prepareMove(listener, dragger, name)
+            executeAction()
+        }
     }
 }

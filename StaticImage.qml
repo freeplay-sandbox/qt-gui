@@ -91,7 +91,7 @@ Item {
     }
 
     function locateCloseTo(item){
-        var angle = 2*Math.PI *Math.random()
+        var angle = Math.PI/2 * (Math.random() - 0.5)
         x=item.x+40*Math.cos(angle)
         y=item.y+40*Math.sin(angle)
         console.log("Locating "+name+" x "+x+" y "+y)

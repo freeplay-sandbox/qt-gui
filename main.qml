@@ -665,8 +665,10 @@ Window {
                         items[i].relocate()
                         initialItem = items[i]
                     }
-                    else
+                    else{
                         items[i].locateCloseTo(initialItem)
+                        initialItem = items[i]
+                    }
                     //items[i].rotation = Math.random() * 360;
                }
 

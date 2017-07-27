@@ -69,6 +69,12 @@ InteractiveItem {
         enabled:false
     }
 
+
+    Audio {
+        id: playCrunch
+        source: "res/crunch.mp3"
+    }
+
     function testCloseImages(){
         if(!visible || !alive)
             return
@@ -236,5 +242,13 @@ InteractiveItem {
     function blink(color){
             lifeSlider.blinkColor = color
             lifeSlider.animation.start()
+    }
+
+    onEatingChanged:{
+        if (eating){
+            var i = Math.floor(Math.random() * 10) + 1
+            playCrunch.source = "/res/crunch"+i+".mp3"
+            playCrunch.play()
+        }
     }
  }

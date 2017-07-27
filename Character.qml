@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtMultimedia 5.8
 import Box2D 2.0
 
 InteractiveItem {

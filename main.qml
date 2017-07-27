@@ -492,14 +492,17 @@ Window {
             StaticImage{
                 id: corn1
                 name: "corn-1"
+                scale:1.5
             }
             StaticImage{
                 id: corn2
                 name: "corn-2"
+                scale:1.5
             }
             StaticImage{
                 id: corn3
                 name: "corn-3"
+                scale:1.5
             }
 
             Character {

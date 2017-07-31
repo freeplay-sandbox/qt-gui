@@ -909,40 +909,24 @@ Window {
         globalStates.state = "tutorialIntro"
     }
 
-    RosActionPublisher {
-        id: actionPublisher
-        pixelscale: sandbox.pixel2meter
-        target: sandbox
-        frame: "sandtray"
-        origin: sandbox
-        type: "move"
-        topic: "sparc/selected_action"
-        function updateList(){
-            strings.splice(0,strings.length)
-            for(var i=0;i<selectedItems.length;i++){
-                strings.push(selectedItems[i])
             }
-        }
-        function prepareMove(listener, dragger, name){
-            updateList()
-            origin = listener
-            target = dragger
-            frame = name
-            type = "move"
-        }
-        function executeAction(){
-            if(type == "move")
-                for (var i = 0; i < characters.children.length; i++)
-                    if(characters.children[i].name === frame){
-                        characters.children[i].hideArrow()
-                        break
                     }
 
-            publish()
         }
-        function makeMove(listener, dragger, name){
-            prepareMove(listener, dragger, name)
-            executeAction()
+
+
+    RosStringPublisher {
+        id: blockingSpeech
+        topic: "nao/blocking_speech"
+    }
+    RosStringSubscriber {
+        id: naoEventsSub
+        signal speechFinished()
+        topic: "nao/events"
+        onTextChanged: {
+            if(text === "blocking_speech_finished" && tutorial.waitingSpeech){
+                tutorial.pursue()
+            }
         }
     }
 }

@@ -47,6 +47,7 @@ Item {
             y=-100
             visible = false
             scale = initialScale
+            itemDying(name)
         }
     }
 

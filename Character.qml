@@ -61,7 +61,7 @@ InteractiveItem {
         NumberAnimation {target: character; property: "x"; from: x; to: x+fleeX; duration: 500; easing.type: Easing.OutInBounce}
         NumberAnimation {target: character; property: "y";from: y; to: y+fleeY; duration: 500; easing.type: Easing.InOutBounce}
     }
-    NumberAnimation {id: lifeChangeAnimation; target: character; property: "life"; from: life; to: targetLife; duration: 800; onRunningChanged: eating = running}
+    NumberAnimation {id: lifeChangeAnimation; target: character; property: "life"; from: life; to: targetLife; duration: 800; onRunningChanged: {if(!running) eating = false}}
     NumberAnimation {id: death; target: character; property: "scale"; from: scale; to: 0.1; duration: 1000}
 
 
@@ -139,6 +139,7 @@ InteractiveItem {
             sandbox.livingAnimals--
             visible = false
             scale = initialScale
+            itemDying(name)
         }
     }
 
@@ -166,6 +167,7 @@ InteractiveItem {
             }
         }
     }
+
     function  checkProximity(){
         if(isMoved || !alive)
             return
@@ -237,7 +239,7 @@ InteractiveItem {
         }
         else{
             blink("green")
-            eating =true
+            eating=true
         }
     }
 
@@ -251,6 +253,7 @@ InteractiveItem {
             var i = Math.floor(Math.random() * 10) + 1
             playCrunch.source = "/res/crunch"+i+".mp3"
             playCrunch.play()
+            animalEating(name)
         }
     }
  }

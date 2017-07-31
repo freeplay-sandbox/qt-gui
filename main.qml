@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import Box2D 2.0
+import QtTest 1.1
 
 import Ros 1.0
 
@@ -72,7 +73,8 @@ Window {
                     PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
             },
             State {
-                    name:"tutorialIntro"
+                    name:"tutorial"
+                    PropertyChanges { target: informationScreen; visible: false}
             }
         ]
     }
@@ -93,7 +95,7 @@ Window {
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
-            if(livingAnimals == 0){
+            if(livingAnimals == 0 && globalStates.state == "game"){
                 endGame()
             }
         }
@@ -905,15 +907,146 @@ Window {
         globalStates.state = "endGame"
     }
 
-    function tutorialIntro() {
-        globalStates.state = "tutorialIntro"
-    }
+    Item{
+        id: tutorial
+        property bool waitingSpeech: false
+        property bool waitingFlyEating: false
+        property bool waitingFrogEating: false
+        property bool interrupted: false
+        property bool interrupt: false
+        signal pursue()
 
-            }
-                    }
-
+        StateGroup {
+            id: tutoStates
+            states: [
+                State {
+                    name: "init"
+                },
+                State {
+                        name: "phase1"
+                },
+                State {
+                        name: "phase2"
+                }
+            ]
         }
 
+        function practice() {
+            globalStates.state = "tutorial"
+            tutorial.interrupt = false
+            //startFoodChain()
+            interactiveitems.setAlive([frog,fly])
+            frog.visible = true
+            frog.x = sandbox.width/4
+            frog.y = sandbox.height/2
+            frog.movable =false
+            fly.visible = true
+            fly.x = 2*sandbox.width/4
+            fly.y = sandbox.height/2
+            fly.movable = false
+            mango1.visible = true
+            mango1.x = 3*sandbox.width/4
+            mango1.y = sandbox.height/2
+            if(!interrupted){
+                waitingSpeech = true
+                blockingSpeech.text = "Hello, welcome to the game. The goal is to keep all the animals alive as long as possible."
+                try{
+                    spyTutoPursue.wait(6000)
+                }
+                catch(err){}
+            }
+            waitingSpeech = true
+            hunger.start()
+            blockingSpeech.text = "Animals have energy which decreases as time goes by, and they have to eat to stay alive"
+            try{
+                spyTutoPursue.wait(6000)
+            }
+            catch(err){}
+            fly.movable = true
+            blockingSpeech.text = "Now, feed the fly by moving it to the apple."
+            var repeat = true
+            while(repeat){
+                repeat = false
+                waitingFlyEating = true
+                spyTutoPursue.clear()
+                try{
+                    spyTutoPursue.wait(6000)
+                }
+                catch(err){
+                    if(interrupt){
+                        waitingFlyEating = false
+                        interrupted = true
+                        blockingSpeech.text = "One animal died, let's try again."
+                        practice()
+                        return
+                    }
+
+                    repeat = true
+                    blockingSpeech.text = "Press on the fly and drag it to the apple."
+                }
+            }
+            frog.movable = true
+            waitingSpeech = true
+            blockingSpeech.text = "Well done! Now move the frog to the fly to feed the frog."
+            try{
+                spyTutoPursue.wait(6000)
+            }
+            catch(err){}
+            repeat = true
+            while(repeat){
+                repeat = false
+                waitingFrogEating = true
+                spyTutoPursue.clear()
+                try{
+                    spyTutoPursue.wait(6000)
+                }
+                catch(err){
+                    if(interrupt){
+                        waitingFrogEating = false
+                        interrupted = true
+                        blockingSpeech.text = "One animal died, let's try again."
+                        practice()
+                        return
+                    }
+                    repeat = true
+                    blockingSpeech.text = "Press on the frog and drag it to the fly."
+                }
+            }
+            waitingFrogEating = true
+            waitingSpeech = true
+            blockingSpeech.text = "Excellent! Let's start the game when you are ready."
+            try{
+                spyTutoPursue.wait(6000)
+            }
+            catch(err){}
+            globalStates.state = "prepareGame"
+        }
+
+        onPursue: {
+            waitingSpeech = false
+            waitingFlyEating = false
+            waitingFrogEating = false
+        }
+    }
+
+    SignalSpy {
+        id: spyTutoPursue
+        target: tutorial
+        signalName: "pursue"
+    }
+
+    function itemDying(name){
+        if(name === "frog" || name === "fly")
+            tutorial.interrupt = true
+        
+    }
+    function animalEating(name){
+        if(tutorial.waitingFlyEating && name === "fly")
+            tutorial.pursue()
+        if(tutorial.waitingFrogEating && name === "frog")
+            tutorial.pursue()
+        
+    }
 
     RosStringPublisher {
         id: blockingSpeech

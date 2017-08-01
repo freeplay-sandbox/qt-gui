@@ -22,6 +22,10 @@ Window {
     property int prevHeight:600
 
     property string  qlogfilename: ""
+    property int rounds: 0
+    property int maxRounds: 4
+    property int totalPoints: 0
+
     Component.onCompleted: {
         var d = new Date()
         qlogfilename = "logFoodChain/foodchain-" + d.toISOString() + ".csv"
@@ -66,21 +70,51 @@ Window {
                     PropertyChanges { target: informationScreen; visible: false}
             },
             State {
-                    name: "endGame"
+                    name: "endRound"
                     PropertyChanges { target: informationScreen; visible: true}
                     PropertyChanges { target: buttonStart; text: "Try again"}
+                    PropertyChanges { target: informationScreen; text: "Three animals died, so the game stops. \n You finished with " + sandbox.points +" points. \n Well done!"}
             },
             State {
                     name: "prepareGame"
                     PropertyChanges { target: question3; visible: false}
                     PropertyChanges { target: informationScreen; visible: true}
-                    PropertyChanges { target: lab; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
+                    PropertyChanges { target: instructionScreen; visible: false}
+                    PropertyChanges { target: informationScreen; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
             },
             State {
-                    name:"tutorial"
+                    name: "tutorialIntro"
+                    PropertyChanges { target: informationScreen; visible: true}
+                    PropertyChanges { target: informationScreen; text: "We will start by practising the game."}
+                    PropertyChanges { target: buttonStart; text: "Start"}
+            },
+            State {
+                    name: "tutorial"
                     PropertyChanges { target: informationScreen; visible: false}
+            },
+            State {
+                    name: "endGame"
+                    PropertyChanges { target: buttonStart; text: "Continue"}
+                    PropertyChanges { target: informationScreen; text: "This is the end of the game. \nYou achieved a total " + totalPoints +" points. \nWell done!"}
+            },
+            State {
+                    name: "end"
+                    PropertyChanges { target: question3; visible: "false"}
+                    PropertyChanges { target: informationScreen; text: "Thank you for having played the game!"}
+                    PropertyChanges { target: buttonStart; visible: "false"}
             }
+
         ]
+        onStateChanged: {
+            switch (globalStates.state){
+                case "question3":
+                    if(rounds == maxRounds)
+                        question3.nextState = "end"
+                    break
+                case "endGame":
+                    break
+            }
+        }
     }
 
     Item {
@@ -99,8 +133,8 @@ Window {
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
-            if(livingAnimals == 0 && globalStates.state == "game"){
-                endGame()
+            if(livingAnimals == 7 && globalStates.state == "game"){
+                endRound()
             }
         }
         DrawingArea {
@@ -199,7 +233,7 @@ Window {
                         var obj = interactiveitems.childAt(x, y);
                         if (obj.objectName === "interactive") {
                             draggedObject = obj.name;
-                            console.log("ROS controller touched object: " + obj.name);
+                            //console.log("ROS controller touched object: " + obj.name);
                             interactionEventsPub.text = "robottouching_" + draggedObject;
 
                             target = obj.body
@@ -219,7 +253,7 @@ Window {
                     interval: 1000
                     running: false
                     onTriggered: {
-                        console.log("Auto-releasing ROS contact with " + parent.draggedObject);
+                        //console.log("Auto-releasing ROS contact with " + parent.draggedObject);
                         interactionEventsPub.text = "robotreleasing_" + parent.draggedObject;
                         var items = interactiveitems.getActiveItems()
                         for(var i = 0;i<items.length;i++){
@@ -547,6 +581,7 @@ Window {
 
         var d = new Date()
         sandbox.startingTime = d.getTime()
+        sandbox.points = 0
         hunger.start()
 
         globalStates.state = "game"
@@ -556,6 +591,7 @@ Window {
         id: informationScreen
         anchors.fill: parent
         visible: true
+        property string text: "Welcome to the food chain game, \n We will start with some questions."
         z: 10
 
         Rectangle {
@@ -594,21 +630,33 @@ Window {
                 }
                 onClicked: {
                     //if(globalStates.state == "")
-                        //interactiveitems.startFoodChain()
-                    tutorialIntro()
+                    //    tutorial.practice()
+                    //else
+                    switch (globalStates.state){
+                    case "endGame":
+                        globalStates.state = "question1"
+                        break
+                    case "tutorialIntro":
+                        tutorial.practice()
+                        break
+                    case "endRound":
+                        startFoodChain()
+                        break
+                    case "end":
+                        finish()
+                        break
+                    case "":
+                        globalStates.state = "demoQuestion"
+                        break
+                    default:startFoodChain()
+                    }
+
                     //else{
                     //    globalStates.state = "demoQuestion"  //Change if needed to ask questions
                     //}
                 }
 
             }
-        }
-        onVisibleChanged: {
-            var d = new Date()
-            console.log(sandbox.startingTime)
-            var n = d.getTime() - sandbox.startingTime
-            lab.text =  "You finished with " + Number(sandbox.points).toLocaleString(Qt.locale("en_UK"),"f",0) +" points. \n" +
-                        "Well done!"
         }
     }
 
@@ -768,7 +816,11 @@ Window {
                                     text: nextquestionsButton.text
                             }
                     }
-                    onClicked:  globalStates.state = "question1";
+                    onClicked:{
+                        var log=[genderquestion.gender(),age.value]
+                        fileio.write(window.qlogfilename, log.join(","));
+                        globalStates.state = "question1";
+                    }
             }
     }
     Question {
@@ -803,7 +855,7 @@ Window {
         image3Name: "fly"
         image4Name: "grasshopper"
         text: "What does a dragonfly eat?"
-        nextState: "prepareGame"
+        nextState: "tutorialIntro"
         visible: false
         z:11
     }
@@ -859,7 +911,7 @@ Window {
                 localising.signal();
                 fiducialmarker.visible = true;
                 clicks = 0;
-                //endGame()
+                //endRound()
             }
         }
     }
@@ -937,11 +989,20 @@ Window {
       }
     }
 
-    function endGame(){
+    function endRound(){
         hunger.running = false
+        rounds++
+        if(rounds == maxRounds)
+            globalStates.state = "endGame"
+        else
+            globalStates.state = "endRound"
         interactiveitems.hideItems(interactiveitems.getStaticItems())
         interactiveitems.hideItems(interactiveitems.getActiveItems())
-        globalStates.state = "endGame"
+        var d = new Date()
+        var n = d.getTime() - sandbox.startingTime
+        var log=[n,sandbox.points]
+        fileio.write(window.qlogfilename, log.join(","));
+        totalPoints += sandbox.points
     }
 
     Item{

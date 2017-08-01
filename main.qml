@@ -134,6 +134,7 @@ Window {
             id: interactiveitems
             anchors.fill: parent
             visible: true
+            z:5
 
             property var collisionCategories: Box.Category2
             property bool showRobotChild: false
@@ -494,7 +495,36 @@ Window {
                 setAlive(getActiveItems())
                 itemsToRandomByName(getStaticItems());
                 restoreAllItems();
+            }
+        }
 
+        Item {
+            id: instructionScreen
+            anchors.fill: parent
+            visible: false
+            property string text: ""
+            z: 4
+
+            Rectangle {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                anchors.topMargin: parent.height/10
+                width: 2 * parent.width / 3
+                height: parent.height / 4
+                color: "AliceBlue"
+                border.color: "black"
+                border.width: width/100
+                radius: width / 10
+                Label {
+                    id: instructionText
+                    width: parent.width * .8
+                    font.pixelSize: 50
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    text: instructionScreen.text
+                    wrapMode: Text.WordWrap
+                }
             }
         }
     }
@@ -538,12 +568,12 @@ Window {
             border.width: width/100
             radius: width / 10
             Label {
-                id: lab
+                id: informationText
                 font.pixelSize: 50
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: "Welcome to the food chain game, \n We will start with some questions."
+                text: informationScreen.text
             }
             Button {
                 id: buttonStart
@@ -921,25 +951,13 @@ Window {
         property bool waitingFrogEating: false
         property bool interrupted: false
         property bool interrupt: false
+        property int sentencesSaid: 0
+        property int sentencesExpected: 0
         signal pursue()
-
-        StateGroup {
-            id: tutoStates
-            states: [
-                State {
-                    name: "init"
-                },
-                State {
-                        name: "phase1"
-                },
-                State {
-                        name: "phase2"
-                }
-            ]
-        }
 
         function practice() {
             globalStates.state = "tutorial"
+            instructionScreen.visible = true
             tutorial.interrupt = false
             //startFoodChain()
             interactiveitems.setAlive([frog,fly])
@@ -955,22 +973,14 @@ Window {
             apple1.x = 3*sandbox.width/4
             apple1.y = sandbox.height/2
             if(!interrupted){
-                waitingSpeech = true
-                blockingSpeech.text = "Hello, welcome to the game. The goal is to keep all the animals alive as long as possible."
-                try{
-                    spyTutoPursue.wait(6000)
-                }
-                catch(err){}
+                waitForSpeech("Hello, welcome to the game. The goal is to keep all the animals alive as long as possible.")
             }
-            waitingSpeech = true
-            hunger.start()
-            blockingSpeech.text = "Animals have energy which decreases as time goes by, and they have to eat to stay alive"
-            try{
-                spyTutoPursue.wait(6000)
-            }
-            catch(err){}
+            hunger.running =true
+            waitForSpeech("Animals have energy which decreases as time goes by, and they have to eat to stay alive")
             fly.movable = true
+            instructionScreen.text = "Now, feed the fly by moving it to the apple."
             blockingSpeech.text = "Now, feed the fly by moving it to the apple."
+            sentencesExpected++
             var repeat = true
             while(repeat){
                 repeat = false
@@ -983,22 +993,21 @@ Window {
                     if(interrupt){
                         waitingFlyEating = false
                         interrupted = true
-                        blockingSpeech.text = "One animal died, let's try again."
+                        waitForSpeech("One animal died, let's try again.")
                         practice()
                         return
                     }
-
                     repeat = true
+                    instructionScreen.text = "Press on the fly and drag it to the apple."
                     blockingSpeech.text = "Press on the fly and drag it to the apple."
+                    sentencesExpected++
                 }
             }
             frog.movable = true
-            waitingSpeech = true
+            instructionScreen.text = "Well done! Now move the frog to the fly to feed the frog."
             blockingSpeech.text = "Well done! Now move the frog to the fly to feed the frog."
-            try{
-                spyTutoPursue.wait(6000)
-            }
-            catch(err){}
+            sentencesExpected++
+
             repeat = true
             while(repeat){
                 repeat = false
@@ -1011,21 +1020,21 @@ Window {
                     if(interrupt){
                         waitingFrogEating = false
                         interrupted = true
-                        blockingSpeech.text = "One animal died, let's try again."
+                        waitForSpeech("One animal died, let's try again.")
                         practice()
                         return
                     }
                     repeat = true
+                    instructionScreen.text = "Press on the frog and drag it to the fly."
                     blockingSpeech.text = "Press on the frog and drag it to the fly."
+                    sentencesExpected++
                 }
             }
             waitingFrogEating = true
-            waitingSpeech = true
-            blockingSpeech.text = "Excellent! Let's start the game when you are ready."
-            try{
-                spyTutoPursue.wait(6000)
-            }
-            catch(err){}
+            waitForSpeech("Excellent! But becareful, when an animal has no energy, it dies. Let's start the game when you are ready.")
+            hunger.running = false
+            interactiveitems.hideItems(interactiveitems.getStaticItems())
+            interactiveitems.hideItems(interactiveitems.getActiveItems())
             globalStates.state = "prepareGame"
         }
 
@@ -1034,6 +1043,26 @@ Window {
             waitingFlyEating = false
             waitingFrogEating = false
         }
+
+        function waitForSpeech(sentence){
+            sentencesExpected++
+            waitingSpeech = true
+            instructionScreen.text = sentence
+            blockingSpeech.text = sentence
+            var finished = false
+            console.log("waiting for "+sentencesSaid)
+            while (!finished){
+                try{
+                    spyTutoPursue.wait(6000)
+                }
+                catch(err){return false}
+                finished = sentencesExpected <= sentencesSaid
+                console.log("Received "+spyTutoPursue.count)
+            }
+            return true
+        }
+
+
     }
 
     SignalSpy {
@@ -1050,9 +1079,9 @@ Window {
     function animalEating(name){
         if(tutorial.waitingFlyEating && name === "fly")
             tutorial.pursue()
+
         if(tutorial.waitingFrogEating && name === "frog")
             tutorial.pursue()
-        
     }
 
     RosStringPublisher {
@@ -1065,7 +1094,7 @@ Window {
         topic: "nao/events"
         onTextChanged: {
             if(text === "blocking_speech_finished" && tutorial.waitingSpeech){
-                tutorial.pursue()
+                tutorial.sentencesSaid ++
             }
         }
     }

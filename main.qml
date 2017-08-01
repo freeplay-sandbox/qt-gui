@@ -21,7 +21,11 @@ Window {
     property int prevWidth:800
     property int prevHeight:600
 
-    property string  qlogfilename: "test.csv"
+    property string  qlogfilename: ""
+    Component.onCompleted: {
+        var d = new Date()
+        qlogfilename = "logFoodChain/foodchain-" + d.toISOString() + ".csv"
+    }
 
     onWidthChanged: {
         prevWidth=width;

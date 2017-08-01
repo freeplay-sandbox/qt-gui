@@ -315,16 +315,16 @@ Window {
                 name: "lavender-1"
             }
             StaticImage{
-                id: mango1
-                name: "mango-1"
+                id: apple1
+                name: "apple-1"
             }
             StaticImage{
-                id: mango2
-                name: "mango-2"
+                id: apple2
+                name: "apple-2"
             }
             StaticImage{
-                id: mango3
-                name: "mango-3"
+                id: apple3
+                name: "apple-3"
             }
             StaticImage{
                 id: corn1
@@ -359,7 +359,7 @@ Window {
             Character {
                 id: fly
                 name: "fly"
-                food: "mango"
+                food: "apple"
                 initialScale: 0.5
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -426,7 +426,7 @@ Window {
                 return [eagle, wolf, rat, python,bird,frog,dragonfly,fly,butterfly,grasshopper]
             }
             function getStaticItems() {
-                return [lavender, flower1, flower2, flower3, mango1, mango2, mango3, corn1, corn2, corn3]
+                return [lavender, flower1, flower2, flower3, apple1, apple2, apple3, corn1, corn2, corn3]
             }
 
             function hideItems(items) {
@@ -761,7 +761,7 @@ Window {
     Question {
         id: question3
         mainImageName: "dragonfly"
-        image1Name: "mango"
+        image1Name: "apple"
         image2Name: "rat"
         image3Name: "fly"
         image4Name: "grasshopper"
@@ -944,9 +944,9 @@ Window {
             fly.x = 2*sandbox.width/4
             fly.y = sandbox.height/2
             fly.movable = false
-            mango1.visible = true
-            mango1.x = 3*sandbox.width/4
-            mango1.y = sandbox.height/2
+            apple1.visible = true
+            apple1.x = 3*sandbox.width/4
+            apple1.y = sandbox.height/2
             if(!interrupted){
                 waitingSpeech = true
                 blockingSpeech.text = "Hello, welcome to the game. The goal is to keep all the animals alive as long as possible."

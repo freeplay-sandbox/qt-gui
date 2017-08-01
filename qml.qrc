@@ -14,7 +14,6 @@
         <file>res/wolf.png</file>
         <file>res/rat.png</file>
         <file>res/python.png</file>
-        <file>res/mango.png</file>
         <file>res/lavender.png</file>
         <file>res/frog.png</file>
         <file>res/fly.png</file>
@@ -38,5 +37,6 @@
         <file>res/crunch2.mp3</file>
         <file>res/crunch1.mp3</file>
         <file>res/crunch0.mp3</file>
+        <file>res/apple.png</file>
     </qresource>
 </RCC>

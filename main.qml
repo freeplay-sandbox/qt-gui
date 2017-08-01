@@ -432,6 +432,8 @@ Window {
             function hideItems(items) {
                 for (var i = 0; i < items.length; i++) {
                     items[i].visible = false;
+                    items[i].x = -100
+                    items[i].y = -100
                 }
             }
 
@@ -477,6 +479,7 @@ Window {
 
             function setAlive(items) {
                 for(var i = 0; i < items.length; i++) {
+                   items[i].relocate()
                    items[i].alive = true
                    items[i].life = items[i].initialLife
                 }

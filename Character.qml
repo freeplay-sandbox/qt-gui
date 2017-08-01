@@ -123,7 +123,6 @@ InteractiveItem {
     }
     onAliveChanged: {
         if(alive){
-            relocate()
             sandbox.livingAnimals++
             visible = true
 

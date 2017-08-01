@@ -25,7 +25,7 @@ Item {
             id: mainImage
             anchors.horizontalCenter: parent.horizontalCenter
             fillMode: Image.PreserveAspectFit
-            width: 4 * scale * question.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
+            width: 8 * scale * question.height * sandbox.physicalCubeSize / sandbox.physicalMapWidth
             source: "res/" + question.mainImageName + ".png"
         }
 
@@ -39,10 +39,17 @@ Item {
         RowLayout{
             spacing: question.width/10
             anchors.horizontalCenter: parent.horizontalCenter
+            width: question.width
+            height: question.height / 3
+            property double maximumWidth: width/6
+
             Image {
                 id: image1
                 source: "res/" + question.image1Name + ".png"
                 property bool selected: false
+                fillMode: Image.PreserveAspectFit
+                Layout.maximumWidth: parent.maximumWidth
+                Layout.maximumHeight: parent.height
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -64,6 +71,9 @@ Item {
                 id: image2
                 source: "res/" + question.image2Name + ".png"
                 property bool selected: false
+                fillMode: Image.PreserveAspectFit
+                Layout.maximumWidth: parent.maximumWidth
+                Layout.maximumHeight: parent.height
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -85,6 +95,9 @@ Item {
                 id: image3
                 source: "res/" + question.image3Name + ".png"
                 property bool selected: false
+                fillMode: Image.PreserveAspectFit
+                Layout.maximumWidth: parent.maximumWidth
+                Layout.maximumHeight: parent.height
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -106,6 +119,9 @@ Item {
                 id: image4
                 source: "res/" + question.image4Name + ".png"
                 property bool selected: false
+                fillMode: Image.PreserveAspectFit
+                Layout.maximumWidth: parent.maximumWidth
+                Layout.maximumHeight: parent.height
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -142,7 +158,7 @@ Item {
             onClicked: {
                 globalStates.state = nextState
                 var log=[mainImageName,image1Name,image1.selected,image2Name,image2.selected,image3Name,image3.selected,image4Name,image4.selected]
-                var a = fileio.write(window.qlogfilename, log.join(","));
+                fileio.write(window.qlogfilename, log.join(","));
                 image1.selected = false
                 image2.selected = false
                 image3.selected = false

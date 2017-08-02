@@ -234,7 +234,7 @@ Window {
                         if (obj.objectName === "interactive") {
                             draggedObject = obj.name;
                             //console.log("ROS controller touched object: " + obj.name);
-                            interactionEventsPub.text = "robottouching_" + draggedObject;
+                            interactionEventsPub.text = "robottouch_" + draggedObject;
 
                             target = obj.body
                             externalJoint.maxForce = target.getMass() * 500;
@@ -254,7 +254,7 @@ Window {
                     running: false
                     onTriggered: {
                         //console.log("Auto-releasing ROS contact with " + parent.draggedObject);
-                        interactionEventsPub.text = "robotreleasing_" + parent.draggedObject;
+                        interactionEventsPub.text = "robotrelease_" + parent.draggedObject;
                         var items = interactiveitems.getActiveItems()
                         for(var i = 0;i<items.length;i++){
                             if(items[i].name === parent.draggedObject){
@@ -565,7 +565,7 @@ Window {
         id: interactionEventsSub
         topic: "sandtray/interaction_events"
         onTextChanged: {
-            if(text === "supervisor_ready")
+            if(text === "supervisor_ready" || text === "analyser_ready")
                 publishItems();
         }
     }
@@ -960,7 +960,7 @@ Window {
 
     RosListFloatPublisher{
         id: lifePub
-        topic: "sparc/partial_state"
+        topic: "sparc/life"
     }
 
     function publishItems(){

@@ -45,10 +45,9 @@ TouchPoint {
     onPressedChanged: {
         var obj = interactiveitems.childAt(x, y);
         if (pressed) {
-            interactionEventsPub.text = "childtouch_"+obj.name
-
             // find out whether we touched an item
             if (obj.objectName === "interactive" && obj.movable) {
+                interactionEventsPub.text = "childtouch_"+obj.name
                 movingItem = true;
                 itemMoved = obj;
                 itemMoved.isMoved = true
@@ -60,7 +59,7 @@ TouchPoint {
         else { // released
             if(movingItem) {
                 //itemMoved.testCloseImages()
-                interactionEventsPub.text = "childreleasing_"+obj.name
+                interactionEventsPub.text = "childrelease_"+obj.name
                 joint.bodyB = null;
                 movingItem = false;
                 itemMoved.isMoved = false

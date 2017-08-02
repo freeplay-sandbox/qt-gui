@@ -85,14 +85,14 @@ InteractiveItem {
             if(list[i].visible && list[i].life > 0 && testProximity(list[i])){
                 if(food.indexOf(list[i].name)>-1){
                     list[i].fleeing()
-                    if(!eating){// && life < .95*initialLife){
+                    if(!eating && list[i].life>0){// && life < .95*initialLife){
                         list[i].changeLife(-.25)
                         changeLife(0.3)
                     }
                 }
                 else if(list[i].food.indexOf(name)>-1){
                     fleeing()
-                    if (!list[i].eating){// && list[i].life < .95*list[i].initialLife){
+                    if (!list[i].eating && life>0){// && list[i].life < .95*list[i].initialLife){
                         changeLife(-.25)
                         list[i].changeLife(.3)
                     }
@@ -105,7 +105,7 @@ InteractiveItem {
 
         list = interactiveitems.getStaticItems()
         for(var i=0 ; i < list.length; i++){
-            if(testProximity(list[i]) && food.indexOf(list[i].type)>-1 && !eating){// && life < .95*initialLife){
+            if(testProximity(list[i]) && food.indexOf(list[i].type)>-1 && !eating && list[i].life>0){// && life < .95*initialLife){
                 list[i].changeLife(-.25)
                 changeLife(0.3)
             }

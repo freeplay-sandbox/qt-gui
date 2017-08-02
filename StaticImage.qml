@@ -39,7 +39,7 @@ Item {
     }
 
     NumberAnimation {id: death; target: staticImage; property: "scale"; from: scale; to: 0.1; duration: 1000}
-    NumberAnimation {id: lifeChangeAnimation; target: staticImage; property: "life"; from: life; to: life+lifeChange; duration: 800}
+    //NumberAnimation {id: lifeChangeAnimation; target: staticImage; property: "life"; from: life; to: life+lifeChange; duration: 800}
 
     onScaleChanged: {
         if(scale <= 0.1 && visible){
@@ -95,13 +95,13 @@ Item {
         var angle = Math.PI/2 * (Math.random() - 0.5)
         x=item.x+40*Math.cos(angle)
         y=item.y+40*Math.sin(angle)
-        console.log("Locating "+name+" x "+x+" y "+y)
         visible = true
     }
 
     function changeLife(value){
-        lifeChange = value
-        lifeChangeAnimation.start()
+        life+=value
+        //lifeChange = value
+        //lifeChangeAnimation.start()
         /*
         lifeChangeAnimation.start()
         if(value<0)
@@ -113,6 +113,12 @@ Item {
         }
         lifeSlider.animation.start()*/
     }
+
+    function initiate(){
+        scale = initialScale
+        life = initialLife
+    }
+
     onNameChanged: type = name.split("-")[0]
     onLifeChanged: if(life<=0) death.start()
 }

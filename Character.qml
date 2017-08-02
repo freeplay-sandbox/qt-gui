@@ -247,6 +247,14 @@ InteractiveItem {
             lifeSlider.animation.start()
     }
 
+    function initiate(){
+        visible = true
+        relocate()
+        alive = true
+        life = initialLife
+        scale = initialScale
+    }
+
     onEatingChanged:{
         if (eating){
             var i = Math.floor(Math.random() * 10) + 1

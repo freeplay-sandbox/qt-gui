@@ -476,13 +476,6 @@ Window {
                 }
             }
 
-            function restoreAllItems() {
-                var items = getActiveItems();
-                for (var i = 0; i < items.length; i++) {
-                    items[i].visible = true;
-                }
-            }
-
             function shuffleItems() {
                 var items = getActiveItems();
                 for(var i = 0; i < items.length; i++) {
@@ -516,19 +509,20 @@ Window {
 
             }
 
-            function setAlive(items) {
-                for(var i = 0; i < items.length; i++) {
-                   items[i].relocate()
-                   items[i].alive = true
-                   items[i].life = items[i].initialLife
-                }
+            function initiate(items) {
+                for(var i = 0; i < items.length; i++)
+                    items[i].initiate()
              }
 
             function prepareGame(){
-                restoreAllItems();
-                setAlive(getActiveItems())
-                itemsToRandomByName(getStaticItems());
-                restoreAllItems();
+                var items = getActiveItems()
+                for(var i = 0; i < items.length; i++)
+                    items[i].initiate()
+                items = getStaticItems()
+                for(var i = 0; i < items.length; i++)
+                    items[i].initiate()
+                itemsToRandomByName(items);
+                sandbox.livingAnimals = 10
             }
         }
 
@@ -952,7 +946,11 @@ Window {
             for(var i = 0; i < items.length; i++){
                 if(items[i].life>0)
                     items[i].life -= 0.01
-                list.push(items[i].life)
+                list.push(items[i].life/items[i].initialLife)
+            }
+            items = interactiveitems.getStaticItems()
+            for(var i = 0; i < items.length; i++){
+                list.push(items[i].life/items[i].initialLife)
             }
             lifePub.list = list
             lifePub.publish()

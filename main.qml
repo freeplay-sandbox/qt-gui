@@ -997,10 +997,15 @@ Window {
     function endRound(){
         hunger.running = false
         rounds++
-        if(rounds == maxRounds)
+        if(rounds == maxRounds){
             globalStates.state = "endGame"
-        else
+            interactionEventsPub.text = "endGame"
+        }
+        else{
             globalStates.state = "endRound"
+            interactionEventsPub.text = "endround"
+        }
+
         interactiveitems.hideItems(interactiveitems.getStaticItems())
         interactiveitems.hideItems(interactiveitems.getActiveItems())
         var d = new Date()

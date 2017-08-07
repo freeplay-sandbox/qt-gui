@@ -964,18 +964,25 @@ Window {
     }
 
     function publishItems(){
+        var list=[]
         var message = "characters"
         var items = interactiveitems.getActiveItems()
-        for(var i = 0; i < items.length; i++)
+        for(var i = 0; i < items.length; i++){
             message += "_"+items[i].name + "," + items[i].initialScale
+            list.push(items[i].life/items[i].initialLife)
+        }
         interactionEventsPub.text = message
         sleep(100)
         message = "targets"
         items = interactiveitems.getStaticItems()
-        for(var i = 0; i < items.length; i++)
+        for(var i = 0; i < items.length; i++){
             message += "_"+items[i].name + "," + items[i].initialScale
+            list.push(items[i].life/items[i].initialLife)
+        }
         interactionEventsPub.text = message
 
+        lifePub.list = list
+        lifePub.publish()
     }
 
     function sleep(milliseconds) {

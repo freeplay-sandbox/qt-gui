@@ -555,6 +555,60 @@ Window {
                 }
             }
         }
+
+        RosPoseSubscriber {
+            id: gazeFocus
+            x: window.width/2
+            y: window.height/2
+            z:100
+
+            visible: false
+
+            topic: "/gazepose_0"
+            origin: mapOrigin
+            pixelscale: sandbox.pixel2meter
+
+            Rectangle {
+                anchors.centerIn: parent
+                width: 10
+                height: width
+                radius: width/2
+                color: "red"
+            }
+            Rectangle {
+                anchors.centerIn: parent
+                width: parent.zvalue * 2 / sandbox.pixel2meter
+                height: width
+                radius: width/2
+                color: "transparent"
+                border.color: "orange"
+            }
+        }
+        RosPosePublisher {
+            id: gazeSimulator
+            topic: "/gazepose_0"
+            target: gazeSimulator
+            visible: false
+            origin: sandbox
+            frame: "sandtray"
+            pixelscale: sandbox.pixel2meter
+            x: sandbox.width/2
+            y: sandbox.height/2
+            z:101
+            Rectangle {
+                anchors.centerIn: parent
+                width:40
+                height: width
+                radius: width/2
+
+                MouseArea {
+                    id: dragArea
+                    anchors.fill: parent
+                    drag.target: gazeSimulator
+                }
+            }
+            onXChanged: if(visible) publish()
+        }
     }
 
     RosStringPublisher {

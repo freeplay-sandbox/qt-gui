@@ -625,6 +625,7 @@ Window {
     }
 
     function startFoodChain() {
+        instructionScreen.visible = false
         interactiveitems.prepareGame()
 
         var d = new Date()
@@ -1085,7 +1086,7 @@ Window {
             instructionScreen.visible = true
             tutorial.interrupt = false
             //startFoodChain()
-            interactiveitems.setAlive([frog,fly])
+            interactiveitems.initiate([frog,fly])
             frog.visible = true
             frog.x = sandbox.width/4
             frog.y = sandbox.height/2
@@ -1101,7 +1102,7 @@ Window {
                 waitForSpeech("Hello, welcome to the game. The goal is to keep all the animals alive as long as possible.")
             }
             hunger.running =true
-            waitForSpeech("Animals have energy which decreases as time goes by, and they have to eat to stay alive")
+            waitForSpeech("Animals have energy which decreases as time goes by, and they have to eat to stay alive.")
             fly.movable = true
             instructionScreen.text = "Now, feed the fly by moving it to the apple."
             blockingSpeech.text = "Now, feed the fly by moving it to the apple."
@@ -1112,7 +1113,7 @@ Window {
                 waitingFlyEating = true
                 spyTutoPursue.clear()
                 try{
-                    spyTutoPursue.wait(6000)
+                    spyTutoPursue.wait(10000)
                 }
                 catch(err){
                     if(interrupt){
@@ -1139,7 +1140,7 @@ Window {
                 waitingFrogEating = true
                 spyTutoPursue.clear()
                 try{
-                    spyTutoPursue.wait(6000)
+                    spyTutoPursue.wait(10000)
                 }
                 catch(err){
                     if(interrupt){

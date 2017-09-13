@@ -633,8 +633,10 @@ Window {
         sandbox.startingTime = d.getTime()
         sandbox.points = 0
         hunger.start()
+        interactionEventsPub.text = "start"
 
         globalStates.state = "game"
+        instructionScreen.visible = false
     }
 
     Item {
@@ -1054,6 +1056,7 @@ Window {
     }
 
     function endRound(){
+        interactionEventsPub.text = "stop"
         hunger.running = false
         rounds++
         if(rounds == maxRounds){

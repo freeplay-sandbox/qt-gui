@@ -997,18 +997,11 @@ Window {
         interval: 1000; running: false; repeat: true
         onTriggered: {
             var items = interactiveitems.getActiveItems()
-            var list=[]
             for(var i = 0; i < items.length; i++){
                 if(items[i].life>0)
                     items[i].life -= 0.01
-                list.push(items[i].life/items[i].initialLife)
             }
-            items = interactiveitems.getStaticItems()
-            for(var i = 0; i < items.length; i++){
-                list.push(items[i].life/items[i].initialLife)
-            }
-            lifePub.list = list
-            lifePub.publish()
+            publishLife()
             sandbox.points += sandbox.totalLife
         }
     }
@@ -1018,26 +1011,36 @@ Window {
         topic: "sparc/life"
     }
 
-    function publishItems(){
-        var list=[]
-        var message = "characters"
+    function publishLife(){
         var items = interactiveitems.getActiveItems()
+        var list=[]
         for(var i = 0; i < items.length; i++){
-            message += "_"+items[i].name + "," + items[i].initialScale
             list.push(items[i].life/items[i].initialLife)
         }
-        interactionEventsPub.text = message
-        sleep(100)
-        message = "targets"
         items = interactiveitems.getStaticItems()
         for(var i = 0; i < items.length; i++){
-            message += "_"+items[i].name + "," + items[i].initialScale
             list.push(items[i].life/items[i].initialLife)
         }
-        interactionEventsPub.text = message
-
         lifePub.list = list
         lifePub.publish()
+    }
+
+    function publishItems(){
+        var message = "characters"
+        var items = interactiveitems.getActiveItems()
+        for(var i = 0; i < items.length; i++)
+            message += "_"+items[i].name + "," + items[i].initialScale
+        interactionEventsPub.text = message
+        sleep(100)
+
+        message = "targets"
+        items = interactiveitems.getStaticItems()
+        for(var i = 0; i < items.length; i++)
+            message += "_"+items[i].name + "," + items[i].initialScale
+        interactionEventsPub.text = message
+        sleep(100)
+
+        publishLife()
     }
 
     function sleep(milliseconds) {

@@ -12,7 +12,7 @@ InteractiveItem {
     property var stash: parent
     property var food: []
     property double initialLife: 1
-    property double life: initialLife
+    property double life: 0
     property bool eating: false
     property double fleeX: 0
     property double fleeY: 0

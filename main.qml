@@ -25,6 +25,7 @@ Window {
     property int rounds: 0
     property int maxRounds: 4
     property int totalPoints: 0
+    property int animalLimit: 7
 
     Component.onCompleted: {
         var d = new Date()
@@ -133,7 +134,7 @@ Window {
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
-            if(livingAnimals == 7 && globalStates.state == "game"){
+            if(livingAnimals == animalLimit && globalStates.state == "game"){
                 endRound()
             }
         }

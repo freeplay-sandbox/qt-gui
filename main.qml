@@ -89,7 +89,6 @@ Window {
             },
             State {
                     name: "end"
-                    PropertyChanges { target: question3; visible: "false"}
                     PropertyChanges { target: informationScreen; text: "Thank you for having played the game!"}
                     PropertyChanges { target: buttonStart; visible: "false"}
             }
@@ -100,8 +99,6 @@ Window {
                 case "test":
                     if(rounds == 0)
                         graph.prepare()
-                    if(rounds == maxRounds)
-                        question3.nextState = "end"
                     break
                 case "endGame":
                     break
@@ -876,42 +873,6 @@ Window {
                         globalStates.state = "test"
                     }
             }
-    }
-    Question {
-        id: question1
-        mainImageName: "eagle"
-        image1Name: "rat"
-        image2Name: "python"
-        image3Name: "butterfly"
-        image4Name: "flower"
-        text: "What does an eagle eat?"
-        nextState: "question2"
-        visible: false
-        z:11
-    }
-    Question {
-        id: question2
-        mainImageName: "bird"
-        image1Name: "dragonfly"
-        image2Name: "grasshopper"
-        image3Name: "wolf"
-        image4Name: "frog"
-        text: "What does a bird eat?"
-        nextState: "question3"
-        visible: false
-        z:11
-    }
-    Question {
-        id: question3
-        mainImageName: "dragonfly"
-        image1Name: "apple"
-        image2Name: "rat"
-        image3Name: "fly"
-        image4Name: "grasshopper"
-        text: "What does a dragonfly eat?"
-        nextState: "tutorialIntro"
-        visible: false
-        z:11
     }
 
     Rectangle {

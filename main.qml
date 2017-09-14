@@ -52,19 +52,9 @@ Window {
                 PropertyChanges { target: drawingarea; visible: false}
             },
             State {
-                    name: "question1"
-                    PropertyChanges { target: question1; visible: true}
+                    name: "test"
+                    PropertyChanges { target: graph; visible: true}
                     PropertyChanges { target: informationScreen; visible: false}
-            },
-            State {
-                    name: "question2"
-                    PropertyChanges { target: question1; visible: false}
-                    PropertyChanges { target: question2; visible: true}
-            },
-            State {
-                    name: "question3"
-                    PropertyChanges { target: question2; visible: false}
-                    PropertyChanges { target: question3; visible: true}
             },
             State {
                     name: "game"
@@ -78,7 +68,6 @@ Window {
             },
             State {
                     name: "prepareGame"
-                    PropertyChanges { target: question3; visible: false}
                     PropertyChanges { target: informationScreen; visible: true}
                     PropertyChanges { target: instructionScreen; visible: false}
                     PropertyChanges { target: informationScreen; text: "Welcome to the food chain game, \n try to keep animal alive as long \n as possible by feeding them."}
@@ -108,7 +97,9 @@ Window {
         ]
         onStateChanged: {
             switch (globalStates.state){
-                case "question3":
+                case "test":
+                    if(rounds == 0)
+                        graph.prepare()
                     if(rounds == maxRounds)
                         question3.nextState = "end"
                     break
@@ -686,7 +677,8 @@ Window {
                     //else
                     switch (globalStates.state){
                     case "endGame":
-                        globalStates.state = "question1"
+                        globalStates.state = "test"
+                        graph.nextState = "end"
                         break
                     case "tutorialIntro":
                         tutorial.practice()
@@ -712,6 +704,10 @@ Window {
         }
     }
 
+    Graph {
+        id: graph
+        visible: false
+    }
 
     ColumnLayout {
             id: questions
@@ -871,7 +867,7 @@ Window {
                     onClicked:{
                         var log=[genderquestion.gender(),age.value]
                         fileio.write(window.qlogfilename, log.join(","));
-                        globalStates.state = "question1";
+                        globalStates.state = "test"
                     }
             }
     }

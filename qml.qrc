@@ -38,5 +38,7 @@
         <file>res/crunch1.mp3</file>
         <file>res/crunch0.mp3</file>
         <file>res/apple.png</file>
+        <file>Graph.qml</file>
+        <file>Arrow.qml</file>
     </qresource>
 </RCC>

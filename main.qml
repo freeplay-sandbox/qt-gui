@@ -627,7 +627,7 @@ Window {
         sandbox.startingTime = d.getTime()
         sandbox.points = 0
         hunger.start()
-        interactionEventsPub.text = "start"
+        interactionEventsPub.text = "start_"+rounds+"_"+maxRounds
 
         globalStates.state = "game"
         instructionScreen.visible = false

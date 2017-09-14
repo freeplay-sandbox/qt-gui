@@ -399,6 +399,7 @@ Window {
                 name: "bird"
                 food: ["dragonfly","fly"]
                 initialScale:.9
+                predatorLevel: 1
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
@@ -411,6 +412,7 @@ Window {
             Character {
                 id: frog
                 name: "frog"
+                predatorLevel: 1
                 food: ["grasshopper","butterfly","dragonfly","fly"]
                 collidesWith: interactiveitems.collisionCategories
             }
@@ -419,12 +421,14 @@ Window {
                 name: "eagle"
                 food: ["python","rat","wolf","frog","bird"]
                 initialScale:1.5
+                predatorLevel: 5
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
                 id: rat
                 name: "rat"
                 food: "grasshopper"
+                predatorLevel: 1
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
@@ -432,6 +436,7 @@ Window {
                 name: "wolf"
                 food: ["rat","bird"]
                 initialScale:1.5
+                predatorLevel: 3
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
@@ -439,6 +444,7 @@ Window {
                 name: "python"
                 food: ["rat","frog","wolf"]
                 initialScale:1.5
+                predatorLevel: 3
                 collidesWith: interactiveitems.collisionCategories
             }
 

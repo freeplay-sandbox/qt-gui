@@ -20,6 +20,7 @@ InteractiveItem {
     property bool isMoved: false
     property double targetLife: 0
     property bool movable: true
+    property int predatorLevel: 0
     visible: false
     x: -100
     y: -100
@@ -97,8 +98,11 @@ InteractiveItem {
                         list[i].changeLife(.3)
                     }
                 }
-                else {
+                else if (list[i].predatorLevel <= predatorLevel){
                     list[i].fleeing()
+                }
+                else{
+                    fleeing()
                 }
             }
         }

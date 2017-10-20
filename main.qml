@@ -189,6 +189,14 @@ Window {
                 ]
             }
 
+            TFListener {
+                id: robotLocation
+                frame: "torso"
+                origin: mapOrigin
+                parentframe: mapOrigin.name
+                pixelscale: sandbox.pixel2meter
+            }
+
             RosPoseSubscriber {
                 id: rostouch
                 x: 0
@@ -203,7 +211,7 @@ Window {
                     width: 120
                     fillMode: Image.PreserveAspectFit
                     // tracks the position of the robot
-                    transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(rostouch.y, rostouch.x))}
+                    transform: Rotation {origin.x: 15;origin.y: 5;angle: 180/Math.PI * (-Math.PI/2 + Math.atan2(robotLocation.y - rostouch.y, robotLocation.x - rostouch.x))}
                     visible: false
                 }
 

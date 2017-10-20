@@ -40,5 +40,6 @@
         <file>res/apple.png</file>
         <file>Graph.qml</file>
         <file>Arrow.qml</file>
+        <file>res/wheat.png</file>
     </qresource>
 </RCC>

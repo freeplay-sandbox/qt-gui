@@ -97,8 +97,7 @@ Window {
         onStateChanged: {
             switch (globalStates.state){
                 case "test":
-                    if(rounds == 0)
-                        graph.prepare()
+                    graph.start()
                     break
                 case "endGame":
                     break

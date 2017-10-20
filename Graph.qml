@@ -7,6 +7,7 @@ Item {
     property string text: ""
     property var imageNames: ['flower', 'dragonfly', 'bird', 'wolf', 'butterfly', 'wheat', 'apple', 'rat', 'grasshopper', 'eagle', 'fly', 'frog', 'python']
     property string nextState: "tutorialIntro"
+    property bool ready: false
     id: graph
     anchors.fill:parent
     visible: false
@@ -132,9 +133,12 @@ Item {
              obj.x = radiusWidth*Math.cos(2*Math.PI*i/imageNames.length)+graph.width/2-offset/4
              obj.y = radiusHeight*Math.sin(2*Math.PI*i/imageNames.length)+graph.height/2-offset/2
          }
+         ready=true
     }
 
     function start() {
+        if(ready == false)
+            prepare()
         graph.visible = true
         }
 

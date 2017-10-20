@@ -238,7 +238,7 @@ Window {
 
                 Timer {
                     id: releasetimer
-                    interval: 1000
+                    interval: 2000
                     running: false
                     onTriggered: {
                         //console.log("Auto-releasing ROS contact with " + parent.draggedObject);

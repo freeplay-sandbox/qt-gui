@@ -64,7 +64,7 @@ Window {
                     name: "endRound"
                     PropertyChanges { target: informationScreen; visible: true}
                     PropertyChanges { target: buttonStart; text: "Try again"}
-                    PropertyChanges { target: informationScreen; text: "Three animals died, so the game stops. \n You finished with " + sandbox.points +" points. \n Well done!"}
+                    PropertyChanges { target: informationScreen; text: "Three animals died, so the game stops. \n You finished with " + Math.round(sandbox.points) +" points. \n Well done!"}
             },
             State {
                     name: "prepareGame"
@@ -85,7 +85,7 @@ Window {
             State {
                     name: "endGame"
                     PropertyChanges { target: buttonStart; text: "Continue"}
-                    PropertyChanges { target: informationScreen; text: "This is the end of the game. \nYou achieved a total " + totalPoints +" points. \nWell done!"}
+                    PropertyChanges { target: informationScreen; text: "This is the end of the game. \nYou achieved a total " + Math.round(totalPoints) +" points. \nWell done!"}
             },
             State {
                     name: "end"
@@ -117,7 +117,7 @@ Window {
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
         property int livingAnimals: 0 //eagle.alife + wolf.alife + rat.alife + python.alife + bird.alife + frog.alife + dragonfly.alife + fly.alife + butterfly.alife + grasshopper.alife
         property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
-        property int points: 0
+        property double points: 0
         property var startingTime: 0
 
         onLivingAnimalsChanged: {
@@ -1028,6 +1028,25 @@ Window {
         else{
             globalStates.state = "endRound"
             interactionEventsPub.text = "endround"
+        }
+
+        var finished = false
+        var items = interactiveitems.getActiveItems()
+        var lifes=[]
+        for(var i = 0; i < items.length; i++)
+            lifes[i]=items[i].life
+
+        while(!finished){
+            finished = true
+            for(var i = 0; i < lifes.length; i++){
+                if(lifes[i]>0){
+                    lifes[i] -= 0.01
+                    finished = false
+                    sandbox.points += lifes[i]
+                    console.log("life "+lifes[i] +"-" +sandbox.points)
+
+                }
+            }
         }
 
         interactiveitems.hideItems(interactiveitems.getStaticItems())

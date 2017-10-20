@@ -23,6 +23,35 @@ Item {
     }
 
     Item {
+        id: instructionScreen
+        anchors.fill: parent
+        visible: true
+        property string text: "Connect animals to their food."
+        z: 0
+
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            width: parent.width / 2
+            height: parent.height / 2
+            color: "AliceBlue"
+            border.color: "black"
+            border.width: width/100
+            radius: width / 10
+            Label {
+                id: instructionText
+                width: parent.width * .8
+                font.pixelSize: 50
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                horizontalAlignment: Text.AlignHCenter
+                text: instructionScreen.text
+                wrapMode: Text.WordWrap
+            }
+        }
+    }
+
+    Item {
         id:arrows
         visible: true
         anchors.fill:parent
@@ -90,6 +119,7 @@ Item {
             }
         }
     }
+
     Rectangle{
         id: continueButton
         anchors.right: parent.right

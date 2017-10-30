@@ -1220,7 +1220,8 @@ Window {
     }
 
     function itemDying(name){
-        if(tutoStates.state !== "" && tutoStates.state !== "endTuto" && tutoStates.state !== "deadAnimal" &&   name === "frog" || name === "fly"){
+        console.log("")
+        if(tutoStates.state !== "" && tutoStates.state !== "endTuto" && tutoStates.state !== "deadAnimal" &&  (name === "frog" || name === "fly")){
             tutoStates.state = "deadAnimal"
             if(tutorial.flyFed && name === "frog")
                 tutorial.deadFrog = true

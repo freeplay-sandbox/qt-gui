@@ -691,7 +691,7 @@ Window {
                         graph.nextState = "end"
                         break
                     case "tutorialIntro":
-                        tutorial.practice()
+                        tutoStates.state = "intro"
                         break
                     case "endRound":
                         startFoodChain()
@@ -1068,155 +1068,185 @@ Window {
 
     Item{
         id: tutorial
-        property bool waitingSpeech: false
-        property bool waitingFlyEating: false
-        property bool waitingFrogEating: false
-        property bool interrupted: false
-        property bool interrupt: false
-        property int sentencesSaid: 0
-        property int sentencesExpected: 0
-        signal pursue()
+        property bool flyFed: false
+        property bool deadFrog: false
+        property bool introduced: false
+        property string sentence: ""
 
-        function practice() {
-            globalStates.state = "tutorial"
+        StateGroup {
+            id: tutoStates
+            states: [
+                State {
+                    name: "default"
+                },
+                State {
+                    name: "intro"
+                },
+                State {
+                    name: "goal"
+                },
+                State {
+                    name: "feedFly"
+                    PropertyChanges {target: repeatInstructions; sentence: "Press on the fly and drag it to the apple."}
+                },
+                State {
+                    name: "feedFrog"
+                    PropertyChanges {target: repeatInstructions; sentence: "Press on the frog and drag it to the fly."}
+                },
+                State {
+                    name: "deadAnimal"
+                },
+                State {
+                    name: "endTuto"
+                }
+
+            ]
+            onStateChanged: {
+                console.log("Current state "+tutoStates.state)
+                repeatInstructions.running = false
+                switch (tutoStates.state){
+                    case "intro":
+                        tutorial.setupTutorial()
+                        tutorial.sentence = "Hello, welcome to the game. The goal is to keep all the animals alive as long as possible."
+                        tutorial.introduced = true
+                        break
+                    case "goal":
+                        hunger.running = true
+                        tutorial.sentence = "Animals have energy which decreases as time goes by, and they have to eat to stay alive."
+                        break
+                    case "feedFly":
+                        hunger.running = true
+                        tutorial.sentence = "Now, feed the fly by moving it to the apple."
+                        fly.movable = true
+                        break
+                    case "feedFrog":
+                        hunger.running = true
+                        tutorial.flyFed = true
+                        if(tutorial.deadFrog == false){
+                            tutorial.sentence = "Well done! Now move the frog to the fly to feed the frog."
+                        }
+                        else{
+                            tutorial.sentence = "Now move the frog to the fly to feed the frog."
+                        }
+                        frog.movable = true
+                        fly.movable = true
+                        break
+                    case "deadAnimal":
+                        tutorial.sentence = "One animal died, let's try again."
+                        hunger.running = false
+                        break
+                    case "endTuto":
+                        tutorial.sentence = "Excellent! But becareful, when an animal has no energy, it dies. Let's start the game when you are ready."
+                        hunger.running = false
+                        break
+                }
+            }
+        }
+        onSentenceChanged: {
+            if(sentence != ""){
+                instructionScreen.text = sentence
+                blockingSpeech.text = sentence
+                defaultSay.start()
+            }
+        }
+        Timer {
+            id: defaultSay
+            interval: 6000
+            running: false
+            repeat: false
+            onTriggered: {
+                tutorial.sentenceIn(tutorial.sentence)
+            }
+        }
+
+        Timer {
+            id: repeatInstructions
+            interval: 6000
+            running: false
+            repeat: true
+            property string sentence: ""
+            onTriggered: {
+                instructionScreen.text = sentence
+                blockingSpeech.text = sentence
+            }
+        }
+
+        function setupTutorial (){
+            informationScreen.visible = false
             instructionScreen.visible = true
-            tutorial.interrupt = false
-            //startFoodChain()
             interactiveitems.initiate([frog,fly])
-            frog.visible = true
             frog.x = sandbox.width/4
             frog.y = sandbox.height/2
-            frog.movable =false
-            fly.visible = true
-            fly.x = 2*sandbox.width/4
+            fly.x = 2 * sandbox.width/4
             fly.y = sandbox.height/2
+            frog.movable = false
+            fly.visible = true
             fly.movable = false
             apple1.visible = true
             apple1.x = 3*sandbox.width/4
             apple1.y = sandbox.height/2
-            if(!interrupted){
-                waitForSpeech("Hello, welcome to the game. The goal is to keep all the animals alive as long as possible.")
-            }
-            hunger.running =true
-            waitForSpeech("Animals have energy which decreases as time goes by, and they have to eat to stay alive.")
-            fly.movable = true
-            instructionScreen.text = "Now, feed the fly by moving it to the apple."
-            blockingSpeech.text = "Now, feed the fly by moving it to the apple."
-            sentencesExpected++
-            var repeat = true
-            while(repeat){
-                repeat = false
-                waitingFlyEating = true
-                spyTutoPursue.clear()
-                try{
-                    spyTutoPursue.wait(10000)
-                }
-                catch(err){
-                    if(interrupt){
-                        waitingFlyEating = false
-                        interrupted = true
-                        waitForSpeech("One animal died, let's try again.")
-                        practice()
-                        return
-                    }
-                    repeat = true
-                    instructionScreen.text = "Press on the fly and drag it to the apple."
-                    blockingSpeech.text = "Press on the fly and drag it to the apple."
-                    sentencesExpected++
-                }
-            }
-            frog.movable = true
-            instructionScreen.text = "Well done! Now move the frog to the fly to feed the frog."
-            blockingSpeech.text = "Well done! Now move the frog to the fly to feed the frog."
-            sentencesExpected++
-
-            repeat = true
-            while(repeat){
-                repeat = false
-                waitingFrogEating = true
-                spyTutoPursue.clear()
-                try{
-                    spyTutoPursue.wait(10000)
-                }
-                catch(err){
-                    if(interrupt){
-                        waitingFrogEating = false
-                        interrupted = true
-                        waitForSpeech("One animal died, let's try again.")
-                        practice()
-                        return
-                    }
-                    repeat = true
-                    instructionScreen.text = "Press on the frog and drag it to the fly."
-                    blockingSpeech.text = "Press on the frog and drag it to the fly."
-                    sentencesExpected++
-                }
-            }
-            waitingFrogEating = true
-            waitForSpeech("Excellent! But becareful, when an animal has no energy, it dies. Let's start the game when you are ready.")
-            hunger.running = false
-            interactiveitems.hideItems(interactiveitems.getStaticItems())
-            interactiveitems.hideItems(interactiveitems.getActiveItems())
-            globalStates.state = "prepareGame"
         }
 
-        onPursue: {
-            waitingSpeech = false
-            waitingFlyEating = false
-            waitingFrogEating = false
-        }
-
-        function waitForSpeech(sentence){
-            sentencesExpected++
-            waitingSpeech = true
-            instructionScreen.text = sentence
-            blockingSpeech.text = sentence
-            var finished = false
-            console.log("waiting for "+sentencesSaid)
-            while (!finished){
-                try{
-                    spyTutoPursue.wait(6000)
+        function sentenceIn(str) {
+            if(str === tutorial.sentence){
+                defaultSay.stop()
+                switch (tutoStates.state){
+                    case "intro":
+                        tutoStates.state = "goal"
+                        break
+                    case "goal":
+                        tutoStates.state = "feedFly"
+                        break
+                    case "feedFly":
+                        repeatInstructions.restart()
+                        break
+                    case "feedFrog":
+                        repeatInstructions.restart()
+                        break
+                    case "endTuto":
+                        interactiveitems.hideItems(interactiveitems.getStaticItems())
+                        interactiveitems.hideItems(interactiveitems.getActiveItems())
+                        globalStates.state = "prepareGame"
+                        break
+                    case "deadAnimal":
+                        setupTutorial()
+                        if(tutorial.flyFed)
+                            tutoStates.state = "feedFrog"
+                        else
+                            tutoStates.state = "feedFly"
                 }
-                catch(err){return false}
-                finished = sentencesExpected <= sentencesSaid
-                console.log("Received "+spyTutoPursue.count)
             }
-            return true
         }
-
-
-    }
-
-    SignalSpy {
-        id: spyTutoPursue
-        target: tutorial
-        signalName: "pursue"
     }
 
     function itemDying(name){
-        if(name === "frog" || name === "fly")
-            tutorial.interrupt = true
-        
+        if(tutoStates.state !== "" && tutoStates.state !== "endTuto" && tutoStates.state !== "deadAnimal" &&   name === "frog" || name === "fly"){
+            tutoStates.state = "deadAnimal"
+            if(tutorial.flyFed && name === "frog")
+                tutorial.deadFrog = true
+        }
+
+
     }
     function animalEating(name){
-        if(tutorial.waitingFlyEating && name === "fly")
-            tutorial.pursue()
-
-        if(tutorial.waitingFrogEating && name === "frog")
-            tutorial.pursue()
+        if(tutoStates.state === "feedFly" && name === "fly")
+            tutoStates.state = "feedFrog"
+        if(tutoStates.state === "feedFrog" && name === "frog")
+            tutoStates.state = "endTuto"
     }
 
     RosStringPublisher {
         id: blockingSpeech
         topic: "nao/blocking_speech"
     }
+
     RosStringSubscriber {
         id: naoEventsSub
         signal speechFinished()
         topic: "nao/events"
         onTextChanged: {
-            if(text === "blocking_speech_finished" && tutorial.waitingSpeech){
-                tutorial.sentencesSaid ++
+            if(text.split("-")[0] === "blocking_speech_finished"){
+                tutorial.sentenceIn(text.split("-")[1])
             }
         }
     }

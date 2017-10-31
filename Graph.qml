@@ -5,7 +5,7 @@ import QtQuick.Layouts 1.1
 
 Item {
     property string text: ""
-    property var imageNames: ['flower', 'dragonfly', 'bird', 'wolf', 'butterfly', 'wheat', 'apple', 'rat', 'grasshopper', 'eagle', 'fly', 'frog', 'python']
+    property var imageNames: ['flower', 'dragonfly', 'bird', 'wolf', 'butterfly', 'wheat', 'apple', 'rat', 'grasshopper', 'eagle', 'fly', 'frog', 'snake']
     property string nextState: "tutorialIntro"
     property bool ready: false
     id: graph

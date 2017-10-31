@@ -115,8 +115,8 @@ Window {
         property double physicalCubeSize: 30 //mm
         //property double pixel2meter: (physicalMapWidth / 1000) / drawingarea.paintedWidth
         property double pixel2meter: (physicalMapWidth / 1000) / parent.width
-        property int livingAnimals: 0 //eagle.alife + wolf.alife + rat.alife + python.alife + bird.alife + frog.alife + dragonfly.alife + fly.alife + butterfly.alife + grasshopper.alife
-        property double totalLife: eagle.life + wolf.life + rat.life + python.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
+        property int livingAnimals: 0 //eagle.alife + wolf.alife + rat.alife + snake.alife + bird.alife + frog.alife + dragonfly.alife + fly.alife + butterfly.alife + grasshopper.alife
+        property double totalLife: eagle.life + wolf.life + rat.life + snake.life + bird.life + frog.life + dragonfly.life + fly.life + butterfly.life + grasshopper.life
         property double points: 0
         property var startingTime: 0
 
@@ -423,7 +423,7 @@ Window {
             Character {
                 id: eagle
                 name: "eagle"
-                food: ["python","rat","wolf","frog","bird"]
+                food: ["snake","rat","wolf","frog","bird"]
                 initialScale:1.5
                 predatorLevel: 5
                 collidesWith: interactiveitems.collisionCategories
@@ -444,8 +444,8 @@ Window {
                 collidesWith: interactiveitems.collisionCategories
             }
             Character {
-                id: python
-                name: "python"
+                id: snake
+                name: "snake"
                 food: ["rat","frog","wolf"]
                 initialScale:1.5
                 predatorLevel: 3
@@ -464,7 +464,7 @@ Window {
             }
 
             function getActiveItems() {
-                return [eagle, wolf, rat, python,bird,frog,dragonfly,fly,butterfly,grasshopper]
+                return [eagle, wolf, rat, snake,bird,frog,dragonfly,fly,butterfly,grasshopper]
             }
             function getStaticItems() {
                 return [lavender, flower1, flower2, flower3, apple1, apple2, apple3, wheat1, wheat2, wheat3]
